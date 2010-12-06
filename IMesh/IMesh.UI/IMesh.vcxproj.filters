@@ -147,9 +147,6 @@
     <ClInclude Include="targetver.h">
       <Filter>头文件\ui</Filter>
     </ClInclude>
-    <ClInclude Include="Painter.h">
-      <Filter>头文件\ds</Filter>
-    </ClInclude>
     <ClInclude Include="MeshData.h">
       <Filter>头文件\ds</Filter>
     </ClInclude>
@@ -158,6 +155,9 @@
     </ClInclude>
     <ClInclude Include="Macro.h">
       <Filter>头文件\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Visualizer.h">
+      <Filter>头文件\ds</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -194,13 +194,13 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>源文件\ui</Filter>
     </ClCompile>
-    <ClCompile Include="Painter.cpp">
-      <Filter>头文件\ds</Filter>
-    </ClCompile>
     <ClCompile Include="MeshData.cpp">
       <Filter>头文件\ds</Filter>
     </ClCompile>
     <ClCompile Include="Config.cpp">
+      <Filter>头文件\ds</Filter>
+    </ClCompile>
+    <ClCompile Include="Visualizer.cpp">
       <Filter>头文件\ds</Filter>
     </ClCompile>
   </ItemGroup>

@@ -3,22 +3,29 @@
 
 #include "stdafx.h"
 #include "IMesh.h"
-#include "Painter.h"
+#include "Visualizer.h"
 #include "Config.h"
+
+// use M_PI
+#ifndef _USE_MATH_DEFINES
+#define _USE_MATH_DEFINES
+#include <cmath>
+#endif
+
 
 namespace IMesh { 
 namespace UI { // namespace IMesh::UI
 
 
 // CPainter
-CPainter::CPainter()
+CVisualizer::CVisualizer()
 {
 	m_GLPixelIndex = 0;
 	m_hGLContext = NULL;
 	m_hDC = NULL;
 }
 
-CPainter::~CPainter()
+CVisualizer::~CVisualizer()
 {
 	// TODO: Add your message handler code here
 	if(wglGetCurrentContext()!=NULL)
@@ -36,18 +43,18 @@ CPainter::~CPainter()
 
 #pragma region Drawer
 
-void CPainter::PreCreateWindow( CREATESTRUCT& cs )
+void CVisualizer::PreCreateWindow( CREATESTRUCT& cs )
 {
 	cs.style |= (WS_CLIPCHILDREN | WS_CLIPSIBLINGS);
 }
 
 
-void CPainter::OnSize( UINT nType, int cx, int cy )
+void CVisualizer::OnSize( UINT nType, int cx, int cy )
 {
 	ActivateCurrentContext();
 
 	GLsizei width, height;
-	GLdouble aspect;
+	GLdouble aspect, fovy, zNear, zFar;
 	width = cx;
 	height = cy;
 	if(cy==0)
@@ -58,15 +65,28 @@ void CPainter::OnSize( UINT nType, int cx, int cy )
 	{
 		aspect = (GLdouble)cx / (GLdouble)cy;
 	}
-	glViewport(0,0,width,height);
+	fovy = 90;
+	zNear = -50;
+	zFar = -1000;
+	
+	OnView();
+	glViewport(0, 0, width, height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluOrtho2D(0.0,500.0*aspect,0.0,500.0);
+	glOrtho(0, 1, 0, 1, -1, 1);
+	//gluPerspective(fovy, aspect, zNear, zFar);
 	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+	
 }
 
-void CPainter::OnPaint( HDC hDC )
+void CVisualizer::OnView()
+{
+	gluLookAt(0, 0, 100, 
+				0, 0, -1, 
+				0, 1, 0);
+}
+
+void CVisualizer::OnPaint( HDC hDC )
 {
 	using namespace Config;
 	glLoadIdentity();
@@ -74,11 +94,11 @@ void CPainter::OnPaint( HDC hDC )
 	{
 		glBegin(GL_POLYGON);
 		glColor4fv(Colors::RED);
-		glVertex2f(100.0f,50.0f);
+		glVertex3f(0.5f, 0.2f, 0.0f);
 		glColor4fv(Colors::GREEN);
-		glVertex2f(450.0f,400.0f);
+		glVertex3f(0.6f, 0.4f, 0.0f);
 		glColor4fv(Colors::BLUE);
-		glVertex2f(450.0f,50.0f);
+		glVertex3f(0.6f, 0.2f, 0.0f);
 		glEnd();
 	}
 	glFlush();
@@ -86,7 +106,7 @@ void CPainter::OnPaint( HDC hDC )
 	::SwapBuffers(hDC);
 }
 
-BOOL CPainter::CreateViewGLContext( HDC hDC )
+BOOL CVisualizer::CreateViewGLContext( HDC hDC )
 {
 	this->m_hGLContext = wglCreateContext(hDC);
 	if(this->m_hGLContext==NULL)
@@ -96,7 +116,7 @@ BOOL CPainter::CreateViewGLContext( HDC hDC )
 	return TRUE;
 }
 
-BOOL CPainter::SetWindowPixelFormat( HDC hDC )
+BOOL CVisualizer::SetWindowPixelFormat( HDC hDC )
 {
 	//定义窗口的像素格式
 	PIXELFORMATDESCRIPTOR pixelDesc=
@@ -137,7 +157,7 @@ BOOL CPainter::SetWindowPixelFormat( HDC hDC )
 	return TRUE;
 }
 
-int CPainter::OnCreate( HDC hDC )
+int CVisualizer::OnCreate( HDC hDC )
 {
 	if(this->SetWindowPixelFormat(hDC) == FALSE)
 	{
@@ -154,7 +174,7 @@ int CPainter::OnCreate( HDC hDC )
 	return 0;
 }
 
-BOOL CPainter::ActivateCurrentContext()
+BOOL CVisualizer::ActivateCurrentContext()
 {
 	if (wglGetCurrentContext() != this->m_hGLContext) {
 		if(wglMakeCurrent(m_hDC, this->m_hGLContext)==FALSE)
