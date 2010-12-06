@@ -2,6 +2,7 @@
 // IMeshView.cpp : CIMeshView 类的实现
 //
 
+
 #include "stdafx.h"
 // SHARED_HANDLERS 可以在实现预览、缩略图和搜索筛选器句柄的
 // ATL 项目中进行定义，并允许与该项目共享文档代码。
@@ -17,8 +18,7 @@
 #endif
 
 
-namespace IMesh { 
-namespace UI { // namespace IMesh::UI
+BEGIN_NAMESPACE2(IMesh, UI)
 
 // CIMeshView
 
@@ -38,6 +38,7 @@ BEGIN_MESSAGE_MAP(CIMeshView, CView)
 	ON_WM_MOUSEWHEEL()
 	ON_WM_LBUTTONDOWN()
 	ON_WM_LBUTTONUP()
+	ON_WM_MOUSEMOVE()
 END_MESSAGE_MAP()
 
 // CIMeshView 构造/析构
@@ -45,17 +46,19 @@ END_MESSAGE_MAP()
 CIMeshView::CIMeshView()
 {
 	// TODO: 在此处添加构造代码
+	m_bLeftButtonDown = false;
 }
 
 CIMeshView::~CIMeshView()
 {
+	
 }
 
 BOOL CIMeshView::PreCreateWindow(CREATESTRUCT& cs)
 {
 	// TODO: 在此处通过修改
 	//  CREATESTRUCT cs 来修改窗口类或样式
-	m_painter.PreCreateWindow(cs);
+	m_vis.PreCreateWindow(cs);
 	return CView::PreCreateWindow(cs);
 }
 
@@ -146,7 +149,7 @@ void CIMeshView::OnSize(UINT nType, int cx, int cy)
 	str.Format(_T("OnSize %s"), this->GetDocument()->GetTitle());
 	theApp.GetMainFrame()->AddDebug(str);
 	// TODO: 在此处添加消息处理程序代码
-	m_painter.OnSize(nType, cx, cy);
+	m_vis.OnSize(nType, cx, cy);
 }
 
 
@@ -160,7 +163,7 @@ void CIMeshView::OnPaint()
 	str.Format(_T("OnPaint %s"), this->GetDocument()->GetTitle());
 	theApp.GetMainFrame()->AddDebug(str);
 	//m_painter.ActivateCurrentContext(hDC);
-	m_painter.OnPaint(hDC);
+	m_vis.OnPaint(hDC);
 }
 
 
@@ -173,7 +176,7 @@ int CIMeshView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	theApp.GetMainFrame()->AddDebug(_T("OnCreate"));
 	HWND hwnd = GetSafeHwnd();
 	HDC hDC = ::GetDC(hwnd);
-	return m_painter.OnCreate(hDC);
+	return m_vis.OnCreate(hDC);
 }
 
 
@@ -185,7 +188,7 @@ void CIMeshView::OnNcPaint()
 	CString str;
 	str.Format(_T("OnNcPaint %s"), this->GetDocument()->GetTitle());
 	theApp.GetMainFrame()->AddDebug(str);
-	m_painter.ActivateCurrentContext();
+	m_vis.ActivateCurrentContext();
 }
 
 
@@ -214,4 +217,22 @@ void CIMeshView::OnLButtonUp(UINT nFlags, CPoint point)
 	CView::OnLButtonUp(nFlags, point);
 }
 
-}}
+void CIMeshView::OnMouseMove(UINT nFlags, CPoint point)
+{
+	// TODO: Add your message handler code here and/or call default
+	
+	if (m_bLeftButtonDown) {
+		double dx = point.x - m_ptPrevMouseMove.x;
+		double dy = point.y - m_ptPrevMouseMove.y;
+		CString str;
+		str.Format(_T("New: (%d, %d)  Old: (%d, %d)"), point.x, point.y, 
+											m_ptPrevMouseMove.x, m_ptPrevMouseMove.y);
+		// theApp.GetMainFrame()->AddDebug(str);
+	}
+	
+	m_ptPrevMouseMove = point;
+	CView::OnMouseMove(nFlags, point);
+}
+
+
+END_NAMESPACE2(IMesh, UI)

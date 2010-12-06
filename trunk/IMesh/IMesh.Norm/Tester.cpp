@@ -2,6 +2,7 @@
 
 static char THIS_FILE[] = __FILE__;
 
+
 namespace IMesh { //: namespace IMesh
 namespace Norm { //: namespace IMesh::Norm
 	
@@ -22,7 +23,6 @@ namespace Norm { //: namespace IMesh::Norm
 int main() 
 {
 	using namespace IMesh::Norm;
-	
 	HelloWorld::Say();
 	getchar();
 

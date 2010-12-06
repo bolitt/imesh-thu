@@ -6,16 +6,21 @@ namespace UI { // namespace IMesh::UI
 
 // CPainter ÃüÁîÄ¿±ê
 
-class CPainter : public CObject
+class CVisualizer : public CObject
 {
 public:
-	CPainter();
-	virtual ~CPainter();
+	CVisualizer();
+	virtual ~CVisualizer();
 
 protected:
 	HGLRC m_hGLContext;
 	int m_GLPixelIndex;
 	HDC m_hDC;
+	
+	GLdouble m_Longtitude; // x on sphere
+	GLdouble m_Latitude;   // y on sphere
+	GLdouble m_Height;     // z on sphere
+
 
 protected:
 	BOOL CreateViewGLContext(HDC hDC); 
@@ -27,7 +32,7 @@ public:
 	void PreCreateWindow(CREATESTRUCT& cs);
 	void OnSize(UINT nType, int cx, int cy);
 	void OnPaint(HDC hDC);
-
+	void OnView();
 };
 
 }}

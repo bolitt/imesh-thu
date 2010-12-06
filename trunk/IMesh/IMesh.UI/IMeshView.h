@@ -2,11 +2,9 @@
 // IMeshView.h : CIMeshView 类的接口
 #pragma once
 
-#include "Painter.h"
+#include "Visualizer.h"
 
-namespace IMesh { 
-namespace UI { // namespace IMesh::UI
-
+BEGIN_NAMESPACE2(IMesh, UI)
 
 class CIMeshView : public CView
 {
@@ -54,19 +52,19 @@ public:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 
 protected:
-	CPainter m_painter;
+	CVisualizer m_vis;
 	
 protected:
 	bool m_bLeftButtonDown;
 	CPoint m_ptLeftButtonDown;
 	CPoint m_ptPrevMouseMove;
 
-
 public:
 	afx_msg void OnNcPaint();
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
+	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 };
 
 #ifndef _DEBUG  // IMeshView.cpp 中的调试版本
@@ -74,5 +72,5 @@ inline CIMeshDoc* CIMeshView::GetDocument() const
    { return reinterpret_cast<CIMeshDoc*>(m_pDocument); }
 #endif
 
-}}
+END_NAMESPACE2(IMesh, UI)
 
