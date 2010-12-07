@@ -30,7 +30,7 @@ namespace UI { // namespace IMesh::UI
 			const double DEFAULT_RIGHT = 0.5;
 			const double DEFAULT_BOTTOM = -0.5;
 			const double DEFAULT_TOP = 0.5;
-			const double DEFAULT_NEAR = 0.1;
+			const double DEFAULT_NEAR = 1;
 			const double DEFAULT_FAR = 1e5;
 
 			// For DEG-RAD Transform
@@ -43,7 +43,7 @@ namespace UI { // namespace IMesh::UI
 			const double DIV_2_PI = 0.636619772367581343076;
 
 			// For User Zoom
-			const double DEG_PER_ROTATE_RATE = 300;
+			const double DEG_PER_ROTATE_RATE = 250;
 			const double ZOOM_IN_RATE = 1.1;
 			const double ZOOM_OUT_RATE = 1.0 / ZOOM_IN_RATE;
 		}

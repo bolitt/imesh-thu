@@ -6,8 +6,6 @@
 #include "Visualizer.h"
 #include "Config.h"
 
-#include "Tester.h"
-
 
 namespace IMesh { 
 namespace UI { // namespace IMesh::UI
@@ -41,8 +39,6 @@ namespace UI { // namespace IMesh::UI
 // CPainter
 CVisualizer::CVisualizer()
 {
-	IMesh::Num::Test::Tester::Run();
-
 	m_GLPixelIndex = 0;
 	m_hGLContext = NULL;
 	m_hDC = NULL;
@@ -286,7 +282,7 @@ void CVisualizer::OnViewRotate( double deltaX, double deltaY )
 {
 	using namespace IMesh::UI::Config::Navigation;
 
-	double rotateX = deltaX / m_canvasSize.cx * DEG_PER_ROTATE_RATE;
+	double rotateX = - deltaX / m_canvasSize.cx * DEG_PER_ROTATE_RATE;
 	double rotateY = deltaY / m_canvasSize.cy * DEG_PER_ROTATE_RATE;
 	m_camera.Rotate(rotateX, rotateY);
 	OnView();
