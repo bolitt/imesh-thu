@@ -141,8 +141,7 @@
     <ClInclude Include="Grid.h" />
     <ClInclude Include="OutputWnd.h" />
     <ClInclude Include="Projection.h" />
-    <ClInclude Include="Tester.h" />
-    <ClInclude Include="vec.h" />
+    <ClInclude Include="Structures.h" />
     <ClInclude Include="Visualizer.h" />
     <ClInclude Include="PropertiesWnd.h" />
     <ClInclude Include="Resource.h" />

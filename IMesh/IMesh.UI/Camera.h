@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Config.h"
-#include "vec.h"
+#include "Structures.h"
 
 namespace IMesh { namespace UI {
 

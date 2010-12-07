@@ -205,26 +205,3 @@ namespace IMesh { namespace Num {
 		typedef Vec3<double> Vec3d;
 } } ///:~ namespace IMesh::Num
 
-
-namespace IMesh { namespace Num { namespace GL {
-	//typedef signed char GLbyte;
-	//typedef short GLshort;
-	//typedef int GLint;
-	//typedef unsigned char GLubyte;
-	//typedef unsigned short GLushort;
-	//typedef unsigned int GLuint;
-	//typedef float GLfloat;
-	//typedef double GLdouble;
-	typedef Vec3<GLbyte> Vec3GLbyte;
-	typedef Vec3<GLshort> Vec3GLshort;
-	typedef Vec3<GLint> Vec3GLint;
-	typedef Vec3<GLubyte> Vec3GLubyte;
-	typedef Vec3<GLushort> Vec3GLushort;
-	typedef Vec3<GLuint> Vec3GLuint;
-	typedef Vec3<GLfloat> Vec3GLfloat;
-	typedef Vec3<GLdouble> Vec3GLdouble;
-
-
-	
-
-} } } ///:~ namespace IMesh::Num::GL

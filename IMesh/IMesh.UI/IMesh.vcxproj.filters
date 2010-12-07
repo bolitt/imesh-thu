@@ -5,9 +5,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="num">
-      <UniqueIdentifier>{c219efc6-6864-466a-80c0-1126c5f6e343}</UniqueIdentifier>
-    </Filter>
     <Filter Include="window">
       <UniqueIdentifier>{a9a88fca-8a28-465e-a746-ee311273d46f}</UniqueIdentifier>
     </Filter>
@@ -25,6 +22,9 @@
     </Filter>
     <Filter Include="window\header">
       <UniqueIdentifier>{e749cf8e-a727-4bb2-9e78-4f64528f2f58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ds">
+      <UniqueIdentifier>{33fd37f2-da2a-451b-a4ef-d4e5d1123f8f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -115,9 +115,6 @@
     <ClInclude Include="Visualizer.h">
       <Filter>views</Filter>
     </ClInclude>
-    <ClInclude Include="vec.h">
-      <Filter>num</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>views</Filter>
     </ClInclude>
@@ -141,9 +138,6 @@
     </ClInclude>
     <ClInclude Include="Layer.h">
       <Filter>models</Filter>
-    </ClInclude>
-    <ClInclude Include="Tester.h">
-      <Filter>num</Filter>
     </ClInclude>
     <ClInclude Include="ChildFrm.h">
       <Filter>window\header</Filter>
@@ -186,6 +180,9 @@
     </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>window\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Structures.h">
+      <Filter>ds</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
