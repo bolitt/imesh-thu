@@ -124,35 +124,50 @@
     <None Include="UserImages.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="ClassView.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="FileView.h" />
     <ClInclude Include="IMesh.h" />
     <ClInclude Include="IMeshDoc.h" />
+    <ClInclude Include="Layer.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="IMeshView.h" />
+    <ClInclude Include="IModel.h" />
     <ClInclude Include="Macro.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="MeshData.h" />
+    <ClInclude Include="Grid.h" />
     <ClInclude Include="OutputWnd.h" />
+    <ClInclude Include="Projection.h" />
+    <ClInclude Include="Tester.h" />
+    <ClInclude Include="vec.h" />
     <ClInclude Include="Visualizer.h" />
     <ClInclude Include="PropertiesWnd.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="ViewTree.h" />
+    <ClInclude Include="Axis.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ChildFrm.cpp" />
     <ClCompile Include="ClassView.cpp" />
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="FileView.cpp" />
     <ClCompile Include="IMesh.cpp" />
     <ClCompile Include="IMeshDoc.cpp" />
+    <ClCompile Include="Layer.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="IMeshView.cpp" />
+    <ClCompile Include="IModel.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="MeshData.cpp" />
+    <ClCompile Include="Grid.cpp" />
     <ClCompile Include="OutputWnd.cpp" />
+    <ClCompile Include="Projection.cpp" />
     <ClCompile Include="Visualizer.cpp" />
     <ClCompile Include="PropertiesWnd.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -160,6 +175,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ViewTree.cpp" />
+    <ClCompile Include="Axis.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="IMesh.rc" />

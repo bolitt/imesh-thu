@@ -62,18 +62,6 @@ BOOL CIMeshView::PreCreateWindow(CREATESTRUCT& cs)
 	return CView::PreCreateWindow(cs);
 }
 
-// CIMeshView 绘制
-
-void CIMeshView::OnDraw(CDC* pCDC/*pDC*/)
-{
-	CIMeshDoc* pDoc = GetDocument();
-	ASSERT_VALID(pDoc);
-	if (!pDoc)
-		return;
-
-	// TODO: 在此处为本机数据添加绘制代码
-	theApp.GetMainFrame()->AddDebug(_T("OnDraw"));
-}
 
 
 // CIMeshView 打印
@@ -140,14 +128,26 @@ CIMeshDoc* CIMeshView::GetDocument() const // 非调试版本是内联的
 // CIMeshView 消息处理程序
 
 
+// CIMeshView 绘制
+
+void CIMeshView::OnDraw(CDC* pCDC/*pDC*/)
+{
+	CIMeshDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	if (!pDoc)
+		return;
+
+	// TODO: 在此处为本机数据添加绘制代码
+	//theApp.GetMainFrame()->AddDebug(_T("OnDraw"));
+}
 
 void CIMeshView::OnSize(UINT nType, int cx, int cy)
 {
 	CView::OnSize(nType, cx, cy);
 
-	CString str;
+	/*CString str;
 	str.Format(_T("OnSize %s"), this->GetDocument()->GetTitle());
-	theApp.GetMainFrame()->AddDebug(str);
+	theApp.GetMainFrame()->AddDebug(str);*/
 	// TODO: 在此处添加消息处理程序代码
 	m_vis.OnSize(nType, cx, cy);
 }
@@ -160,10 +160,12 @@ void CIMeshView::OnPaint()
 	// 不为绘图消息调用 CView::OnPaint()
 	HDC hDC = dc.GetSafeHdc();
 	CString str;
-	str.Format(_T("OnPaint %s"), this->GetDocument()->GetTitle());
-	theApp.GetMainFrame()->AddDebug(str);
+	/*str.Format(_T("OnPaint %s"), this->GetDocument()->GetTitle());
+	theApp.GetMainFrame()->AddDebug(str);*/
 	//m_painter.ActivateCurrentContext(hDC);
-	m_vis.OnPaint(hDC);
+	m_vis.OnRender();
+
+	::SwapBuffers(hDC);
 }
 
 
@@ -185,17 +187,25 @@ void CIMeshView::OnNcPaint()
 {
 	// TODO: 在此处添加消息处理程序代码
 	// 不为绘图消息调用 CView::OnNcPaint()
-	CString str;
-	str.Format(_T("OnNcPaint %s"), this->GetDocument()->GetTitle());
-	theApp.GetMainFrame()->AddDebug(str);
-	m_vis.ActivateCurrentContext();
+	//CString str;
+	/*str.Format(_T("OnNcPaint %s"), this->GetDocument()->GetTitle());
+	theApp.GetMainFrame()->AddDebug(str);*/
+	//m_vis.ActivateCurrentContext();
 }
 
 
 BOOL CIMeshView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	double delta = zDelta;
 
+	/*CString str;
+	const Camera& c = m_vis.m_camera;
+	str.Format(_T("Zoom (%f, %f, %f)"), c.m_angleX, c.m_angleY, c.m_distance);
+	theApp.GetMainFrame()->AddDebug(str);*/
+	
+	m_vis.OnViewZoom(delta);
+	this->OnPaint();
 	return CView::OnMouseWheel(nFlags, zDelta, pt);
 }
 
@@ -225,9 +235,14 @@ void CIMeshView::OnMouseMove(UINT nFlags, CPoint point)
 		double dx = point.x - m_ptPrevMouseMove.x;
 		double dy = point.y - m_ptPrevMouseMove.y;
 		CString str;
-		str.Format(_T("New: (%d, %d)  Old: (%d, %d)"), point.x, point.y, 
-											m_ptPrevMouseMove.x, m_ptPrevMouseMove.y);
-		// theApp.GetMainFrame()->AddDebug(str);
+		//str.Format(_T("New: (%d, %d)  Old: (%d, %d)"), point.x, point.y, 
+		//									m_ptPrevMouseMove.x, m_ptPrevMouseMove.y);
+		//const Camera& c = m_vis.m_camera;
+		//str.Format(_T("Move (%f, %f, %f)"), c.m_angleX, c.m_angleY, c.m_distance);
+		//theApp.GetMainFrame()->AddDebug(str);
+		
+		m_vis.OnViewRotate(dx, dy);
+		this->OnPaint();
 	}
 	
 	m_ptPrevMouseMove = point;
