@@ -1,29 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="源文件">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="头文件">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="资源文件">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="头文件\ui">
+    <Filter Include="num">
+      <UniqueIdentifier>{c219efc6-6864-466a-80c0-1126c5f6e343}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="window">
       <UniqueIdentifier>{a9a88fca-8a28-465e-a746-ee311273d46f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="源文件\ui">
-      <UniqueIdentifier>{3ea17974-d20a-4f17-8e86-ee5bd83a5d6e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="头文件\ds">
+    <Filter Include="views">
       <UniqueIdentifier>{0922b8d2-2efe-44a0-8dcd-6d849af6bf78}</UniqueIdentifier>
     </Filter>
-    <Filter Include="源文件\ds">
-      <UniqueIdentifier>{29f08afe-3b20-4231-a40c-351b36205dde}</UniqueIdentifier>
+    <Filter Include="config">
+      <UniqueIdentifier>{44f7ee76-abf4-42f8-9cf4-ddd80cdc60ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="models">
+      <UniqueIdentifier>{63940265-484b-433e-9c18-99956157ea07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="window\cpp">
+      <UniqueIdentifier>{3ea17974-d20a-4f17-8e86-ee5bd83a5d6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="window\header">
+      <UniqueIdentifier>{e749cf8e-a727-4bb2-9e78-4f64528f2f58}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -108,100 +109,148 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ChildFrm.h">
-      <Filter>头文件\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="ViewTree.h">
-      <Filter>头文件\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="ClassView.h">
-      <Filter>头文件\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="FileView.h">
-      <Filter>头文件\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="IMesh.h">
-      <Filter>头文件\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="IMeshDoc.h">
-      <Filter>头文件\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="IMeshView.h">
-      <Filter>头文件\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="MainFrm.h">
-      <Filter>头文件\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="OutputWnd.h">
-      <Filter>头文件\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="PropertiesWnd.h">
-      <Filter>头文件\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>头文件\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="stdafx.h">
-      <Filter>头文件\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>头文件\ui</Filter>
-    </ClInclude>
     <ClInclude Include="MeshData.h">
-      <Filter>头文件\ds</Filter>
-    </ClInclude>
-    <ClInclude Include="Config.h">
-      <Filter>头文件\ds</Filter>
-    </ClInclude>
-    <ClInclude Include="Macro.h">
-      <Filter>头文件\ui</Filter>
+      <Filter>views</Filter>
     </ClInclude>
     <ClInclude Include="Visualizer.h">
-      <Filter>头文件\ds</Filter>
+      <Filter>views</Filter>
+    </ClInclude>
+    <ClInclude Include="vec.h">
+      <Filter>num</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>views</Filter>
+    </ClInclude>
+    <ClInclude Include="Projection.h">
+      <Filter>views</Filter>
+    </ClInclude>
+    <ClInclude Include="Config.h">
+      <Filter>config</Filter>
+    </ClInclude>
+    <ClInclude Include="IModel.h">
+      <Filter>models</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>models</Filter>
+    </ClInclude>
+    <ClInclude Include="Axis.h">
+      <Filter>models</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>models</Filter>
+    </ClInclude>
+    <ClInclude Include="Layer.h">
+      <Filter>models</Filter>
+    </ClInclude>
+    <ClInclude Include="Tester.h">
+      <Filter>num</Filter>
+    </ClInclude>
+    <ClInclude Include="ChildFrm.h">
+      <Filter>window\header</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewTree.h">
+      <Filter>window\header</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassView.h">
+      <Filter>window\header</Filter>
+    </ClInclude>
+    <ClInclude Include="FileView.h">
+      <Filter>window\header</Filter>
+    </ClInclude>
+    <ClInclude Include="IMesh.h">
+      <Filter>window\header</Filter>
+    </ClInclude>
+    <ClInclude Include="IMeshDoc.h">
+      <Filter>window\header</Filter>
+    </ClInclude>
+    <ClInclude Include="IMeshView.h">
+      <Filter>window\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Macro.h">
+      <Filter>window\header</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFrm.h">
+      <Filter>window\header</Filter>
+    </ClInclude>
+    <ClInclude Include="OutputWnd.h">
+      <Filter>window\header</Filter>
+    </ClInclude>
+    <ClInclude Include="PropertiesWnd.h">
+      <Filter>window\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>window\header</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>window\header</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>window\header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ChildFrm.cpp">
-      <Filter>源文件\ui</Filter>
+      <Filter>window\cpp</Filter>
     </ClCompile>
     <ClCompile Include="ViewTree.cpp">
-      <Filter>源文件\ui</Filter>
+      <Filter>window\cpp</Filter>
     </ClCompile>
     <ClCompile Include="ClassView.cpp">
-      <Filter>源文件\ui</Filter>
+      <Filter>window\cpp</Filter>
     </ClCompile>
     <ClCompile Include="FileView.cpp">
-      <Filter>源文件\ui</Filter>
+      <Filter>window\cpp</Filter>
     </ClCompile>
     <ClCompile Include="IMesh.cpp">
-      <Filter>源文件\ui</Filter>
+      <Filter>window\cpp</Filter>
     </ClCompile>
     <ClCompile Include="IMeshDoc.cpp">
-      <Filter>源文件\ui</Filter>
+      <Filter>window\cpp</Filter>
     </ClCompile>
     <ClCompile Include="IMeshView.cpp">
-      <Filter>源文件\ui</Filter>
+      <Filter>window\cpp</Filter>
     </ClCompile>
     <ClCompile Include="MainFrm.cpp">
-      <Filter>源文件\ui</Filter>
+      <Filter>window\cpp</Filter>
     </ClCompile>
     <ClCompile Include="OutputWnd.cpp">
-      <Filter>源文件\ui</Filter>
+      <Filter>window\cpp</Filter>
     </ClCompile>
     <ClCompile Include="PropertiesWnd.cpp">
-      <Filter>源文件\ui</Filter>
+      <Filter>window\cpp</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
-      <Filter>源文件\ui</Filter>
+      <Filter>window\cpp</Filter>
     </ClCompile>
     <ClCompile Include="MeshData.cpp">
-      <Filter>头文件\ds</Filter>
-    </ClCompile>
-    <ClCompile Include="Config.cpp">
-      <Filter>头文件\ds</Filter>
+      <Filter>views</Filter>
     </ClCompile>
     <ClCompile Include="Visualizer.cpp">
-      <Filter>头文件\ds</Filter>
+      <Filter>views</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>views</Filter>
+    </ClCompile>
+    <ClCompile Include="Projection.cpp">
+      <Filter>views</Filter>
+    </ClCompile>
+    <ClCompile Include="Config.cpp">
+      <Filter>config</Filter>
+    </ClCompile>
+    <ClCompile Include="IModel.cpp">
+      <Filter>models</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>models</Filter>
+    </ClCompile>
+    <ClCompile Include="Axis.cpp">
+      <Filter>models</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>models</Filter>
+    </ClCompile>
+    <ClCompile Include="Layer.cpp">
+      <Filter>models</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

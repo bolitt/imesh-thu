@@ -6,23 +6,47 @@
 #include "Visualizer.h"
 #include "Config.h"
 
-// use M_PI
-#ifndef _USE_MATH_DEFINES
-#define _USE_MATH_DEFINES
-#include <cmath>
-#endif
+#include "Tester.h"
 
 
 namespace IMesh { 
 namespace UI { // namespace IMesh::UI
 
+	class Helper
+	{
+	public:
+		static PosVec3d Orth2Sphere(const PosVec3d& v) {
+			PosVec3d orth;
+			return orth;
+		}
+
+		static PosVec3d Sphere2Orth(const PosVec3d& v) {
+			PosVec3d orth;
+			GLdouble smallRadius = v._radius * sin(v._coLatitude);
+			orth._x = smallRadius * cos(v._longtitude);
+			orth._y = smallRadius * sin(v._longtitude);
+			orth._z = v._radius * cos(v._coLatitude);
+			return orth;
+		}
+
+		static PosVec3d SphereFindTopOrth(const PosVec3d& v) {
+			PosVec3d topSphere = v;
+			topSphere._coLatitude -= M_PI_2;
+			PosVec3d topOrth = Sphere2Orth(topSphere);
+			return topOrth;
+		}
+	};
+
 
 // CPainter
 CVisualizer::CVisualizer()
 {
+	IMesh::Num::Test::Tester::Run();
+
 	m_GLPixelIndex = 0;
 	m_hGLContext = NULL;
 	m_hDC = NULL;
+	m_quadric = NULL;
 }
 
 CVisualizer::~CVisualizer()
@@ -38,6 +62,10 @@ CVisualizer::~CVisualizer()
 		this->m_hGLContext = NULL;
 	}
 	//SAFE_DELETE(m_hDC);
+	if (m_quadric != NULL) {
+		gluDeleteQuadric(m_quadric);
+		m_quadric = NULL;
+	}
 }
 
 
@@ -49,61 +77,119 @@ void CVisualizer::PreCreateWindow( CREATESTRUCT& cs )
 }
 
 
+void CVisualizer::InitializeDS()
+{
+	m_quadric = gluNewQuadric();
+	gluQuadricDrawStyle(m_quadric, GLU_FILL);
+}
+
+
 void CVisualizer::OnSize( UINT nType, int cx, int cy )
 {
-	ActivateCurrentContext();
-
-	GLsizei width, height;
-	GLdouble aspect, fovy, zNear, zFar;
-	width = cx;
-	height = cy;
-	if(cy==0)
-	{
-		aspect = (GLdouble)cx;
-	}
-	else
-	{
-		aspect = (GLdouble)cx / (GLdouble)cy;
-	}
-	fovy = 90;
-	zNear = -50;
-	zFar = -1000;
-	
-	OnView();
-	glViewport(0, 0, width, height);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(0, 1, 0, 1, -1, 1);
-	//gluPerspective(fovy, aspect, zNear, zFar);
-	glMatrixMode(GL_MODELVIEW);
-	
+	m_canvasSize.SetSize(cx, cy);
 }
+
+Num::GL::Vec3GLdouble CVisualizer::CameraToPos()
+{
+	PosVec3d& spherePos = m_camera.ToPolarVec3();
+	PosVec3d& orthPos = Helper::Sphere2Orth(spherePos);
+	return orthPos;
+}
+
+Num::GL::Vec3GLdouble CVisualizer::CameraFindUp()
+{
+	PosVec3d& spherePos = m_camera.ToPolarVec3();
+	PosVec3d& orthPos = Helper::SphereFindTopOrth(spherePos);
+	return orthPos;
+}
+
 
 void CVisualizer::OnView()
 {
-	gluLookAt(0, 0, 100, 
-				0, 0, -1, 
-				0, 1, 0);
 }
 
-void CVisualizer::OnPaint( HDC hDC )
+void GLCheckError()
+{
+	GLenum error = glGetError();
+}
+
+void CVisualizer::OnRender()
 {
 	using namespace Config;
-	glLoadIdentity();
-	glClear(GL_COLOR_BUFFER_BIT);
-	{
-		glBegin(GL_POLYGON);
-		glColor4fv(Colors::RED);
-		glVertex3f(0.5f, 0.2f, 0.0f);
-		glColor4fv(Colors::GREEN);
-		glVertex3f(0.6f, 0.4f, 0.0f);
-		glColor4fv(Colors::BLUE);
-		glVertex3f(0.6f, 0.2f, 0.0f);
-		glEnd();
+	
+	ActivateCurrentContext();
+	{		
+		GLsizei width = m_canvasSize.cx;
+		GLsizei height = m_canvasSize.cy;
+		GLdouble aspect = (height != 0) ? (GLdouble)width / (GLdouble)height : 1;
+	
+		glViewport(0, 0, width, height);
+		//glScissor(0, 0, width, height);
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		//glOrtho(0, 1, 0, 1, -1, 1);
+		m_projection.Reshape((double)width, (double)height);
+		glFrustum(m_projection.m_left, m_projection.m_right, 
+				 m_projection.m_bottom, m_projection.m_top, 
+				 m_projection.m_zNear, m_projection.m_zFar);
+		glMatrixMode(GL_MODELVIEW);
 	}
-	glFlush();
+	
+	{
+		glLoadIdentity();
+		PosVec3d& orthPos = CameraToPos();
+		PosVec3d& upVec = CameraFindUp();
+		/*gluLookAt(0, 0, 10, 
+				0, 0, -1, 
+				0, 1, 0); */
+		gluLookAt(orthPos._x, orthPos._y, orthPos._z, 
+				0, 0, 0, 
+				upVec._x, upVec._y, upVec._z);
+	}
 
-	::SwapBuffers(hDC);
+	{
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		{
+			m_scene.OnRender();
+		}
+
+		{
+			/*glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			glEnable(GL_DEPTH_TEST);
+			glEnable(GL_CULL_FACE);*/
+
+			glBegin(GL_POLYGON);
+			{
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+				glEnable(GL_DEPTH_TEST);
+				glEnable(GL_CULL_FACE);
+				
+				glColor4fv(Colors::RED);
+				glVertex3f(100.0f, 20.0f, 0.0f);
+				glColor4fv(Colors::GREEN);
+				glVertex3f(20.0f, 20.0f, 0.0f);
+				glColor4fv(Colors::BLUE);
+				glVertex3f(20.0f, 100.0f, 0.0f);
+			}
+			glEnd();
+
+			glBegin(GL_POLYGON);
+			{
+				const int SLICES = 36;
+				const int STACKS = 36;
+				const float RADIUS = 10.0f;
+				
+				glPushMatrix();
+				glColor4fv(Colors::WHITE);
+				gluSphere(m_quadric, RADIUS, SLICES, STACKS);
+				glPopMatrix();
+			}
+			glEnd();
+		}
+	}
+	
+	glFlush();
 }
 
 BOOL CVisualizer::CreateViewGLContext( HDC hDC )
@@ -171,6 +257,7 @@ int CVisualizer::OnCreate( HDC hDC )
 	if(this->ActivateCurrentContext() == FALSE) {
 		return -1;
 	}
+	InitializeDS();
 	return 0;
 }
 
@@ -186,6 +273,23 @@ BOOL CVisualizer::ActivateCurrentContext()
 	}
 	
 	return TRUE;
+}
+
+void CVisualizer::OnViewZoom( double delta )
+{
+	Camera::ZoomType z = (delta < 0) ? Camera::CAMERA_ZOOM_IN : Camera::CAMERA_ZOOM_OUT;
+	m_camera.Zoom(z);
+	OnView();
+}
+
+void CVisualizer::OnViewRotate( double deltaX, double deltaY )
+{
+	using namespace IMesh::UI::Config::Navigation;
+
+	double rotateX = deltaX / m_canvasSize.cx * DEG_PER_ROTATE_RATE;
+	double rotateY = deltaY / m_canvasSize.cy * DEG_PER_ROTATE_RATE;
+	m_camera.Rotate(rotateX, rotateY);
+	OnView();
 }
 
 
