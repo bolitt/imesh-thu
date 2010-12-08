@@ -14,7 +14,6 @@ Scene::~Scene(void)
 
 }
 
-
 void Scene::Initialize()
 {
 	m_baseLayer.m_children.push_back(&m_worldGrid);

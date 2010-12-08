@@ -11,6 +11,8 @@ void Model::OnRender()
 
 void ModelCollection::OnRender()
 {
+	parent_type::OnRender();
+
 	children_type& children = this->m_children;
 	for (size_t i = 0; i < children.size(); ++i) {
 		base_type* pModel = children[i];
