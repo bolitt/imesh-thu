@@ -10,6 +10,10 @@ namespace IMesh { namespace UI { namespace Models {
 class Scene : public Model
 {
 public:
+	typedef  Model  parent_type;
+	typedef  Scene  self_type;
+
+public:
 	Layer m_baseLayer;
 	Layer m_overLayer;
 
