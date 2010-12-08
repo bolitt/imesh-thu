@@ -3,7 +3,6 @@
 #include "vec.h"
 #include "Camera.h"
 #include "Projection.h"
-
 #include "Scene.h"
 
 namespace IMesh { 
