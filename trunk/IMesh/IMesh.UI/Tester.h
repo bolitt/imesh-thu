@@ -73,6 +73,15 @@ protected:
 
 			m4 = +m2;
 			ASSERT(m4._x == -1 && m4._y == -1 && m4._z == -1);
+
+			m4.Add(5);
+			ASSERT(m4._x == 4 && m4._y == 4 && m4._z == 4);
+
+			m4.Add(Vec3i(1, 2, 3));
+			ASSERT(m4._x == 5 && m4._y == 6 && m4._z == 7);
+
+			m4.Zeros();
+			ASSERT(m4._x == 0 && m4._y == 0 && m4._z == 0);
 		}
 	}
 #pragma endregion test vec

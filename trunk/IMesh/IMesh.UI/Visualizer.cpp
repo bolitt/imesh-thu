@@ -42,7 +42,6 @@ CVisualizer::CVisualizer()
 	m_GLPixelIndex = 0;
 	m_hGLContext = NULL;
 	m_hDC = NULL;
-	m_quadric = NULL;
 }
 
 CVisualizer::~CVisualizer()
@@ -58,10 +57,6 @@ CVisualizer::~CVisualizer()
 		this->m_hGLContext = NULL;
 	}
 	//SAFE_DELETE(m_hDC);
-	if (m_quadric != NULL) {
-		gluDeleteQuadric(m_quadric);
-		m_quadric = NULL;
-	}
 }
 
 
@@ -75,8 +70,7 @@ void CVisualizer::PreCreateWindow( CREATESTRUCT& cs )
 
 void CVisualizer::InitializeDS()
 {
-	m_quadric = gluNewQuadric();
-	gluQuadricDrawStyle(m_quadric, GLU_FILL);
+	m_scene.OnSetup();
 }
 
 
@@ -145,43 +139,12 @@ void CVisualizer::OnRender()
 
 	{
 		glClear(GL_COLOR_BUFFER_BIT);
-
 		{
 			m_scene.OnRender();
 		}
 
 		{
-			/*glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-			glEnable(GL_DEPTH_TEST);
-			glEnable(GL_CULL_FACE);*/
-
-			glBegin(GL_POLYGON);
-			{
-				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-				glEnable(GL_DEPTH_TEST);
-				glEnable(GL_CULL_FACE);
-				
-				glColor4fv(Colors::RED);
-				glVertex3f(100.0f, 20.0f, 0.0f);
-				glColor4fv(Colors::GREEN);
-				glVertex3f(20.0f, 20.0f, 0.0f);
-				glColor4fv(Colors::BLUE);
-				glVertex3f(20.0f, 100.0f, 0.0f);
-			}
-			glEnd();
-
-			glBegin(GL_POLYGON);
-			{
-				const int SLICES = 36;
-				const int STACKS = 36;
-				const float RADIUS = 10.0f;
-				
-				glPushMatrix();
-				glColor4fv(Colors::WHITE);
-				gluSphere(m_quadric, RADIUS, SLICES, STACKS);
-				glPopMatrix();
-			}
-			glEnd();
+			
 		}
 	}
 	
