@@ -2,7 +2,7 @@
 
 #include <gl/gl.h> 
 #include <gl/glu.h>
-#include "vec.h"
+#include "../IMesh.Share/vec.h"
 
 
 namespace IMesh { namespace Num { namespace GL {

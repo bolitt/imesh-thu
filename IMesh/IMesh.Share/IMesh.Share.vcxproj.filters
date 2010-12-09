@@ -21,12 +21,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\IMesh.UI\Tester.h">
-      <Filter>头文件\num</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IMesh.UI\vec.h">
-      <Filter>头文件\num</Filter>
-    </ClInclude>
     <ClInclude Include="Event.h">
       <Filter>头文件\interface</Filter>
     </ClInclude>
@@ -35,6 +29,15 @@
     </ClInclude>
     <ClInclude Include="EventArg.h">
       <Filter>头文件\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="interface_test.h">
+      <Filter>头文件\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="num_test.h">
+      <Filter>头文件\num</Filter>
+    </ClInclude>
+    <ClInclude Include="vec.h">
+      <Filter>头文件\num</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

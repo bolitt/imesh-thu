@@ -193,6 +193,9 @@
     <ClInclude Include="Vertex.h">
       <Filter>models</Filter>
     </ClInclude>
+    <ClInclude Include="..\IMesh.Share\vec.h">
+      <Filter>ds</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ChildFrm.cpp">

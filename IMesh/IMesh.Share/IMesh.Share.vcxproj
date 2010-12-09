@@ -11,11 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\IMesh.UI\Tester.h" />
-    <ClInclude Include="..\IMesh.UI\vec.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventArg.h" />
     <ClInclude Include="EventListener.h" />
+    <ClInclude Include="interface_test.h" />
+    <ClInclude Include="num_test.h" />
+    <ClInclude Include="vec.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Event.cpp" />

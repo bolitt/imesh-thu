@@ -7,8 +7,7 @@ class EventArg
 {
 public:
 	EventArg(void);
-	~EventArg(void);
-
+	virtual ~EventArg(void);
 };
 
 } }
