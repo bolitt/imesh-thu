@@ -154,6 +154,13 @@ namespace IMesh { namespace Num {
 				this->_x = this->_y = this->_z = TValue();
 			}
 
+			void Negtive()
+			{
+				this->_x = - (this->_x);
+				this->_y = - (this->_y);
+				this->_z = - (this->_z);
+			}
+
 			TValue Dot (const self_type& v) const 
 			{
 				return (this->_x * v._x) + 

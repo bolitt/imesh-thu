@@ -13,8 +13,14 @@
   <ItemGroup>
     <ClInclude Include="..\IMesh.UI\Tester.h" />
     <ClInclude Include="..\IMesh.UI\vec.h" />
+    <ClInclude Include="Event.h" />
+    <ClInclude Include="EventArg.h" />
+    <ClInclude Include="EventListener.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Event.cpp" />
+    <ClCompile Include="EventArg.cpp" />
+    <ClCompile Include="EventListener.cpp" />
     <ClCompile Include="Tester.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
