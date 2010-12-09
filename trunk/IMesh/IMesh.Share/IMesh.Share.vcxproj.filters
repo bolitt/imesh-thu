@@ -16,6 +16,9 @@
     <Filter Include="头文件\num">
       <UniqueIdentifier>{3b782e9d-d682-4064-905c-50114d186e10}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\interface">
+      <UniqueIdentifier>{9b4862b7-8186-4151-9c77-52e6359ab9fd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\IMesh.UI\Tester.h">
@@ -24,10 +27,28 @@
     <ClInclude Include="..\IMesh.UI\vec.h">
       <Filter>头文件\num</Filter>
     </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>头文件\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="EventListener.h">
+      <Filter>头文件\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="EventArg.h">
+      <Filter>头文件\interface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tester.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Event.cpp">
+      <Filter>头文件\interface</Filter>
+    </ClCompile>
+    <ClCompile Include="EventListener.cpp">
+      <Filter>头文件\interface</Filter>
+    </ClCompile>
+    <ClCompile Include="EventArg.cpp">
+      <Filter>头文件\interface</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
