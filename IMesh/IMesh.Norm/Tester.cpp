@@ -2,6 +2,9 @@
 
 static char THIS_FILE[] = __FILE__;
 
+#include "ReadFile.h"
+
+extern vector<Vector3> vertices,norm;
 
 namespace IMesh { //: namespace IMesh
 namespace Norm { //: namespace IMesh::Norm
@@ -23,8 +26,14 @@ namespace Norm { //: namespace IMesh::Norm
 int main() 
 {
 	using namespace IMesh::Norm;
-	HelloWorld::Say();
-	getchar();
+	InitFrom("bunny_simple.obj");
+//	cout<<ReadFile("bunny.obj")<<endl;
+//	ComputeNorm();
+//	AdjustNormDirection();
+//	Display(vertices);
+//	Display(norm);
+	Output();
 
+	getchar();
 	return 0;
 }
