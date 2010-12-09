@@ -11,6 +11,40 @@
 using namespace std;
 
 
+#include "Vec.h"
+
+
+namespace IMesh { //: namespace IMesh
+	namespace Norm { //: namespace IMesh::Norm
+
+		class Matrix{
+		public:
+			double m_mat[3][3];
+			Matrix(){ };
+			Matrix( vector<int> &v , vector<Vector3> &vertices);
+			void Show();
+			Vector3 Solve();
+		};
+
+
+
+	} ///:~ namespace IMesh::Norm
+} ///:~ namespace IMesh
+
+#endif // _MATRIX_H=======
+//Matrix.h
+
+#ifndef _MATRIX_H
+#define _MATRIX_H
+
+#include<vector>
+#include<list>
+#include<iostream>
+#include<math.h>
+
+using namespace std;
+
+
 class Vector3{
 public:
 	double x,y,z;
@@ -62,4 +96,4 @@ public:
 };
 
 
-#endif // _MATRIX_H
+#endif // _MATRIX_H>>>>>>> .r11

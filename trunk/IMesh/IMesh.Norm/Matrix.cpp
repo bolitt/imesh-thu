@@ -2,52 +2,53 @@
 
 #include "Matrix.h"
 
-extern vector<Vector3> vertices;
+namespace IMesh { //: namespace IMesh
+	namespace Norm { //: namespace IMesh::Norm
 
-Matrix::Matrix(vector<int> &v ){
-	int k = v.size();
-	Vector3 p(0,0,0);
-	for( vector<int>::iterator it=v.begin() ; it < v.end() ; it++ )
-	{
-		p.x+=vertices[(*it)].x;
-		p.y+=vertices[(*it)].y;
-		p.z+=vertices[(*it)].z;
-	}
-	p.x = p.x/k;
-	p.y = p.y/k;
-	p.z = p.z/k;
-
-	for( int i = 0 ; i < 3 ; i++ )
-		for( int j = 0 ; j < 3 ; j++ )
-			m_mat[i][j] = 0 ;
-
-	for( int i = 0 ; i < 3 ; i++ )
-	{
-		for( int j = 0 ; j < 3 ; j++ )
+	Matrix::Matrix(vector<int> &v , vector<Vector3> &vertices){
+		int k = v.size();
+		Vector3 p(0,0,0);
+		for( vector<int>::iterator it=v.begin() ; it < v.end() ; it++ )
 		{
-			for( int l = 0 ; l < k ; l++)
-			{
-				//vertices[v[l]].get(i);
-				//vertices[v[l]].get(j);
-				m_mat[i][j] += vertices[v[l]].get(i) * vertices[v[l]].get(j);
-			}
-			m_mat[i][j] = m_mat[i][j]/k - p.get(i)*p.get(j);
+			p.x+=vertices[(*it)].x;
+			p.y+=vertices[(*it)].y;
+			p.z+=vertices[(*it)].z;
 		}
+		p.x = p.x/k;
+		p.y = p.y/k;
+		p.z = p.z/k;
+
+		for( int i = 0 ; i < 3 ; i++ )
+			for( int j = 0 ; j < 3 ; j++ )
+				m_mat[i][j] = 0 ;
+
+		for( int i = 0 ; i < 3 ; i++ )
+		{
+			for( int j = 0 ; j < 3 ; j++ )
+			{
+				for( int l = 0 ; l < k ; l++)
+				{
+					//vertices[v[l]].get(i);
+					//vertices[v[l]].get(j);
+					m_mat[i][j] += vertices[v[l]].get(i) * vertices[v[l]].get(j);
+				}
+				m_mat[i][j] = m_mat[i][j]/k - p.get(i)*p.get(j);
+			}
+		}
+
 	}
 
-}
-
-void Matrix::Show()
-{
-	for( int i = 0 ; i < 3 ; i++ )
+	void Matrix::Show()
 	{
-		for( int j = 0 ; j < 3 ; j++ )
-			cout<<m_mat[i][j]<<" ";
+		for( int i = 0 ; i < 3 ; i++ )
+		{
+			for( int j = 0 ; j < 3 ; j++ )
+				cout<<m_mat[i][j]<<" ";
+			cout<<endl;
+		}
 		cout<<endl;
+		return;
 	}
-	cout<<endl;
-	return;
-}
 
 
 //《常用算法程序集（C语言描述）》
@@ -145,3 +146,8 @@ Vector3 Matrix::Solve(){
 	
 
 }
+
+
+	} ///:~ namespace IMesh::Norm
+} ///:~ namespace IMesh=======
+//Matrix.cpp
