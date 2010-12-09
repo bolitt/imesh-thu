@@ -60,15 +60,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Cloud.cpp" />
+    <ClCompile Include="Cloud_Norm.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="MST.cpp" />
-    <ClCompile Include="ReadFile.cpp" />
     <ClCompile Include="Tester.cpp" />
+    <ClCompile Include="Vec.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cloud.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="MST.h" />
-    <ClInclude Include="ReadFile.h" />
+    <ClInclude Include="Vec.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

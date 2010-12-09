@@ -24,18 +24,27 @@
     <ClCompile Include="MST.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ReadFile.cpp">
+    <ClCompile Include="Vec.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Cloud.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Cloud_Norm.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ReadFile.h">
+    <ClInclude Include="Matrix.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="MST.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Matrix.h">
+    <ClInclude Include="Vec.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Cloud.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
