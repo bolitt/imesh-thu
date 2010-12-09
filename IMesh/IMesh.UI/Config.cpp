@@ -9,17 +9,17 @@ namespace UI { // namespace IMesh::UI
 	{
 		namespace Colors
 		{
-			const GLfloat RED[4]= {1.0f, 0, 0, 0.5f};
-			const GLfloat GREEN[4]= {0, 1.0f, 0, 0.5f};
-			const GLfloat BLUE[4]= {0, 0, 1.0f, 0.5f};
-			const GLfloat WHITE[4]= {1.0f, 1.0f, 1.0f, 0.5f};
+			const Num::GL::RGBColor RED(1.0f, 0.0f, 0.0f);
+			const Num::GL::RGBColor GREEN(0.0f, 1.0f, 0.0f);
+			const Num::GL::RGBColor BLUE(0.0f, 0.0f, 1.0f);
+			const Num::GL::RGBColor WHITE(1.0f, 1.0f, 1.0f);
 		}
 
 		namespace Navigation
 		{
 			// For Camera
 			const double DEFAULT_ANGLE_X = 15;
-			const double DEFAULT_ANGLE_Y = 15;
+			const double DEFAULT_ANGLE_Y = 65;
 			const double DEFAULT_MIN_DISTANCE = 0.1;
 			const double DEFAULT_DISTANCE = 200;
 			const double DEFAULT_MAX_DISTANCE = 5000;
@@ -46,6 +46,14 @@ namespace UI { // namespace IMesh::UI
 			const double DEG_PER_ROTATE_RATE = 250;
 			const double ZOOM_IN_RATE = 1.1;
 			const double ZOOM_OUT_RATE = 1.0 / ZOOM_IN_RATE;
+		}
+
+
+		namespace Animation 
+		{
+			const double SLOW = 2000;   // million-seconds
+			const double NORMAL = 1000; // million-seconds
+			const double FAST = 500;    // million-seconds
 		}
 	}
 

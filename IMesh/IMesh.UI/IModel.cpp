@@ -4,10 +4,32 @@
 
 namespace IMesh { namespace UI { namespace Models {
 
+Model::Model()
+{
+
+}
+
+
+Model::~Model()
+{
+
+}
+
 void Model::OnRender()
 {
-	// do nothing;
+	// do nothing!
 }
+
+void Model::OnSetup()
+{
+	// customized setup, should called before OnRender
+}
+
+void Model::OnDestroy()
+{
+	// customized destroy, should called before destructor
+}
+
 
 void ModelCollection::OnRender()
 {

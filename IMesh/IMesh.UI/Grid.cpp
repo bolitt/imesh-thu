@@ -15,6 +15,8 @@ Grid::~Grid(void)
 
 void Grid::OnRender()
 {
+	parent_type::OnRender();
+
 	float step = m_step, 
 		  size = m_size;
 	GLboolean bGL_LIGHTING = glIsEnabled(GL_LIGHTING);
@@ -49,6 +51,7 @@ void Grid::OnRender()
 		glVertex3f(0, size,  0);
 	}
 	glEnd();
+	_DEBUG_ONRENDER_CHECK_ERROR_();
 
 	// enable lighting back
 	if (bGL_LIGHTING) { glEnable(GL_LIGHTING); }

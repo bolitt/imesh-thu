@@ -17,6 +17,8 @@ Axis::~Axis(void)
 
 void Axis::OnRender()
 {
+	parent_type::OnRender();
+
 	float size = m_size;
 
 	GLboolean bGL_LIGHTING = glIsEnabled(GL_LIGHTING);
@@ -25,6 +27,7 @@ void Axis::OnRender()
 
 	// draw axis
 	glLineWidth(3);
+
 	glBegin(GL_LINES);
 	{
 		// X-axis
@@ -47,8 +50,9 @@ void Axis::OnRender()
 		}
 	}
 	glEnd();
-	glLineWidth(1);
+	_DEBUG_ONRENDER_CHECK_ERROR_();
 
+	glLineWidth(1);
 	// draw arrows(actually big square dots)
 	glPointSize(4);
 	glBegin(GL_POINTS);
@@ -65,9 +69,11 @@ void Axis::OnRender()
 			glColor3f(0, 0, 1);
 			glVertex3f(0, 0, size);
 		}
+		
 	}
 	glEnd();
 	glPointSize(1);
+	_DEBUG_ONRENDER_CHECK_ERROR_();
 
 	// restore default settings
 	if (bGL_LIGHTING) { glEnable(GL_LIGHTING); }

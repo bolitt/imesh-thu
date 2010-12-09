@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Structures.h"
+
 namespace IMesh { 
 namespace UI { // namespace IMesh::UI
 
@@ -7,10 +9,10 @@ namespace UI { // namespace IMesh::UI
 	{
 		namespace Colors 
 		{
-			const extern GLfloat RED[4];
-			const extern GLfloat GREEN[4];
-			const extern GLfloat BLUE[4];
-			const extern GLfloat WHITE[4];
+			const extern Num::GL::RGBColor RED;
+			const extern Num::GL::RGBColor GREEN;
+			const extern Num::GL::RGBColor BLUE;
+			const extern Num::GL::RGBColor WHITE;
 		}
 
 		namespace Navigation
@@ -46,9 +48,11 @@ namespace UI { // namespace IMesh::UI
 			const extern double ZOOM_OUT_RATE;
 		}
 
-		namespace Delays 
+		namespace Animation 
 		{
-
+			const extern double SLOW;
+			const extern double NORMAL;
+			const extern double FAST;
 		}
 	}
 

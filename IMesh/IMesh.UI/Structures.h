@@ -6,7 +6,6 @@
 
 
 namespace IMesh { namespace Num { namespace GL {
-
 	//typedef unsigned int GLenum;
 	//typedef unsigned char GLboolean;
 	//typedef unsigned int GLbitfield;
@@ -33,6 +32,7 @@ namespace IMesh { namespace Num { namespace GL {
 	typedef Num::Vec3<GLuint> Vec3GLuint;
 	typedef Num::Vec3<GLfloat> Vec3GLfloat;
 	typedef Num::Vec3<GLdouble> Vec3GLdouble;
-
+	
+	typedef Num::Vec3<GLfloat> RGBColor;
 } } }
 

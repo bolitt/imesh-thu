@@ -29,9 +29,6 @@ public:
 public:
 	Models::Scene m_scene;
 
-public:
-	GLUquadric* m_quadric;
-
 protected:
 	BOOL CreateViewGLContext(HDC hDC); 
 	BOOL SetWindowPixelFormat(HDC hDC);

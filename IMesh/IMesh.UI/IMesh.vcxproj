@@ -141,7 +141,10 @@
     <ClInclude Include="Grid.h" />
     <ClInclude Include="OutputWnd.h" />
     <ClInclude Include="Projection.h" />
+    <ClInclude Include="Sphere.h" />
     <ClInclude Include="Structures.h" />
+    <ClInclude Include="Triangle.h" />
+    <ClInclude Include="Vertex.h" />
     <ClInclude Include="Visualizer.h" />
     <ClInclude Include="PropertiesWnd.h" />
     <ClInclude Include="Resource.h" />
@@ -167,6 +170,9 @@
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="OutputWnd.cpp" />
     <ClCompile Include="Projection.cpp" />
+    <ClCompile Include="Sphere.cpp" />
+    <ClCompile Include="Triangle.cpp" />
+    <ClCompile Include="Vertex.cpp" />
     <ClCompile Include="Visualizer.cpp" />
     <ClCompile Include="PropertiesWnd.cpp" />
     <ClCompile Include="stdafx.cpp">
