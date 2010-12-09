@@ -9,24 +9,22 @@
 namespace IMesh { //: namespace IMesh
 	namespace Norm { //: namespace IMesh::Norm
 
-		Vector3 Cloud::origin = Vector3();
-		std::vector<Vector3>* Cloud::p_vertices = NULL;
+		/*Vector3 Cloud::origin = Vector3();
+		std::vector<Vector3>* Cloud::p_vertices = NULL;*/
 
+/*
 		bool Cloud::DisCmp( int u, int v)
 		{
 			return SquareOfDistance((*p_vertices)[u],origin) < SquareOfDistance((*p_vertices)[v], origin);
 		}
 
-
-
 		bool Cloud::DisCmp2( Vector3 &u, Vector3 &v)
 		{
 			return SquareOfDistance(u,origin) < SquareOfDistance(v,origin);
 		}
-
+*/
 		Vector3 Cloud::ComputeOneNorm( int in )
 		{
-	
 		/****
 		Compute the normal of vertex v[in]
 		****/
@@ -35,8 +33,35 @@ namespace IMesh { //: namespace IMesh
 			First, find k nearest neighbours of v, with a heap.
 			****/
 
+			class DisCmpFunctor {
+			public:
+				Vector3& m_Origin;
+				std::vector<Vector3>* m_pVertices;
+
+				DisCmpFunctor(Vector3& origin, std::vector<Vector3>* pVertices) 
+							: m_Origin(origin), m_pVertices(pVertices) {}
+
+			public:
+				bool operator() ( int u, int v ) {
+					return (SquareOfDistance( (*m_pVertices)[u], m_Origin ) < 
+						SquareOfDistance( (*m_pVertices)[v], m_Origin) );
+				}
+			};
+
+			class DisCmp2Functor {
+			public:
+				Vector3& m_Origin;
+				DisCmp2Functor(Vector3& origin) : m_Origin(origin) {}
+
+			public:
+				bool operator() (  Vector3 &u, Vector3 &v ) {
+					return SquareOfDistance(u, m_Origin) < SquareOfDistance(v, m_Origin);
+				}
+			};
+
+
 			//Vector3** neighbour = new Vector3*[k];
-			origin  = m_vertices[in];
+			Vector3& origin  = m_vertices[in];
 			vector<int> neighbour;
 	
 
@@ -53,16 +78,18 @@ namespace IMesh { //: namespace IMesh
 			}
 
 	
-			p_vertices = &m_vertices;
-			make_heap(neighbour.begin(), neighbour.end(),DisCmp);
+			std::vector<Vector3>* p_vertices = &m_vertices;
+			DisCmpFunctor DisCmp(origin, p_vertices);
+			DisCmp2Functor DisCmp2(origin);
 
+			make_heap(neighbour.begin(), neighbour.end(),DisCmp);
 			for( int i = l ; i < v_num ; i++ )
 			{
 				if( DisCmp2( m_vertices[i] , m_vertices[neighbour[0]] ) && SquareOfDistance(m_vertices[i],origin) > 0 )
 				{
-					pop_heap(neighbour.begin(), neighbour.end(), &IMesh::Norm::Cloud::DisCmp);
+					pop_heap(neighbour.begin(), neighbour.end(), DisCmp);
 					neighbour[k-1] = i;
-					push_heap(neighbour.begin(), neighbour.end(), &IMesh::Norm::Cloud::DisCmp);
+					push_heap(neighbour.begin(), neighbour.end(), DisCmp);
 				}
 			}
 
