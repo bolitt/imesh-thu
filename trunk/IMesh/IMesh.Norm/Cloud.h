@@ -15,8 +15,6 @@ namespace Norm { //: namespace IMesh::Norm
 	class Cloud
 	{
 	public:
-		static std::vector<Vector3>* p_vertices;	//vertices
-		static Vector3 origin;
 		std::vector<Vector3> m_vertices;	//vertices
 		std::vector<Vector3> m_norm;			// norms
 		std::vector<Edge> m_edges;				//edges of nearest neighbours
@@ -32,8 +30,7 @@ namespace Norm { //: namespace IMesh::Norm
 		/***
 		Following functions are in Cloud_Norm.cpp
 		***/
-		static bool DisCmp( int u, int v);		//compare distance
-		static bool DisCmp2( Vector3 &u, Vector3 &v);
+
 		Vector3 ComputeOneNorm(int );
 		int ComputeNorm();
 		int AdjustNormDirection();

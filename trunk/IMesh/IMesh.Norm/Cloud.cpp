@@ -12,7 +12,6 @@ namespace Norm { //: namespace IMesh::Norm
 		r = 0;
 		outname = new char[255];
 		norm_finished = false;
-//		origin = Vector3();
 	}
 
 	Cloud::~Cloud()
@@ -20,7 +19,6 @@ namespace Norm { //: namespace IMesh::Norm
 		if ( outname != NULL )
 			delete outname;
 		m_vertices.clear();
-		origin = Vector3();
 	}
 
 	int Cloud::InitFromFile(  char *strFileName )
