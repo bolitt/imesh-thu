@@ -2,11 +2,9 @@
 
 namespace IMesh { namespace Interface {
 
-
 Event::Event()
 {
 }
-
 
 Event::~Event()
 {
@@ -24,7 +22,7 @@ void Event::Detach( EventListener& listener )
 }
 
 
-void Event::OnRaise( void* source, const EventArg& eventArgs )
+void Event::OnNotify( void* source, const EventArg& eventArgs )
 {
 	for (container_type::iterator it = m_listeners.begin(); it != m_listeners.end(); ++it) {
 		container_type::value_type& li = (*it);

@@ -11,16 +11,16 @@ class Event
 protected: 
 	typedef std::list<EventListener *> container_type;
 
-protected:
+public:
 	container_type m_listeners;
 
 public:
 	Event(void);
-	~Event(void);
+	virtual ~Event(void);
 
 	virtual void Attach(EventListener& listener);
 	virtual void Detach(EventListener& listener);
-	virtual void OnRaise(void* source, const EventArg& eventArgs);
+	virtual void OnNotify(void* source, const EventArg& eventArgs);
 };
 
 } }

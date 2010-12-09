@@ -1,6 +1,6 @@
 #pragma once
 
-#include "vec.h"
+#include "Structures.h"
 #include "Camera.h"
 #include "Projection.h"
 #include "Scene.h"

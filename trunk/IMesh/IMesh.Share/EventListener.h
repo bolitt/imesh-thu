@@ -10,7 +10,7 @@ class EventListener
 {
 public:
 	EventListener(void);
-	~EventListener(void);
+	virtual ~EventListener(void);
 
 	virtual void OnHandle(void* source, const EventArg& eventArgs);
 };

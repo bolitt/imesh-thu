@@ -1,18 +1,26 @@
 #include <iostream>
-#include "../IMesh.UI/vec.h"
-#include "../IMesh.UI/Tester.h"
+#include "vec.h"
+#include "num_test.h"
+#include "interface_test.h"
 
 using namespace std;
 
 int main() 
 {	
-	{   
+	{
 		using namespace IMesh::Num::Test;
 
-		cout << "=== BEGIN: Test IMesh.Share ===" << endl;
+		cout << "=== BEGIN: Test Num ===" << endl;
 		Tester::Run();
-		cout << "=== END: Test IMesh.Share PASSED! ===" << endl;
-	}	
+		cout << "=== END: Test Num PASSED! ===" << endl;
+	}
+	{
+		using namespace IMesh::Interface::Test;
+
+		cout << "=== BEGIN: Test Interface ===" << endl;
+		Tester::Run();
+		cout << "=== END: Test Interface PASSED! ===" << endl;
+	}
 	getchar();
 	return 0;
 }
