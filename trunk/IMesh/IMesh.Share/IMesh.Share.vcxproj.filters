@@ -21,15 +21,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Event.h">
-      <Filter>头文件\interface</Filter>
-    </ClInclude>
-    <ClInclude Include="EventListener.h">
-      <Filter>头文件\interface</Filter>
-    </ClInclude>
-    <ClInclude Include="EventArg.h">
-      <Filter>头文件\interface</Filter>
-    </ClInclude>
     <ClInclude Include="interface_test.h">
       <Filter>头文件\interface</Filter>
     </ClInclude>
@@ -38,6 +29,15 @@
     </ClInclude>
     <ClInclude Include="vec.h">
       <Filter>头文件\num</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>头文件\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="EventListener.h">
+      <Filter>头文件\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="EventArg.h">
+      <Filter>头文件\interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

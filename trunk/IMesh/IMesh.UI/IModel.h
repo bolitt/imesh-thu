@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include <vector>
-
+#include "Config.h"
 
 //#define GL_NO_ERROR                       0
 //#define GL_INVALID_ENUM                   0x0500

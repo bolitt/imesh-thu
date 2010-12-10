@@ -27,7 +27,6 @@ void Axis::OnRender()
 
 	// draw axis
 	glLineWidth(3);
-
 	glBegin(GL_LINES);
 	{
 		// X-axis
@@ -69,7 +68,7 @@ void Axis::OnRender()
 			glColor3f(0, 0, 1);
 			glVertex3f(0, 0, size);
 		}
-		
+
 	}
 	glEnd();
 	glPointSize(1);

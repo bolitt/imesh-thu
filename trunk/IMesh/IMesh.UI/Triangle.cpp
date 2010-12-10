@@ -3,7 +3,13 @@
 
 namespace IMesh { namespace UI { namespace Models { 
 
-Triangle::Triangle()
+using namespace IMesh::UI::Config;
+
+const static Triangle::id_type UNINITIALIZED_ID = -1;
+const static Triangle::color_type DEFAULT_FILL = Colors::WHITE;
+
+Triangle::Triangle() : m_id(UNINITIALIZED_ID), 
+						m_fill(DEFAULT_FILL)
 {
 }
 

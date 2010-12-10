@@ -1,0 +1,9 @@
+
+
+在IMesh.UI中，依赖：
+
+IMesh.Norm工程 -> IMesh.Norm.lib
+
+需要把IMesh.Norm工程属性设置为：
+常规配置 -> 配置类型 -> 静态库
+

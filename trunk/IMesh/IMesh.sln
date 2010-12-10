@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IMesh.UI", "IMesh.UI\IMesh.vcxproj", "{599BC65F-7626-4180-87C2-7CEECBE42E8E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C8C253A5-30A4-4A8A-8FCF-4B556BAC05D1} = {C8C253A5-30A4-4A8A-8FCF-4B556BAC05D1}
+		{54CBE1FC-04A7-4192-8FDC-E3BE73EC53DE} = {54CBE1FC-04A7-4192-8FDC-E3BE73EC53DE}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IMesh.Norm", "IMesh.Norm\IMesh.Norm.vcxproj", "{54CBE1FC-04A7-4192-8FDC-E3BE73EC53DE}"
 EndProject
