@@ -2,12 +2,15 @@
 
 #include "IModel.h"
 #include "Layer.h"
-
 #include "Grid.h"
+
 #include "Axis.h"
 #include "Sphere.h"
 #include "Triangle.h"
 #include "Vertex.h"
+#include "Edge.h"
+
+#include "CloudLoader.h"
 
 namespace IMesh { namespace UI { namespace Models {
 
@@ -28,6 +31,8 @@ public:
 	// m_overLayer Children:
 	Sphere m_sphere;
 	Triangle m_triangle;
+	std::vector<Vertex*> m_verties;
+	std::vector<Edge*> m_edges;
 
 public:
 	Scene(void);

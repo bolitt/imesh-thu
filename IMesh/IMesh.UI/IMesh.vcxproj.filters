@@ -23,8 +23,23 @@
     <Filter Include="window\header">
       <UniqueIdentifier>{e749cf8e-a727-4bb2-9e78-4f64528f2f58}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ds">
+    <Filter Include="external">
+      <UniqueIdentifier>{e27a659e-d603-476f-88da-d2656693d46d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\Norm">
+      <UniqueIdentifier>{0717a042-5e7f-410a-8074-478364fd3e55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\Share">
+      <UniqueIdentifier>{9a982587-0028-47ac-949f-cad53bc25e1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DS">
       <UniqueIdentifier>{33fd37f2-da2a-451b-a4ef-d4e5d1123f8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\Share\num">
+      <UniqueIdentifier>{04f9385f-b891-4173-ac01-ec97dd86babe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\Share\interface">
+      <UniqueIdentifier>{89b35859-1eda-4ae6-bc50-4558d6abe314}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -182,7 +197,7 @@
       <Filter>window\header</Filter>
     </ClInclude>
     <ClInclude Include="Structures.h">
-      <Filter>ds</Filter>
+      <Filter>DS</Filter>
     </ClInclude>
     <ClInclude Include="Sphere.h">
       <Filter>models</Filter>
@@ -193,8 +208,35 @@
     <ClInclude Include="Vertex.h">
       <Filter>models</Filter>
     </ClInclude>
+    <ClInclude Include="Edge.h">
+      <Filter>models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IMesh.Norm\MST.h">
+      <Filter>external\Norm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IMesh.Norm\Vec.h">
+      <Filter>external\Norm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IMesh.Norm\Matrix.h">
+      <Filter>external\Norm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IMesh.Norm\Cloud.h">
+      <Filter>external\Norm</Filter>
+    </ClInclude>
     <ClInclude Include="..\IMesh.Share\vec.h">
-      <Filter>ds</Filter>
+      <Filter>external\Share\num</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IMesh.Share\Event.h">
+      <Filter>external\Share\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IMesh.Share\EventArg.h">
+      <Filter>external\Share\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IMesh.Share\EventListener.h">
+      <Filter>external\Share\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="CloudLoader.h">
+      <Filter>DS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -269,6 +311,12 @@
     </ClCompile>
     <ClCompile Include="Vertex.cpp">
       <Filter>models</Filter>
+    </ClCompile>
+    <ClCompile Include="Edge.cpp">
+      <Filter>models</Filter>
+    </ClCompile>
+    <ClCompile Include="CloudLoader.cpp">
+      <Filter>DS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

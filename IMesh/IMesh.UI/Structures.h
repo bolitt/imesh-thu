@@ -3,7 +3,7 @@
 #include <gl/gl.h> 
 #include <gl/glu.h>
 #include "../IMesh.Share/vec.h"
-
+#include "../IMesh.Norm/Cloud.h"
 
 namespace IMesh { namespace Num { namespace GL {
 	//typedef unsigned int GLenum;
