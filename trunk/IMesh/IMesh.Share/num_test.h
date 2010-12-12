@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <sstream>
 #include "vec.h"
 
 #ifndef ASSERT
@@ -40,7 +41,8 @@ protected:
 			Vec3i m3 = m1 + m2;
 			ASSERT(m3._x == -1 && m3._y == -1 && m3._z == -1);
 
-			Vec3i m4 = m3.Abs();
+			Vec3i m4 = m3;
+			m4.Abs();
 			ASSERT(m4._x == 1 && m4._y == 1 && m4._z == 1);
 
 			int i5 = m3.Dot(v1);
@@ -55,6 +57,13 @@ protected:
 			ASSERT(v1.Max() == 3);
 			ASSERT(v1.Min() == -2);
 			ASSERT(v1.SqureSum() == 14);
+
+			std::cout << m5 << std::endl;
+			std::stringstream ss;
+			ss << m5;
+			Vec3i newM5;
+			ss >> newM5;
+			ASSERT(newM5._x == -5 && newM5._y == 2 && newM5._z == 3);
 		}
 
 		{
@@ -82,6 +91,7 @@ protected:
 
 			m4.Zeros();
 			ASSERT(m4._x == 0 && m4._y == 0 && m4._z == 0);
+
 		}
 	}
 #pragma endregion test vec

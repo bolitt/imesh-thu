@@ -14,7 +14,7 @@ CloudLoader::~CloudLoader(void)
 
 void CloudLoader::Initialize()
 {
-	char* file = "../IMesh.Norm/res/bunny_simple.obj";
+	char* file = "../IMesh.Norm/res/horse.obj";
 	m_cloud.InitFromFile(file);
 }
 
@@ -38,7 +38,7 @@ std::vector<Num::Vec3f> CloudLoader::GetNorms()
 	for (size_t i = 0; i < ns.size(); ++i)
 	{
 		Norm::Vector3& v = ns[i];
-		Num::Vec3f nn(v.x, v.y, v.z);
+		Num::Vec3f nn((float)v.x, (float)v.y, (float)v.z);
 		norms.push_back(nn);
 	}
 	return norms;
