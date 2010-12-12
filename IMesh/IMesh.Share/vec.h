@@ -161,6 +161,22 @@ namespace IMesh { namespace Num {
 				this->_z = - (this->_z);
 			}
 
+			void Abs()
+			{
+				this->_x = abs(this->_x);
+				this->_y = abs(this->_y);
+				this->_z = abs(this->_z);
+			}
+
+			void Normalize()
+			{
+				double len = Length();
+				double inverseLen = 1.0 / len;
+				this->_x = TValue(this->_x * inverseLen);
+				this->_y = TValue(this->_y * inverseLen);
+				this->_z = TValue(this->_z * inverseLen);
+			}
+
 			TValue Dot (const self_type& v) const 
 			{
 				return (this->_x * v._x) + 
@@ -222,15 +238,6 @@ namespace IMesh { namespace Num {
 			{
 				return sqrt(SqureSum());
 			}
-			
-			self_type Abs()
-			{
-				self_type v;
-				v._x = abs(this->_x);
-				v._y = abs(this->_y);
-				v._z = abs(this->_z);
-				return v;
-			}
 
 			TValue& operator [] (int index) 
 			{
@@ -239,20 +246,20 @@ namespace IMesh { namespace Num {
 
 			friend std::ostream& operator << (std::ostream& stream, const self_type& v) 
 			{ 
-				stream << "(" << v._x << ", " << v._y << ", " << v._z << ")"
-				return stream; 
-			} 
+				stream << v._x << " " << v._y << " " << v._z;
+				return stream;
+			}
 			friend std::wostream& operator << (std::wostream& stream, const self_type& v) 
 			{ 
-				stream << "(" << v._x << ", " << v._y << ", " << v._z << ")"
+				stream << v._x << " " << v._y << " " << v._z;
 				return stream; 
 			} 
-			friend std::istream& operator >> (std::istream& stream, const self_type& v) 
+			friend std::istream& operator >> (std::istream& stream, self_type& v) 
 			{ 
-				stream >> v._x >> v._y >> v._z; 
-				return stream; 
+				stream >> v._x >> v._y >> v._z;
+				return stream;
 			}
-			friend std::wistream& operator >> (std::wistream& stream, const self_type& v) 
+			friend std::wistream& operator >> (std::wistream& stream, self_type& v) 
 			{ 
 				stream >> v._x >> v._y >> v._z; 
 				return stream;
