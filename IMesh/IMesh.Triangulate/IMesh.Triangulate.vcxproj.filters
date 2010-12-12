@@ -18,5 +18,31 @@
     <ClCompile Include="Tester.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="predefs.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SeedSelection.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="EdgePivot.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TriangulationHandler.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="predefs.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SeedSelection.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="EdgePivot.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TriangulationHandler.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -11,7 +11,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="EdgePivot.cpp" />
+    <ClCompile Include="predefs.cpp" />
+    <ClCompile Include="SeedSelection.cpp" />
     <ClCompile Include="Tester.cpp" />
+    <ClCompile Include="TriangulationHandler.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="EdgePivot.h" />
+    <ClInclude Include="predefs.h" />
+    <ClInclude Include="SeedSelection.h" />
+    <ClInclude Include="TriangulationHandler.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{87C98B8E-1707-4278-99CA-0CB59790166D}</ProjectGuid>
