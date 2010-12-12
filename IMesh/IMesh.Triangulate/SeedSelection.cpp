@@ -1,6 +1,6 @@
 #include "SeedSelection.h"
 
-bool findSeedTriangle(grid *m_grid, long &_pointindex1, long &_pointindex2, long &_pointindex3, point3D &ball_center, float ball_radius)
+bool findSeedTriangle(grid *m_grid, long &_pointindex1, long &_pointindex2, long &_pointindex3, point3D &ball_center, double ball_radius)
 {
 	bool found = false;
 	int gridsize = m_grid->isize*m_grid->jsize*m_grid->ksize;
@@ -12,6 +12,7 @@ bool findSeedTriangle(grid *m_grid, long &_pointindex1, long &_pointindex2, long
 		while(m_grid->currentcellindex<gridsize && !m_grid->pickPointInCell(pointindex1,m_grid->currentcellindex))
 			m_grid->currentcellindex += 1;
 
+		printf("\n%d",m_grid->currentcellindex);
 		if(m_grid->currentcellindex >= gridsize)
 		{
 			break;
@@ -35,7 +36,7 @@ bool findSeedTriangle(grid *m_grid, long &_pointindex1, long &_pointindex2, long
 			while(found == false && j < jupbound)
 			{
 				pointindex2 = m_grid->cells.at(current.third).at(current.first).at(current.second).pointindex[j];
-				if(m_grid->getPoint(pointindex2).isUnused())
+				if(!(m_grid->getPoint(pointindex2).isUnused()))
 				{
 					j++;
 					continue;
@@ -48,7 +49,7 @@ bool findSeedTriangle(grid *m_grid, long &_pointindex1, long &_pointindex2, long
 					for(int j1 = 0;j1 < jupbound1; j1++)
 					{
 						pointindex3 = m_grid->cells.at(current1.third).at(current1.first).at(current1.second).pointindex[j1];
-						if(m_grid->getPoint(pointindex3).isUnused())
+						if(!(m_grid->getPoint(pointindex3).isUnused()))
 							continue;
 
 						vect tempnorm;
@@ -76,12 +77,18 @@ bool findSeedTriangle(grid *m_grid, long &_pointindex1, long &_pointindex2, long
 			}
 			i++;
 		}
+		if(found == true)
+		{
+			_pointindex1 = pointindex1;
+			_pointindex2 = pointindex2;
+			_pointindex3 = pointindex3;
+		}
 	}while(m_grid->currentcellindex<gridsize && !found);
 
 	return found;
 }
 
-bool testTriangleValidity(grid *m_grid, vector<int3> &neighborhood, point3D ball_center, float ball_radius)
+bool testTriangleValidity(grid *m_grid, vector<int3> &neighborhood, point3D ball_center, double ball_radius)
 {
 	int iupbound = neighborhood.size();
 	for(int i = 0;i<iupbound;i++)
@@ -94,7 +101,7 @@ bool testTriangleValidity(grid *m_grid, vector<int3> &neighborhood, point3D ball
 
 			point3D pos = m_grid->pointsdatabase->points[pointindex].position;
 
-			if(point3D::distance2(pos,ball_center) < ball_radius*ball_radius)
+			if(point3D::distance2(pos,ball_center) < ball_radius*ball_radius-0.01)
 				return false;
 		}
 	}
@@ -102,7 +109,7 @@ bool testTriangleValidity(grid *m_grid, vector<int3> &neighborhood, point3D ball
 	return true;
 }
 
-bool buildTriangle(grid *m_grid, long &pointindex1, long &pointindex2, long &pointindex3, point3D &ballcenter, float ballradius,vect outnorm)
+bool buildTriangle(grid *m_grid, long &pointindex1, long &pointindex2, long &pointindex3, point3D &ballcenter, double ballradius,vect outnorm)
 {
 	if(pointindex1 == pointindex2 || pointindex1 == pointindex3 || pointindex2 == pointindex3)
 		return false;
@@ -115,11 +122,11 @@ bool buildTriangle(grid *m_grid, long &pointindex1, long &pointindex2, long &poi
 	vect v23(p3.x-p2.x,p3.y-p2.y,p3.z-p2.z);
 	vect v31(p1.x-p3.x,p1.y-p3.y,p1.z-p3.z);
 
-	float a = v23.norm();
-	float b = v31.norm();
-	float c = v12.norm();
+	double a = v23.norm();
+	double b = v31.norm();
+	double c = v12.norm();
 
-	float R = a*b*c/sqrt((a+b+c)*(a+b-c)*(a+c-b)*(b+c-a));
+	double R = a*b*c/sqrt((a+b+c)*(a+b-c)*(a+c-b)*(b+c-a));
 
 	if(R > ballradius)
 		return false;
@@ -128,20 +135,21 @@ bool buildTriangle(grid *m_grid, long &pointindex1, long &pointindex2, long &poi
 	vect b3 = outnorm.normalize();
 	vect b2 = (vect::cross(b3,b1)).normalize();
 
-	float l1 = c/2;
-	float l2;
+	double l1 = c/2;
+	double l2;
+	
 	if(vect::dot(v23,v31)<0)
-		l2 = sqrt(R*R-l1*l1+0.000001);
+		l2 = sqrt(R*R-l1*l1+0.00001);
 	else
-		l2 = -sqrt(R*R-l1*l1+0.000001);
-	float l3 = sqrt(ballradius*ballradius-R*R);
+		l2 = -sqrt(R*R-l1*l1+0.00001);
+	double l3 = sqrt(ballradius*ballradius-R*R);
 
 	ballcenter = point3D(p1.x+b1.x*l1+b2.x*l2+b3.x*l3,p1.y+b1.y*l1+b2.y*l2+b3.y*l3,p1.z+b1.z*l1+b2.z*l2+b3.z*l3);
 
 	return true;
 }
 
-bool buildTriangle(point3D ballcenter, float ballradius, grid *m_grid, long &pointindex1, long &pointindex2, long &pointindex3)
+bool buildTriangle(point3D ballcenter, double ballradius, grid *m_grid, long &pointindex1, long &pointindex2, long &pointindex3)
 {
 	triangle *newt = new triangle;
 
@@ -155,6 +163,11 @@ bool buildTriangle(point3D ballcenter, float ballradius, grid *m_grid, long &poi
 	edge *e12 = new edge(pointindex1,pointindex2,pointindex3,ballcenter);
 	edge *e23 = new edge(pointindex2,pointindex3,pointindex1,ballcenter);
 	edge *e31 = new edge(pointindex3,pointindex1,pointindex2,ballcenter);
+
+	if((e12->idx_i == 1515 && e12->idx_j == 1577)||(e23->idx_i == 1515 && e23->idx_j == 1577)||(e31->idx_i == 1515 && e31->idx_j == 1577))
+		int kkkk = 1;
+	if((e12->idx_i == 1516 && e12->idx_j == 1577)||(e23->idx_i == 1516 && e23->idx_j == 1577)||(e31->idx_i == 1516 && e31->idx_j == 1577))
+		int kkkk = 1;
 
 	e12->sidelink = newt;
 	e12->startpoint = edge::FIRSTPOINT;
@@ -172,8 +185,12 @@ bool buildTriangle(point3D ballcenter, float ballradius, grid *m_grid, long &poi
 	e31->pre = e23;
 
 	e12->ishead = true;
+	if(e12->flag != edge::ACTIVE && e12->flag != edge::BOUNDARY && e12->flag != edge::DELETED)
+				int kkkkk = 0;
 	edfr.loopheads.push_back(e12);
 	edfr.loopnum += 1;
+	if(edfr.loopnum == 15)
+				int kkkkk = 0;
 
 	frontEdgeQueue.push_back(e23);
 	frontEdgeQueue.push_back(e31);

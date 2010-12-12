@@ -2,7 +2,7 @@
 #include "predefs.h"
 
 edge *getActiveEdge();
-long ballPivot(edge *edgeaxis,grid *m_grid, float ballradius);
+long ballPivot(edge *edgeaxis,grid *m_grid, double ballradius);
 
 
 void joinEdge(edge *edgeaxis, long pointindex, grid *m_grid, point3D ballcenter);
