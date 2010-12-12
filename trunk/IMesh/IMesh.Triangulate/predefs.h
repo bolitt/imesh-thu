@@ -21,17 +21,17 @@ struct int3{
 };
 
 struct point3D{
-	float x;
-	float y;
-	float z;
+	double x;
+	double y;
+	double z;
 
 	point3D(){x=0.0;y=0.0;z=0.0;}
-	point3D(float a,float b,float c){x=a;y=b;z=c;}
-	static float distance(point3D a, point3D b)
+	point3D(double a,double b,double c){x=a;y=b;z=c;}
+	static double distance(point3D a, point3D b)
 	{
 		return sqrt((a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y)+(a.z-b.z)*(a.z-b.z));
 	}
-	static float distance2(point3D a, point3D b)
+	static double distance2(point3D a, point3D b)
 	{
 		return (a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y)+(a.z-b.z)*(a.z-b.z);
 	}
@@ -39,15 +39,15 @@ struct point3D{
 typedef struct point3D point3D;
 
 struct vect{
-	float x;
-	float y;
-	float z;
+	double x;
+	double y;
+	double z;
 
 	vect(){x=0.0;y=0.0;z=0.0;}
-	vect(float a, float b, float c){x=a;y=b;z=c;}
-	float norm(){return sqrt(x*x+y*y+z*z);}
+	vect(double a, double b, double c){x=a;y=b;z=c;}
+	double norm(){return sqrt(x*x+y*y+z*z);}
 	vect normalize(){return vect(x/norm(),y/norm(),z/norm());}
-	static float dot(vect a, vect b){return a.x*b.x+a.y*b.y+a.z*b.z;}
+	static double dot(vect a, vect b){return a.x*b.x+a.y*b.y+a.z*b.z;}
 	static vect cross(vect a, vect b)
 	{
 		return vect(a.y*b.z-a.z*b.y,a.z*b.x-a.x*b.z,a.x*b.y-a.y*b.x);
@@ -71,7 +71,7 @@ struct edge{
 	point3D ball_center;
 	bool ishead;
 	//edge **loophead;
-	//float ball_radius;
+	//double ball_radius;
 
 	struct edge *next;
 	struct edge *pre;
@@ -153,7 +153,10 @@ struct all_point_list{
 		current_traverse_place = 0;
 		long ibound = nps.size();
 		for(long i = 0; i<ibound; i++)
+		{
 			points.push_back(point(nps.at(i)));
+			printf("\n%ld",i);
+		}
 
 	}
 };
@@ -176,7 +179,7 @@ typedef struct cell cell;
 struct grid{
 	vector<vector<vector<cell> > > cells; // cells.at(k).at(i).at(j)
 	all_point_list *pointsdatabase;
-	float gridwidth;
+	double gridwidth;
 	int isize,jsize,ksize;
 	int currentcellindex;//=k*isize*jsize+i*jsize+j; for seed finding, initially 0
 
@@ -187,7 +190,7 @@ struct grid{
 		gridwidth = 0;
 		pointsdatabase = NULL;
 	}
-	grid(int _i, int _j, int _k, all_point_list *_pointsdatabase, float _delta)
+	grid(int _i, int _j, int _k, all_point_list *_pointsdatabase, double _delta)
 	{
 		vector<vector<cell> > temp1;
 		vector<cell> temp2;
@@ -212,7 +215,7 @@ struct grid{
 	void locatePoint(point3D pos,int3 &_cellindex);
 	bool pickPointInCell(long &_index,int _cellindex);
 	void locateNeighborhood(vector<int3> &neighbors,int cellindex);
-	void findNeighborPoints(vector<long> &pointList, float radius, point3D &origin);
+	void findNeighborPoints(vector<long> &pointList, double radius, point3D &origin);
 	
 	point3D getPoint3D(long pointindex)
 	{

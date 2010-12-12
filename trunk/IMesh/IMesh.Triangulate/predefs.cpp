@@ -9,16 +9,17 @@ void grid::initialize()
 	long indexbound = pointsdatabase->points.size();
 	for(long count = 0; count < indexbound;count++)
 	{
-		int _i = floor(pointsdatabase->points[count].position.x / gridwidth)+0.1;//all point must have non-negative position values
-		int _j = floor(pointsdatabase->points[count].position.y / gridwidth)+0.1;
-		int _k = floor(pointsdatabase->points[count].position.z / gridwidth)+0.1;
+		int _i = min(isize-1,(int)(floor(pointsdatabase->points[count].position.x / gridwidth)+0.1));//all point must have non-negative position values
+		int _j = min(jsize-1,(int)(floor(pointsdatabase->points[count].position.y / gridwidth)+0.1));
+		int _k = min(ksize-1,(int)(floor(pointsdatabase->points[count].position.z / gridwidth)+0.1));
 
 		cells.at(_k).at(_i).at(_j).add_pointindex(count);
 	}
-	for(int k = 0;k < ksize; k++)
-		for(int i = 0; i < isize; i++)
-			for(int j = 0; j < jsize; j++)
-				cells.at(k).at(i).at(j).bucket_sort(0,cells.at(k).at(i).at(j).pointindex.size()-1);
+	printf("point1 OK");
+	//for(int k = 0;k < ksize; k++)
+	//	for(int i = 0; i < isize; i++)
+	//		for(int j = 0; j < jsize; j++)
+	//			cells.at(k).at(i).at(j).bucket_sort(0,cells.at(k).at(i).at(j).pointindex.size()-1);
 }
 
 void cell::add_pointindex(long _pointindex)
@@ -38,11 +39,11 @@ void cell::bucket_sort(int startindex, int endindex)
 	int low = startindex;
 	int high = endindex;
 
-	point pivot = pointsdatabase->points.at(pointindex.at(low));
+	point *pivot = &(pointsdatabase->points.at(pointindex.at(low)));
 
 	while(low<high)
 	{
-		while(low < high && point::comparePoint(pivot, pointsdatabase->points.at(pointindex.at(high))) == false)
+		while(low < high && point::comparePoint(*pivot, pointsdatabase->points.at(pointindex.at(high))) == false)
 			high--;
 		if(low<high)
 		{
@@ -50,7 +51,7 @@ void cell::bucket_sort(int startindex, int endindex)
 			pointindex[high] = pointindex[low];
 			pointindex[low] = temp;
 		}
-		while(low < high && point::comparePoint(pivot, pointsdatabase->points.at(pointindex.at(low))) == true)
+		while(low < high && point::comparePoint(*pivot, pointsdatabase->points.at(pointindex.at(low))) == true)
 			low++;
 		if(low<high)
 		{
@@ -173,18 +174,18 @@ bool grid::pickPointInCell(long &_index, int _cellindex)
 	int celli = temp/jsize;
 	int cellj = temp-celli*jsize;
 
-	cell c = cells.at(cellk).at(celli).at(cellj);
+	cell *c = &(cells.at(cellk).at(celli).at(cellj));
 
-	if(c.activated || c.currentpointindex >= c.pointnum)
+	if(c->activated || c->currentpointindex >= c->pointnum)
 		return false;
 
-	while(this->getPoint(c.pointindex[c.currentpointindex]).flag != point::UNUSED && c.currentpointindex < c.pointnum)
-		c.currentpointindex += 1;
-	if(c.currentpointindex >= c.pointnum)
+	while(this->getPoint(c->pointindex[c->currentpointindex]).flag != point::UNUSED && c->currentpointindex < c->pointnum)
+		c->currentpointindex += 1;
+	if(c->currentpointindex >= c->pointnum)
 		return false;
 
-	_index = c.pointindex[c.currentpointindex];
-	c.currentpointindex += 1;
+	_index = c->pointindex[c->currentpointindex];
+	c->currentpointindex += 1;
 
 	return true;
 }
@@ -202,7 +203,7 @@ void grid::locatePoint(long _index,int3 &_cellindex)
 	locatePoint(pos,_cellindex);
 }
 
-void grid::findNeighborPoints(vector<long> &pointList, float radius, point3D &origin)
+void grid::findNeighborPoints(vector<long> &pointList, double radius, point3D &origin)
 {
 	int3 cell0;
 	locatePoint(origin,cell0);
