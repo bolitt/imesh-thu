@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Externals">
+      <UniqueIdentifier>{c4fe6f39-71ae-4fb5-9416-b3fa4a4589ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="interface">
+      <UniqueIdentifier>{925016de-688d-4f5e-a90d-fffe9cfe0e00}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tester.cpp">
@@ -30,6 +36,9 @@
     <ClCompile Include="TriangulationHandler.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="EventCommon.cpp">
+      <Filter>interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="predefs.h">
@@ -43,6 +52,21 @@
     </ClInclude>
     <ClInclude Include="TriangulationHandler.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IMesh.Share\Event.h">
+      <Filter>Externals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IMesh.Share\EventArg.h">
+      <Filter>Externals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IMesh.Share\EventListener.h">
+      <Filter>Externals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IMesh.Share\vec.h">
+      <Filter>Externals</Filter>
+    </ClInclude>
+    <ClInclude Include="EventCommon.h">
+      <Filter>interface</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
