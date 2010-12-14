@@ -47,7 +47,7 @@ int main()
 	fclose(fp);
 
 
-
+	getchar();
 	return 0;
 }
 

@@ -19,6 +19,8 @@ void TriangulationHandler::triangulateModel()
 		while((currentaxis = getActiveEdge()) != NULL)
 		{
 			printf("\ngetActiveEdge()");
+			OnEdgeActivated(currentaxis); //: TODO: CHANGED!
+
 			long newpointindex = ballPivot(currentaxis,modelgrid,ball_radius);
 			printf("\nballPivot()");
 		}
@@ -35,4 +37,18 @@ void TriangulationHandler::triangulateModel()
 		else
 			return;
 	}
+}
+
+void TriangulationHandler::OnEdgeActivated(edge* currentAxis)
+{
+	EdgeEventArg arg;
+	EdgeEventArg::EventType type = EdgeEventArg::Activatied;
+	arg.Initialize(type, 
+					currentAxis, &edfr, 
+					apl, &triangleList, &frontEdgeQueue);
+	void* source = currentAxis;
+	
+	// The change is originated by "source", and
+	// Influenced variables would be "arg"
+	m_edgeEvent.OnNotify(source, arg);
 }
