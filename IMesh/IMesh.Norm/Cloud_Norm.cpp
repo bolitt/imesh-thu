@@ -232,6 +232,7 @@ namespace IMesh { //: namespace IMesh
 
 		int Cloud::MoveToZero(){
 			double lx = 0,ly = 0,lz = 0;
+			double hx = 0, hy = 0, hz = 0;
 			for( int i = 0 ; i < v_num ; i++ )
 			{
 				if( lx > m_vertices[i].x )
@@ -241,12 +242,22 @@ namespace IMesh { //: namespace IMesh
 				if( lz > m_vertices[i].z )
 					lz = m_vertices[i].z;
 			}
+			for( int i = 0 ; i < v_num ; i++ )
+			{
+				if( hx < m_vertices[i].x )
+					hx = m_vertices[i].x;
+				if( hy < m_vertices[i].y )
+					hy = m_vertices[i].y;
+				if( hz < m_vertices[i].z )
+					hz = m_vertices[i].z;
+			}
 			Vector3 v(lx,ly,lz);
 			for( int i = 0 ; i < v_num ; i++ )
 			{
 				m_vertices[i]-=v;
 			}
-			
+			mx = (lx+hx)/2, my = (ly+hy)/2, mz = (lz+hz)/2;
+			mid = Vector3(mx,my,mz);
 			return 0;
 		}
 
