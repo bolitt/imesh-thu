@@ -22,15 +22,17 @@ public:
 
 public:
 	CloudInit(void);
-	CloudInit(char*);
 	~CloudInit(void);
 
-
 	void Initialize();
-	//std::vector<Num::Vec3f> GetPoints();
-	//std::vector<Num::Vec3f> GetNorms();
-	std::vector<point3D> GetPoints();
-	std::vector<vect> GetNorms();
+	void Initialize(char* file);
+	void RunTriangulate();
+
+	std::vector<Num::Vec3f> GetPoints();
+	std::vector<Num::Vec3f> GetNorms();
+	
+	/*std::vector<point3D> GetPoints();
+	std::vector<vect> GetNorms();*/
 };
 
 } } 

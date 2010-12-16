@@ -132,6 +132,7 @@
     <ClInclude Include="..\IMesh.Share\EventArg.h" />
     <ClInclude Include="..\IMesh.Share\EventListener.h" />
     <ClInclude Include="..\IMesh.Share\vec.h" />
+    <ClInclude Include="..\IMesh.Triangulate\CloudInit.h" />
     <ClInclude Include="..\IMesh.Triangulate\EdgePivot.h" />
     <ClInclude Include="..\IMesh.Triangulate\EventCommon.h" />
     <ClInclude Include="..\IMesh.Triangulate\SeedSelection.h" />
@@ -189,6 +190,7 @@
     <ClCompile Include="OutputWnd.cpp" />
     <ClCompile Include="Projection.cpp" />
     <ClCompile Include="Sphere.cpp" />
+    <ClCompile Include="Structures.cpp" />
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="Vertex.cpp" />
     <ClCompile Include="Visualizer.cpp" />

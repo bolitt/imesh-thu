@@ -70,8 +70,32 @@ void CVisualizer::PreCreateWindow( CREATESTRUCT& cs )
 
 void CVisualizer::InitializeDS()
 {
-	m_scene.OnSetup();
+	m_cloudEngine.Initialize();
+	
+	m_cloudEngine.m_triangleHandler.m_edgeEvent.Attach(m_edgeEventListener);
 	m_edgeEventListener.Initialize(this, &m_scene.m_demoLayer);
+
+	m_scene.OnSetup(m_cloudEngine);
+	
+	class WorkerThread : public CWinThread
+	{
+	public:
+		CloudInit& m_cloud;
+		WorkerThread(CloudInit& cloud) : m_cloud(cloud) {}
+	public:
+		int Run()
+		{
+			m_cloud.RunTriangulate();
+			return 0;
+		}
+	};
+
+	m_workerThread = new WorkerThread(m_cloudEngine);
+	bool isCreated = m_workerThread->CreateThread();
+	if (isCreated) 
+	{
+		m_workerThread->Run();
+	}
 }
 
 

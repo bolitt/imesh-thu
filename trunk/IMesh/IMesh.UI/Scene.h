@@ -41,10 +41,9 @@ public:
 public:
 	Scene(void);
 	~Scene(void);
-	void OnSetup();
+	void OnSetup(CloudInit& loader);
 	void OnRender();
 
-	void OnDemoLayerUpdated();
 };
 
 } } }

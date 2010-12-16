@@ -6,6 +6,7 @@
 #include "Scene.h"
 #include "EdgeEventHandler.h"
 
+
 namespace IMesh { 
 namespace UI { // namespace IMesh::UI
 
@@ -27,9 +28,12 @@ public:
 	Projection m_projection;
 	CSize m_canvasSize;
 
-public:
+	CloudInit m_cloudEngine;
 	EdgeEventListener m_edgeEventListener;
 	Models::Scene m_scene;
+
+public:
+	CWinThread* m_workerThread;
 
 protected:
 	BOOL CreateViewGLContext(HDC hDC); 
