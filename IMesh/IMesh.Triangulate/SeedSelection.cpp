@@ -53,6 +53,8 @@ bool findSeedTriangle(grid *m_grid, long &_pointindex1, long &_pointindex2, long
 							continue;
 
 						vect tempnorm;
+						if(pointindex1 ==0 && pointindex2 ==1 && pointindex3 == 2340)
+							int kk = 0;
 						if(!(point::testNormal(m_grid->pointsdatabase->points[pointindex1],m_grid->pointsdatabase->points[pointindex2],m_grid->pointsdatabase->points[pointindex3],tempnorm)))
 							continue;
 
@@ -101,11 +103,14 @@ bool testTriangleValidity(grid *m_grid, vector<int3> &neighborhood, point3D ball
 
 			point3D pos = m_grid->pointsdatabase->points[pointindex].position;
 
-			if(point3D::distance2(pos,ball_center) < ball_radius*ball_radius-0.01)
+			if(point3D::distance2(pos,ball_center) < ball_radius*ball_radius-0.0000000001)
 				return false;
+
+			
 		}
 	}
-
+		if(ball_center.x<0.6&&ball_center.x>0.4&&ball_center.y<0.6&&ball_center.y>0.4&&ball_center.z<0.6&&ball_center.z>0.4)
+				int kkkkk = 0;
 	return true;
 }
 
@@ -139,9 +144,9 @@ bool buildTriangle(grid *m_grid, long &pointindex1, long &pointindex2, long &poi
 	double l2;
 	
 	if(vect::dot(v23,v31)<0)
-		l2 = sqrt(R*R-l1*l1+0.00001);
+		l2 = sqrt(R*R-l1*l1);
 	else
-		l2 = -sqrt(R*R-l1*l1+0.00001);
+		l2 = -sqrt(R*R-l1*l1);
 	double l3 = sqrt(ballradius*ballradius-R*R);
 
 	ballcenter = point3D(p1.x+b1.x*l1+b2.x*l2+b3.x*l3,p1.y+b1.y*l1+b2.y*l2+b3.y*l3,p1.z+b1.z*l1+b2.z*l2+b3.z*l3);
@@ -163,11 +168,6 @@ bool buildTriangle(point3D ballcenter, double ballradius, grid *m_grid, long &po
 	edge *e12 = new edge(pointindex1,pointindex2,pointindex3,ballcenter);
 	edge *e23 = new edge(pointindex2,pointindex3,pointindex1,ballcenter);
 	edge *e31 = new edge(pointindex3,pointindex1,pointindex2,ballcenter);
-
-	if((e12->idx_i == 1515 && e12->idx_j == 1577)||(e23->idx_i == 1515 && e23->idx_j == 1577)||(e31->idx_i == 1515 && e31->idx_j == 1577))
-		int kkkk = 1;
-	if((e12->idx_i == 1516 && e12->idx_j == 1577)||(e23->idx_i == 1516 && e23->idx_j == 1577)||(e31->idx_i == 1516 && e31->idx_j == 1577))
-		int kkkk = 1;
 
 	e12->sidelink = newt;
 	e12->startpoint = edge::FIRSTPOINT;
