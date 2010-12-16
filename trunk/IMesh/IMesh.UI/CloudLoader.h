@@ -13,7 +13,7 @@ namespace IMesh { namespace UI {
 class CloudLoader
 {
 public:
-	Norm::Cloud m_cloud;	
+	Norm::Cloud m_cloud;
 
 public:
 	CloudLoader(void);
