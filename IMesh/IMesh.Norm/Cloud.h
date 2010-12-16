@@ -24,6 +24,8 @@ namespace Norm { //: namespace IMesh::Norm
 		int lowest;			//lowest point
 		double mx,my,mz;	//mid point
 		Vector3 mid;
+		double density,grid_width;
+		int grid_x,grid_y,grid_z;
 
 		FILE *m_FileHandler;	//source obj file
 		FILE *m_out;			//target obj file

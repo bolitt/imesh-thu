@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CloudInit.cpp" />
     <ClCompile Include="EventCommon.cpp" />
     <ClCompile Include="EdgePivot.cpp" />
     <ClCompile Include="predefs.cpp" />
@@ -23,6 +24,7 @@
     <ClInclude Include="..\IMesh.Share\EventArg.h" />
     <ClInclude Include="..\IMesh.Share\EventListener.h" />
     <ClInclude Include="..\IMesh.Share\vec.h" />
+    <ClInclude Include="CloudInit.h" />
     <ClInclude Include="EventCommon.h" />
     <ClInclude Include="EdgePivot.h" />
     <ClInclude Include="predefs.h" />

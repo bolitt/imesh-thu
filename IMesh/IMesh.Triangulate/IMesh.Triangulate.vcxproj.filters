@@ -39,6 +39,9 @@
     <ClCompile Include="EventCommon.cpp">
       <Filter>interface</Filter>
     </ClCompile>
+    <ClCompile Include="CloudInit.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="predefs.h">
@@ -67,6 +70,9 @@
     </ClInclude>
     <ClInclude Include="EventCommon.h">
       <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="CloudInit.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
