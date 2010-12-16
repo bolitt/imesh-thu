@@ -19,26 +19,28 @@ void TriangulationHandler::triangulateModel()
 		while((currentaxis = getActiveEdge()) != NULL)
 		{
 			printf("\ngetActiveEdge()");
-			OnEdgeActivated(currentaxis); //: TODO: CHANGED!
-
 			long newpointindex = ballPivot(currentaxis,modelgrid,ball_radius);
+			{
+				OnEdgeActivated(currentaxis); //: TODO: CHANGED!
+				triangle* newTriangel = triangleList[triangleList.size() - 1];
+				OnTriangleCreated(newTriangel);
+			}
+			
 			printf("\nballPivot()");
 		}
-		
-
+   
 		long seedindex1,seedindex2,seedindex3;
 		point3D ball_center;
 		if(findSeedTriangle(modelgrid,seedindex1,seedindex2,seedindex3,ball_center,ball_radius))
 		{
 			printf("\nfindSeedTriangle");
 			buildTriangle(ball_center,ball_radius,modelgrid,seedindex1,seedindex2,seedindex3);
-			printf("\buildTriangle");
+			printf("\nbuildTriangle");
 		}
 		else
 			return;
 	}
 }
-
 void TriangulationHandler::OnEdgeActivated(edge* currentAxis)
 {
 	EdgeEventArg arg;
@@ -51,4 +53,9 @@ void TriangulationHandler::OnEdgeActivated(edge* currentAxis)
 	// The change is originated by "source", and
 	// Influenced variables would be "arg"
 	m_edgeEvent.OnNotify(source, arg);
+}
+
+void TriangulationHandler::OnTriangleCreated(triangle* newTriangel)
+{
+
 }
