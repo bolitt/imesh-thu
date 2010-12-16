@@ -28,6 +28,7 @@ namespace Norm { //: namespace IMesh::Norm
 		ComputeNorm();
 		AdjustNormDirection();
 		norm_finished = true;
+		MoveToZero();
 		return 0;
 	}
 

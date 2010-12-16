@@ -26,7 +26,11 @@ namespace Norm { //: namespace IMesh::Norm
 				u=i,v=j;
 				weight = w;
 		}
-
+		void Vector3::operator-=( Vector3& v ){
+			x -= v.x;
+			y -= v.y;
+			z -= v.z;
+		}
 
 } ///:~ namespace IMesh::Norm
 } ///:~ namespace IMesh

@@ -27,11 +27,11 @@ int main()
 {
 	using namespace IMesh::Norm;
 
-
+/*
 	Cloud cloud;
 	cloud.InitFromFile("res/bunny.obj");
 	cloud.OutToFile();
-
+	*/
 	Cloud c2;
 	c2.InitFromFile("res/bunny_simple.obj");
 	c2.OutToFile();
