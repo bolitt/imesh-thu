@@ -2,12 +2,6 @@
 
 #include "Structures.h"
 
-#ifdef _DEBUG
-  #pragma comment(lib, "../Debug/IMesh.Norm.lib")
-#else
-  #pragma comment(lib, "../Release/IMesh.Norm.lib")
-#endif
-
 namespace IMesh { namespace UI {
 
 class CloudLoader

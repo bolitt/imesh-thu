@@ -4,6 +4,14 @@
 #include <gl/glu.h>
 #include "../IMesh.Share/vec.h"
 #include "../IMesh.Norm/Cloud.h"
+#include "../IMesh.Triangulate/CloudInit.h"
+#include "../IMesh.Triangulate/EventCommon.h"
+#include "../IMesh.Triangulate/predefs.h"
+#include "../IMesh.Triangulate/EdgePivot.h"
+#include "../IMesh.Triangulate/TriangulationHandler.h"
+#include "../IMesh.Triangulate/SeedSelection.h"
+
+
 
 namespace IMesh { namespace Num { namespace GL {
 	//typedef unsigned int GLenum;

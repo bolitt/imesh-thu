@@ -50,7 +50,6 @@
 
 #pragma endregion IMesh Headers
 
-
 #include <afx.h>
 
 #ifdef _UNICODE

@@ -22,8 +22,11 @@ Scene::~Scene(void)
 	}
 }
 
-void Scene::OnSetup()
+void Scene::OnSetup(CloudInit& loader)
 {
+	/*glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);*/
+
 	m_worldGrid.OnSetup();
 	m_worldAxis.OnSetup();
 	m_sphere.OnSetup();
@@ -40,8 +43,7 @@ void Scene::OnSetup()
 	{
 		using namespace IMesh::UI;
 		using namespace IMesh::Norm;
-		CloudLoader loader;
-		loader.Initialize();
+		
 		std::vector<Num::Vec3f>& points = loader.GetPoints();
 		std::vector<Num::Vec3f>& norms = loader.GetNorms();
 		ASSERT(points.size() == norms.size());
@@ -70,7 +72,6 @@ void Scene::OnSetup()
 			m_overLayer.m_children.push_back(v0);
 			m_overLayer.m_children.push_back(e);
 		}
-
 	}
 }
 
@@ -89,9 +90,5 @@ void Scene::OnRender()
 	_DEBUG_ONRENDER_CHECK_ERROR_();
 }
 
-void Scene::OnDemoLayerUpdated()
-{
-	OnRender();
-}
 
 } } }
