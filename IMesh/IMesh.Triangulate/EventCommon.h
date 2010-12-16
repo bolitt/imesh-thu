@@ -22,7 +22,7 @@ class EdgeEventArg : public IMesh::Interface::EventArg
 {
 public:
 	enum EventType {
-		Activatied, Joined  // 增加算法过程中的事件
+		Activatied,    // 增加算法过程中的事件
 	};
 	typedef EventType event_type;
 
