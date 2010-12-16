@@ -1,6 +1,7 @@
 #include "Cloud.h"
 #include <iostream>
 #include <stdio.h>
+#include <string.h>
 
 namespace IMesh { //: namespace IMesh
 namespace Norm { //: namespace IMesh::Norm
@@ -39,7 +40,8 @@ namespace Norm { //: namespace IMesh::Norm
 		int k=0;
 		char ch;
 	
-		m_FileHandler = fopen(strFileName, "r");
+		//m_FileHandler = fopen_s(strFileName, "r");
+		fopen_s(&m_FileHandler, strFileName, "r");
 		if (!m_FileHandler) {
 			std::cout<<"No such file\n"<<std::endl;;
 			return -1;
@@ -50,7 +52,7 @@ namespace Norm { //: namespace IMesh::Norm
 			*str++;
 		}
 		outname[k]='\0';
-		outname=strcat(outname,"_norm.obj");
+		strcat_s(outname,255,"_norm.obj");
 	
 
 		while(!feof(m_FileHandler))
@@ -84,7 +86,7 @@ namespace Norm { //: namespace IMesh::Norm
 	{
 		Vector3 vNewVertex;
 
-		fscanf(m_FileHandler, "%lf %lf %lf", &vNewVertex.x, &vNewVertex.y, &vNewVertex.z);
+		fscanf_s(m_FileHandler, "%lf %lf %lf", &vNewVertex.x, &vNewVertex.y, &vNewVertex.z);
 		m_vertices.push_back(vNewVertex);
 
 		return;
@@ -92,7 +94,8 @@ namespace Norm { //: namespace IMesh::Norm
 
 	void Cloud::OutToFile()
 	{
-		m_out = fopen(outname, "w");
+		//m_out = fopen_s(outname, "w");
+		fopen_s(&m_out, outname, "w");
 		if ( norm_finished )
 		{
 			for ( int i=0; i < v_num; i++) 

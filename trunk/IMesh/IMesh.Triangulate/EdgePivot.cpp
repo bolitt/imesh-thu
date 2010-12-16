@@ -179,7 +179,7 @@ void joinEdge(edge *edgeaxis, long pointindex, grid *m_grid, point3D ballcenter)
 	if(p2->flag == point::ONFRONT)
 	{
 		
-		for(int i = 0;i < p2->outedges.size();i++)
+		for(size_t i = 0;i < p2->outedges.size();i++)
 		{
 			if(shouldGlue(ip,p2->outedges[i]))
 			{
@@ -191,7 +191,7 @@ void joinEdge(edge *edgeaxis, long pointindex, grid *m_grid, point3D ballcenter)
 				break;
 			}
 		}
-		for(int j = 0;j < p2->inedges.size();j++)
+		for(size_t j = 0;j < p2->inedges.size();j++)
 		{
 			if(shouldGlue(pj,p2->inedges[j]))
 			{
@@ -251,7 +251,7 @@ void deleteEdge(edge *e)
 	{
 		if(e->flag != edge::ACTIVE && e->flag != edge::BOUNDARY && e->flag != edge::DELETED)
 				int kkkkk = 0;
-		int i;
+		size_t i;
 		for(i = 0;i<edfr.loopheads.size();i++)
 		{
 			if(edfr.loopheads[i]->flag != edge::ACTIVE && edfr.loopheads[i]->flag != edge::BOUNDARY && edfr.loopheads[i]->flag != edge::DELETED)
@@ -284,7 +284,7 @@ void deleteEdge(edge *e)
 
 void deleteEdgefromPoint(edge *e, point *p, bool oi)
 {
-	int i;
+	size_t i;
 	if(oi == true)//o
 	{
 		p->tabooPointList.push_back(e->idx_j);
@@ -500,7 +500,7 @@ void glueEdges(edge *newedge, edge *originedge, point *newedgei, point *newedgej
 		{
 			if(temp->flag != edge::ACTIVE && temp->flag != edge::BOUNDARY && temp->flag != edge::DELETED)
 				int kkkkk = 0;
-			int i;
+			size_t i;
 			for(i = 0;i<edfr.loopheads.size();i++)
 			{
 				if(edfr.loopheads[i]->flag != edge::ACTIVE && edfr.loopheads[i]->flag != edge::BOUNDARY && edfr.loopheads[i]->flag != edge::DELETED)
