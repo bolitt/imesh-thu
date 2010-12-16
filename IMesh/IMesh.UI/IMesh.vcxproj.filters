@@ -41,6 +41,9 @@
     <Filter Include="external\Share\interface">
       <UniqueIdentifier>{89b35859-1eda-4ae6-bc50-4558d6abe314}</UniqueIdentifier>
     </Filter>
+    <Filter Include="external\Triangulate">
+      <UniqueIdentifier>{16f0c84d-3153-44cd-b82e-7bcda5bd023f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -238,6 +241,21 @@
     <ClInclude Include="CloudLoader.h">
       <Filter>DS</Filter>
     </ClInclude>
+    <ClInclude Include="..\IMesh.Triangulate\EventCommon.h">
+      <Filter>external\Triangulate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IMesh.Triangulate\TriangulationHandler.h">
+      <Filter>external\Triangulate</Filter>
+    </ClInclude>
+    <ClInclude Include="EdgeEventHandler.h">
+      <Filter>DS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IMesh.Triangulate\EdgePivot.h">
+      <Filter>external\Triangulate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IMesh.Triangulate\SeedSelection.h">
+      <Filter>external\Triangulate</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ChildFrm.cpp">
@@ -316,6 +334,9 @@
       <Filter>models</Filter>
     </ClCompile>
     <ClCompile Include="CloudLoader.cpp">
+      <Filter>DS</Filter>
+    </ClCompile>
+    <ClCompile Include="EdgeEventHandler.cpp">
       <Filter>DS</Filter>
     </ClCompile>
   </ItemGroup>

@@ -71,6 +71,7 @@ void CVisualizer::PreCreateWindow( CREATESTRUCT& cs )
 void CVisualizer::InitializeDS()
 {
 	m_scene.OnSetup();
+	m_edgeEventListener.Initialize(this, &m_scene.m_demoLayer);
 }
 
 
@@ -93,7 +94,6 @@ Num::GL::Vec3GLdouble CVisualizer::CameraFindUp()
 	return orthPos;
 }
 
-
 void CVisualizer::OnView()
 {
 }
@@ -108,7 +108,7 @@ void CVisualizer::OnRender()
 	using namespace Config;
 	
 	ActivateCurrentContext();
-	{		
+	{
 		GLsizei width = m_canvasSize.cx;
 		GLsizei height = m_canvasSize.cy;
 		GLdouble aspect = (height != 0) ? (GLdouble)width / (GLdouble)height : 1;

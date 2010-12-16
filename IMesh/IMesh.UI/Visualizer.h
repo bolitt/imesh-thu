@@ -4,6 +4,7 @@
 #include "Camera.h"
 #include "Projection.h"
 #include "Scene.h"
+#include "EdgeEventHandler.h"
 
 namespace IMesh { 
 namespace UI { // namespace IMesh::UI
@@ -27,6 +28,7 @@ public:
 	CSize m_canvasSize;
 
 public:
+	EdgeEventListener m_edgeEventListener;
 	Models::Scene m_scene;
 
 protected:

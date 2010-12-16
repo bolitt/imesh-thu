@@ -84,6 +84,14 @@ void Scene::OnRender()
 
 	m_overLayer.OnRender();
 	_DEBUG_ONRENDER_CHECK_ERROR_();
+
+	m_demoLayer.OnRender();
+	_DEBUG_ONRENDER_CHECK_ERROR_();
+}
+
+void Scene::OnDemoLayerUpdated()
+{
+	OnRender();
 }
 
 } } }

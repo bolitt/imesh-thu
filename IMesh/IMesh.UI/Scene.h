@@ -23,6 +23,7 @@ public:
 public:
 	Layer m_baseLayer;
 	Layer m_overLayer;
+	Layer m_demoLayer;
 
 	// m_baseLayer Children:
 	Grid m_worldGrid;
@@ -34,11 +35,16 @@ public:
 	std::vector<Vertex*> m_verties;
 	std::vector<Edge*> m_edges;
 
+	// m_demotLayer Children:
+
+
 public:
 	Scene(void);
 	~Scene(void);
 	void OnSetup();
 	void OnRender();
+
+	void OnDemoLayerUpdated();
 };
 
 } } }
