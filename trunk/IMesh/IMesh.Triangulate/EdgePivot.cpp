@@ -25,6 +25,9 @@ edge *getActiveEdge()
 
 long ballPivot(edge *edgeaxis, grid *m_grid, double ballradius)
 {
+	if((edgeaxis->idx_i == 13 && edgeaxis->idx_j == 1)||(edgeaxis->idx_j == 1 && edgeaxis->idx_i == 13))
+		int iii = 0;
+
 	point3D pi = m_grid->pointsdatabase->points[edgeaxis->idx_i].position;
 	point3D pj = m_grid->pointsdatabase->points[edgeaxis->idx_j].position;
 	point3D pc = edgeaxis->ball_center;
@@ -53,6 +56,8 @@ long ballPivot(edge *edgeaxis, grid *m_grid, double ballradius)
 	{
 		if(pointcandidates[i] == edgeaxis->idx_i || pointcandidates[i] == edgeaxis->idx_j || pointcandidates[i] == edgeaxis->idx_o)
 			continue;
+		if(m_grid->pointsdatabase->points[edgeaxis->idx_i].hasTaboo(pointcandidates[i]) || m_grid->pointsdatabase->points[edgeaxis->idx_j].hasTaboo(pointcandidates[i]))
+			continue;
 		point3D ps = m_grid->pointsdatabase->points[pointcandidates[i]].position;
 
 		vect vs(ps.x-m.x,ps.y-m.y,ps.z-m.z);
@@ -69,7 +74,7 @@ long ballPivot(edge *edgeaxis, grid *m_grid, double ballradius)
 			continue;
 
 		double angle = atan2(ys,xs);
-		if(angle<0) angle += 2*3.14159265;
+		if(angle<0) angle += 2*3.14159265358979323846;
 		double delta_angle = acos((rc*rc+ds*ds-rs*rs)/2/ds/rc);
 
 		double angle1 = angle-delta_angle;
@@ -79,6 +84,8 @@ long ballPivot(edge *edgeaxis, grid *m_grid, double ballradius)
 		//double angle2 = angle+delta_angle;
 		//if(angle2>2*3.14159265)
 		//	angle2 -= 2*3.14159265;
+		if(angle1<0)
+			int kkkkk=0;
 
 		if(angle1<min_angle)
 		{
@@ -280,6 +287,7 @@ void deleteEdgefromPoint(edge *e, point *p, bool oi)
 	int i;
 	if(oi == true)//o
 	{
+		p->tabooPointList.push_back(e->idx_j);
 		for(i = 0;i<p->outedges.size();i++)
 			if(edgeEqual(p->outedges[i],e))
 				break;
@@ -287,6 +295,7 @@ void deleteEdgefromPoint(edge *e, point *p, bool oi)
 	}
 	else//i
 	{
+		p->tabooPointList.push_back(e->idx_i);
 		for(i = 0;i<p->inedges.size();i++)
 			if(edgeEqual(p->inedges[i],e))
 				break;
@@ -367,6 +376,8 @@ void glueEdges(edge *newedge, edge *originedge, point *newedgei, point *newedgej
 		deleteEdge(originedge);
 		if(newedgei->outedges.size() == 0 && newedgei->inedges.size() == 0)
 			newedgei->flag = point::INNER;
+		if(newedgej->outedges.size() == 0 && newedgej->inedges.size() == 0)
+			newedgej->flag = point::INNER;
 
 		return;
 	}
