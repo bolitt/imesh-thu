@@ -111,7 +111,7 @@ struct point{
 	void setFlagOnfront(){flag = ONFRONT;}
 	void setFlagInner(){flag = INNER;}
 	bool hasTaboo(long index){
-		for(int i = 0;i<tabooPointList.size();i++)
+		for(size_t i = 0;i<tabooPointList.size();i++)
 			if(index == tabooPointList[i])
 				return true;
 		return false;

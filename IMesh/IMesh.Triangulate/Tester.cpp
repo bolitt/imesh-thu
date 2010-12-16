@@ -38,9 +38,9 @@ int main()
 	testHandler.triangulateModel();
 
 	FILE *fp;
-	fp = fopen("testresult.txt","w");
+	fopen_s(&fp,"testresult.txt","w");
 
-	for(int i = 0;i < triangleList.size();i++)
+	for(size_t i = 0;i < triangleList.size();i++)
 	{
 		fprintf(fp,"%ld, %ld, %ld\n",triangleList[i]->idx_i,triangleList[i]->idx_j,triangleList[i]->idx_k);
 	}

@@ -33,7 +33,7 @@ void cell::bucket_sort(int startindex, int endindex)
 {
 	if(startindex >= endindex)
 		return;
-	if(startindex < 0 || endindex >= this->pointindex.size())
+	if(startindex < 0 || endindex >= (int)this->pointindex.size())
 		return;
 
 	int low = startindex;

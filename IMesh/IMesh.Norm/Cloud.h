@@ -22,7 +22,7 @@ namespace Norm { //: namespace IMesh::Norm
 		int k;				//compute for k nearest neighbours;
 		double r;				//radious
 		int lowest;			//lowest point
-		double mx,my,mz;
+		double mx,my,mz;	//mid point
 		Vector3 mid;
 
 		FILE *m_FileHandler;	//source obj file
