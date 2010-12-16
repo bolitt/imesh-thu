@@ -101,6 +101,7 @@ struct point{
 	enum {ONFRONT,UNUSED,INNER}flag;
 	vector<edge *> outedges;
 	vector<edge *> inedges;
+	vector<long> tabooPointList;
 
 	point(norm_point np){position = np.position; norm = np.norm; flag = UNUSED;}
 	bool isUnused(){return flag == UNUSED;}
@@ -109,6 +110,12 @@ struct point{
 	void setFlagUnused(){flag = UNUSED;}
 	void setFlagOnfront(){flag = ONFRONT;}
 	void setFlagInner(){flag = INNER;}
+	bool hasTaboo(long index){
+		for(int i = 0;i<tabooPointList.size();i++)
+			if(index == tabooPointList[i])
+				return true;
+		return false;
+	}
 	static bool comparePoint(point a, point b)
 	{
 	if(a.position.x == b.position.x)
@@ -125,7 +132,7 @@ struct point{
 		vect ac(c.position.x-a.position.x,c.position.y-a.position.y,c.position.z-a.position.z);
 		vect tnorm = vect::cross(ab,ac);
 		outnorm = tnorm;
-		if(vect::dot(tnorm,a.norm)<=0 || vect::dot(tnorm,b.norm)<=0 || vect::dot(tnorm,c.norm)<=0)
+		if(vect::dot(tnorm,a.norm)<=0.0000000001 || vect::dot(tnorm,b.norm)<=0.000000001 || vect::dot(tnorm,c.norm)<=0.000000001)
 			return false;
 		return true;
 	}
