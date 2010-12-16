@@ -230,6 +230,26 @@ namespace IMesh { //: namespace IMesh
 			return 0;
 		}
 
+		int Cloud::MoveToZero(){
+			double lx = 0,ly = 0,lz = 0;
+			for( int i = 0 ; i < v_num ; i++ )
+			{
+				if( lx > m_vertices[i].x )
+					lx = m_vertices[i].x;
+				if( ly > m_vertices[i].y )
+					ly = m_vertices[i].y;
+				if( lz > m_vertices[i].z )
+					lz = m_vertices[i].z;
+			}
+			Vector3 v(lx,ly,lz);
+			for( int i = 0 ; i < v_num ; i++ )
+			{
+				m_vertices[i]-=v;
+			}
+			
+			return 0;
+		}
+
 	
 	} ///:~ namespace IMesh::Norm
 } ///:~ namespace IMesh

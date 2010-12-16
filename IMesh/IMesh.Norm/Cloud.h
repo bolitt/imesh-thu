@@ -21,6 +21,7 @@ namespace Norm { //: namespace IMesh::Norm
 		int v_num;		//number of vertices
 		int k;				//compute for k nearest neighbours;
 		double r;				//radious
+		int lowest;			//lowest point
 
 		FILE *m_FileHandler;	//source obj file
 		FILE *m_out;			//target obj file
@@ -33,6 +34,7 @@ namespace Norm { //: namespace IMesh::Norm
 
 		Vector3 ComputeOneNorm(int );
 		int ComputeNorm();
+		int MoveToZero();
 		int AdjustNormDirection();
 
 		/***
