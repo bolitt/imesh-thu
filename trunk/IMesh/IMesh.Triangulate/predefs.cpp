@@ -192,9 +192,9 @@ bool grid::pickPointInCell(long &_index, int _cellindex)
 
 void grid::locatePoint(point3D pos, int3 &_cellindex)
 {
-	_cellindex.first = floor(pos.x/gridwidth)+0.1;
-	_cellindex.second = floor(pos.y/gridwidth)+0.1;
-	_cellindex.third = floor(pos.z/gridwidth)+0.1;
+	_cellindex.first = min((int)(floor(pos.x/gridwidth)+0.1),this->isize-1);
+	_cellindex.second = min((int)(floor(pos.y/gridwidth)+0.1),this->jsize-1);
+	_cellindex.third = min((int)(floor(pos.z/gridwidth)+0.1),this->ksize-1);
 }
 
 void grid::locatePoint(long _index,int3 &_cellindex)
