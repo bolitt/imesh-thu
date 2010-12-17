@@ -1,13 +1,14 @@
 #pragma once
 #include "predefs.h"
+#include "TriangulationHandler.h"
 
-edge *getActiveEdge();
-long ballPivot(edge *edgeaxis,grid *m_grid, double ballradius);
+extern edge *getActiveEdge(TriangulationHandler *TH);
+extern long ballPivot(edge *edgeaxis,grid *m_grid, double ballradius, TriangulationHandler *TH);
 
 
-void joinEdge(edge *edgeaxis, long pointindex, grid *m_grid, point3D ballcenter);
-void glueEdges(edge *newedge, edge *originedge, point *newedgei, point *newedgej);
-bool shouldGlue(edge *newedge, edge *originedge);
-void deleteEdge(edge *e);
-bool edgeEqual(edge *e1,edge *e2);
-void deleteEdgefromPoint(edge *e, point *p, bool oi);//o:true,i:false
+extern void joinEdge(edge *edgeaxis, long pointindex, grid *m_grid, point3D ballcenter, TriangulationHandler *TH);
+extern void glueEdges(edge *newedge, edge *originedge, point *newedgei, point *newedgej, TriangulationHandler *TH);
+extern bool shouldGlue(edge *newedge, edge *originedge);
+extern void deleteEdge(edge *e, TriangulationHandler *TH);
+extern bool edgeEqual(edge *e1,edge *e2);
+extern void deleteEdgefromPoint(edge *e, point *p, bool oi);//o:true,i:false

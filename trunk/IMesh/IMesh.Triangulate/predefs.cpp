@@ -1,8 +1,8 @@
 #include "predefs.h"
 
-vector<triangle *> triangleList;
-edgefront edfr;
-deque<edge *> frontEdgeQueue;
+//vector<triangle *> triangleList;
+//edgefront edfr;
+//deque<edge *> frontEdgeQueue;
 
 void grid::initialize()
 {
