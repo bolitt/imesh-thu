@@ -15,9 +15,7 @@
 //
 
 
-namespace IMesh { 
-namespace UI { // namespace IMesh::UI
-
+BEGIN_NAMESPACE2(IMesh, UI)
 
 class CIMeshApp : public CWinAppEx
 {
@@ -49,4 +47,4 @@ public:
 
 extern CIMeshApp theApp;
 
-}}
+END_NAMESPACE2(IMesh, UI)
