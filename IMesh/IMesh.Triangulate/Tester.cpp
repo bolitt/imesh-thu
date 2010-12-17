@@ -1,6 +1,6 @@
 #include <iostream>
 #include "TriangulationHandler.h"
-#include "CloudInit.h"
+#include "CloudLoader.h"
 
 
 static char THIS_FILE[] = __FILE__;
@@ -40,11 +40,11 @@ int main()
 	testHandler.triangulateModel();
 
 	FILE *fp;
-	fopen_s(&fp,"testresult.txt","w");
+	fp = fopen("testresult.txt","w");
 
-	for(size_t i = 0;i < triangleList.size();i++)
+	for(int i = 0;i < testHandler.triangleList.size();i++)
 	{
-		fprintf(fp,"%ld, %ld, %ld\n",triangleList[i]->idx_i,triangleList[i]->idx_j,triangleList[i]->idx_k);
+		fprintf(fp,"%ld, %ld, %ld\n",testHandler.triangleList[i]->idx_i,testHandler.triangleList[i]->idx_j,testHandler.triangleList[i]->idx_k);
 	}
 	fclose(fp);
 

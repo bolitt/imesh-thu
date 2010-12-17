@@ -16,14 +16,14 @@ void TriangulationHandler::triangulateModel()
 	{
 		edge *currentaxis;
 
-		while((currentaxis = getActiveEdge()) != NULL)
+		while((currentaxis = getActiveEdge(this)) != NULL)
 		{
 			printf("\ngetActiveEdge()");
-			long newpointindex = ballPivot(currentaxis,modelgrid,ball_radius);
+			long newpointindex = ballPivot(currentaxis,modelgrid,ball_radius,this);
 			{
-				OnEdgeActivated(currentaxis); //: TODO: CHANGED!
+				//OnEdgeActivated(currentaxis); //: TODO: CHANGED!
 				triangle* newTriangel = triangleList[triangleList.size() - 1];
-				OnTriangleCreated(newTriangel);
+				//OnTriangleCreated(newTriangel);
 			}
 			
 			printf("\nballPivot()");
@@ -31,31 +31,31 @@ void TriangulationHandler::triangulateModel()
    
 		long seedindex1,seedindex2,seedindex3;
 		point3D ball_center;
-		if(findSeedTriangle(modelgrid,seedindex1,seedindex2,seedindex3,ball_center,ball_radius))
+		if(findSeedTriangle(modelgrid,seedindex1,seedindex2,seedindex3,ball_center,ball_radius,this))
 		{
 			printf("\nfindSeedTriangle");
-			buildTriangle(ball_center,ball_radius,modelgrid,seedindex1,seedindex2,seedindex3);
+			buildTriangle(ball_center,ball_radius,modelgrid,seedindex1,seedindex2,seedindex3,this);
 			printf("\nbuildTriangle");
 		}
 		else
 			return;
 	}
 }
-void TriangulationHandler::OnEdgeActivated(edge* currentAxis)
-{
-	EdgeEventArg arg;
-	EdgeEventArg::EventType type = EdgeEventArg::Activatied;
-	arg.Initialize(type, 
-					currentAxis, &edfr, 
-					apl, &triangleList, &frontEdgeQueue);
-	void* source = currentAxis;
-	
-	// The change is originated by "source", and
-	// Influenced variables would be "arg"
-	m_edgeEvent.OnNotify(source, arg);
-}
-
-void TriangulationHandler::OnTriangleCreated(triangle* newTriangel)
-{
-
-}
+//void TriangulationHandler::OnEdgeActivated(edge* currentAxis)
+//{
+//	EdgeEventArg arg;
+//	EdgeEventArg::EventType type = EdgeEventArg::Activatied;
+//	arg.Initialize(type, 
+//					currentAxis, &edfr, 
+//					apl, &triangleList, &frontEdgeQueue);
+//	void* source = currentAxis;
+//	
+//	// The change is originated by "source", and
+//	// Influenced variables would be "arg"
+//	m_edgeEvent.OnNotify(source, arg);
+//}
+//
+//void TriangulationHandler::OnTriangleCreated(triangle* newTriangel)
+//{
+//
+//}

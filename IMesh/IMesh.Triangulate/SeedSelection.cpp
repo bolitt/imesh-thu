@@ -1,6 +1,6 @@
 #include "SeedSelection.h"
 
-bool findSeedTriangle(grid *m_grid, long &_pointindex1, long &_pointindex2, long &_pointindex3, point3D &ball_center, double ball_radius)
+bool findSeedTriangle(grid *m_grid, long &_pointindex1, long &_pointindex2, long &_pointindex3, point3D &ball_center, double ball_radius, TriangulationHandler *TH)
 {
 	bool found = false;
 	int gridsize = m_grid->isize*m_grid->jsize*m_grid->ksize;
@@ -154,7 +154,7 @@ bool buildTriangle(grid *m_grid, long &pointindex1, long &pointindex2, long &poi
 	return true;
 }
 
-bool buildTriangle(point3D ballcenter, double ballradius, grid *m_grid, long &pointindex1, long &pointindex2, long &pointindex3)
+bool buildTriangle(point3D ballcenter, double ballradius, grid *m_grid, long &pointindex1, long &pointindex2, long &pointindex3,TriangulationHandler *TH)
 {
 	triangle *newt = new triangle;
 
@@ -187,16 +187,16 @@ bool buildTriangle(point3D ballcenter, double ballradius, grid *m_grid, long &po
 	e12->ishead = true;
 	if(e12->flag != edge::ACTIVE && e12->flag != edge::BOUNDARY && e12->flag != edge::DELETED)
 				int kkkkk = 0;
-	edfr.loopheads.push_back(e12);
-	edfr.loopnum += 1;
-	if(edfr.loopnum == 15)
+	TH->edfr.loopheads.push_back(e12);
+	TH->edfr.loopnum += 1;
+	if(TH->edfr.loopnum == 15)
 				int kkkkk = 0;
 
-	frontEdgeQueue.push_back(e23);
-	frontEdgeQueue.push_back(e31);
-	frontEdgeQueue.push_back(e12);
+	TH->frontEdgeQueue.push_back(e23);
+	TH->frontEdgeQueue.push_back(e31);
+	TH->frontEdgeQueue.push_back(e12);
 
-	triangleList.push_back(newt);
+	TH->triangleList.push_back(newt);
 
 	point *p1 = &(m_grid->pointsdatabase->points[pointindex1]);
 	p1->outedges.push_back(e12);

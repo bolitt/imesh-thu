@@ -1,29 +1,29 @@
 #include "EdgePivot.h"
 
-edge *getActiveEdge()
+edge *getActiveEdge(TriangulationHandler *TH)
 {
 	edge *e = NULL;
 
-	while(!frontEdgeQueue.empty() && e == NULL)
+	while(!TH->frontEdgeQueue.empty() && e == NULL)
 	{
-		edge *f = frontEdgeQueue.front();
+		edge *f = TH->frontEdgeQueue.front();
 
 		if(f->flag != edge::ACTIVE)
 		{
-			frontEdgeQueue.pop_front();
+			TH->frontEdgeQueue.pop_front();
 			if(f->flag == edge::DELETED)
 				delete f;
 			continue;
 		}
 
 		e = f;
-		frontEdgeQueue.pop_front();
+		TH->frontEdgeQueue.pop_front();
 	}
 
 	return e;
 }
 
-long ballPivot(edge *edgeaxis, grid *m_grid, double ballradius)
+long ballPivot(edge *edgeaxis, grid *m_grid, double ballradius,TriangulationHandler *TH)
 {
 	if((edgeaxis->idx_i == 13 && edgeaxis->idx_j == 1)||(edgeaxis->idx_j == 1 && edgeaxis->idx_i == 13))
 		int iii = 0;
@@ -111,12 +111,12 @@ long ballPivot(edge *edgeaxis, grid *m_grid, double ballradius)
 
 	point3D newballcenter(m.x+xoffset*nx.x+yoffset*ny.x,m.y+xoffset*nx.y+yoffset*ny.y,m.z+xoffset*nx.z+yoffset*ny.z);
 
-	joinEdge(edgeaxis, min_index, m_grid, newballcenter);
+	joinEdge(edgeaxis, min_index, m_grid, newballcenter,TH);
 
 	return min_index;
 }
 
-void joinEdge(edge *edgeaxis, long pointindex, grid *m_grid, point3D ballcenter)
+void joinEdge(edge *edgeaxis, long pointindex, grid *m_grid, point3D ballcenter, TriangulationHandler *TH)
 {
 	triangle *newt= new triangle;
 
@@ -161,7 +161,7 @@ void joinEdge(edge *edgeaxis, long pointindex, grid *m_grid, point3D ballcenter)
 	pj->pre = ip;
 	edgeaxis->next->pre = pj;
 
-	triangleList.push_back(newt);
+	TH->triangleList.push_back(newt);
 
 	point *p1 = &(m_grid->pointsdatabase->points[edgeaxis->idx_i]);
 	point *p2 = &(m_grid->pointsdatabase->points[pointindex]);
@@ -171,7 +171,7 @@ void joinEdge(edge *edgeaxis, long pointindex, grid *m_grid, point3D ballcenter)
 	deleteEdgefromPoint(edgeaxis,p1,true);
 	deleteEdgefromPoint(edgeaxis,p3,false);
 	edgeaxis->flag = edge::DELETED;
-	deleteEdge(edgeaxis);
+	deleteEdge(edgeaxis,TH);
 	
 	bool glued1 = false;
 	bool glued2 = false;
@@ -186,7 +186,7 @@ void joinEdge(edge *edgeaxis, long pointindex, grid *m_grid, point3D ballcenter)
 				if((ip->idx_i == 1515 && ip->idx_j == 1452)||(pj->idx_i == 1515 && pj->idx_j == 1452))
 					int kkkk = 1;
 				//glue them!
-				glueEdges(ip,p2->outedges[i],p1,p2);
+				glueEdges(ip,p2->outedges[i],p1,p2,TH);
 				glued1 = true;
 				break;
 			}
@@ -196,7 +196,7 @@ void joinEdge(edge *edgeaxis, long pointindex, grid *m_grid, point3D ballcenter)
 			if(shouldGlue(pj,p2->inedges[j]))
 			{
 				//glue them!
-				glueEdges(pj,p2->inedges[j],p2,p3);
+				glueEdges(pj,p2->inedges[j],p2,p3,TH);
 				glued2 = true;
 				break;
 			}
@@ -217,14 +217,14 @@ void joinEdge(edge *edgeaxis, long pointindex, grid *m_grid, point3D ballcenter)
 		//add edge1 
 		p1->outedges.push_back(ip);
 		p2->inedges.push_back(ip);
-		frontEdgeQueue.push_back(ip);
+		TH->frontEdgeQueue.push_back(ip);
 	}
 	if(glued2 == false)
 	{
 		//add edge2
 		p2->outedges.push_back(pj);
 		p3->inedges.push_back(pj);
-		frontEdgeQueue.push_back(pj);
+		TH->frontEdgeQueue.push_back(pj);
 	}
 
 }
@@ -243,7 +243,7 @@ bool edgeEqual(edge *e1, edge *e2)
 }
 
 
-void deleteEdge(edge *e)
+void deleteEdge(edge *e, TriangulationHandler *TH)
 {
 	//e->next->pre = e->pre;
 	//e->pre->next = e->next;
@@ -252,25 +252,25 @@ void deleteEdge(edge *e)
 		if(e->flag != edge::ACTIVE && e->flag != edge::BOUNDARY && e->flag != edge::DELETED)
 				int kkkkk = 0;
 		size_t i;
-		for(i = 0;i<edfr.loopheads.size();i++)
+		for(i = 0;i<TH->edfr.loopheads.size();i++)
 		{
-			if(edfr.loopheads[i]->flag != edge::ACTIVE && edfr.loopheads[i]->flag != edge::BOUNDARY && edfr.loopheads[i]->flag != edge::DELETED)
+			if(TH->edfr.loopheads[i]->flag != edge::ACTIVE && TH->edfr.loopheads[i]->flag != edge::BOUNDARY && TH->edfr.loopheads[i]->flag != edge::DELETED)
 				int kkkkk = 0;
 
-			if(edgeEqual(edfr.loopheads[i],e))
+			if(edgeEqual(TH->edfr.loopheads[i],e))
 				break;
 		}
 
 		e->ishead = false;
 		if(e->next->flag != edge::ACTIVE && e->next->flag != edge::BOUNDARY && e->next->flag != edge::DELETED)
 				int kkkkk = 0;
-		edfr.loopheads[i] = e->next;
+		TH->edfr.loopheads[i] = e->next;
 		e->next->ishead = true;
 		if(e->ishead)
 		{
-			edfr.loopheads.erase(edfr.loopheads.begin()+i);
-			edfr.loopnum -= 1;
-			if(edfr.loopnum == 15)
+			TH->edfr.loopheads.erase(TH->edfr.loopheads.begin()+i);
+			TH->edfr.loopnum -= 1;
+			if(TH->edfr.loopnum == 15)
 				int kkkkk = 0;
 		}
 	}
@@ -303,7 +303,7 @@ void deleteEdgefromPoint(edge *e, point *p, bool oi)
 	}
 }
 
-void glueEdges(edge *newedge, edge *originedge, point *newedgei, point *newedgej)
+void glueEdges(edge *newedge, edge *originedge, point *newedgei, point *newedgej, TriangulationHandler *TH)
 {
 	triangle *tn = newedge->sidelink;
 	triangle *to = originedge->sidelink;
@@ -341,7 +341,7 @@ void glueEdges(edge *newedge, edge *originedge, point *newedgei, point *newedgej
 		originedge->pre = newedge->pre;
 		
 		newedge->flag = edge::DELETED;
-		deleteEdge(newedge);
+		deleteEdge(newedge,TH);
 
 		originedge->pre->next = originedge->next;
 		originedge->next->pre = originedge->pre;
@@ -349,7 +349,7 @@ void glueEdges(edge *newedge, edge *originedge, point *newedgei, point *newedgej
 		deleteEdgefromPoint(originedge,newedgej,true);
 		deleteEdgefromPoint(originedge,newedgei,false);
 
-		deleteEdge(originedge);
+		deleteEdge(originedge,TH);
 
 		if(newedgej->outedges.size() == 0 && newedgej->inedges.size() == 0)
 			newedgej->flag = point::INNER;
@@ -365,7 +365,7 @@ void glueEdges(edge *newedge, edge *originedge, point *newedgei, point *newedgej
 		originedge->next = newedge->next;
 
 		newedge->flag = edge::DELETED;
-		deleteEdge(newedge);
+		deleteEdge(newedge,TH);
 
 		originedge->pre->next = originedge->next;
 		originedge->next->pre = originedge->pre;
@@ -373,7 +373,7 @@ void glueEdges(edge *newedge, edge *originedge, point *newedgei, point *newedgej
 		deleteEdgefromPoint(originedge,newedgei,false);
 		deleteEdgefromPoint(originedge,newedgej,true);
 
-		deleteEdge(originedge);
+		deleteEdge(originedge,TH);
 		if(newedgei->outedges.size() == 0 && newedgei->inedges.size() == 0)
 			newedgei->flag = point::INNER;
 		if(newedgej->outedges.size() == 0 && newedgej->inedges.size() == 0)
@@ -432,7 +432,7 @@ void glueEdges(edge *newedge, edge *originedge, point *newedgei, point *newedgej
 
 
 			newedge->flag = edge::DELETED;
-			deleteEdge(newedge);
+			deleteEdge(newedge,TH);
 
 			FLAG = originedge->next->flag;
 
@@ -443,13 +443,13 @@ void glueEdges(edge *newedge, edge *originedge, point *newedgei, point *newedgej
 			if(originedge->next->flag != edge::ACTIVE && originedge->next->flag != edge::BOUNDARY && originedge->next->flag != edge::DELETED)
 				int kkkkk = 0;
 
-			edfr.loopheads.push_back(originedge->next);
-			edfr.loopnum += 1;
-			if(edfr.loopnum == 15)
+			TH->edfr.loopheads.push_back(originedge->next);
+			TH->edfr.loopnum += 1;
+			if(TH->edfr.loopnum == 15)
 				int kkkkk = 0;
 
 
-			deleteEdge(originedge);
+			deleteEdge(originedge,TH);
 
 			return;
 		case -2:
@@ -465,14 +465,14 @@ void glueEdges(edge *newedge, edge *originedge, point *newedgei, point *newedgej
 			newedge->next->ishead = true;
 			if(newedge->next->flag != edge::ACTIVE && newedge->next->flag != edge::BOUNDARY && newedge->next->flag != edge::DELETED)
 				int kkkkk = 0;
-			edfr.loopheads.push_back(newedge->next);
-			edfr.loopnum += 1;
-			if(edfr.loopnum == 15)
+			TH->edfr.loopheads.push_back(newedge->next);
+			TH->edfr.loopnum += 1;
+			if(TH->edfr.loopnum == 15)
 				int kkkkk = 0;
 
 			newedge->flag = edge::DELETED;
-			deleteEdge(newedge);
-			deleteEdge(originedge);
+			deleteEdge(newedge,TH);
+			deleteEdge(originedge,TH);
 
 			return;
 		}
@@ -490,8 +490,8 @@ void glueEdges(edge *newedge, edge *originedge, point *newedgei, point *newedgej
 	deleteEdgefromPoint(originedge,newedgei,false);
 
 	newedge->flag = edge::DELETED;
-	deleteEdge(newedge);
-	deleteEdge(originedge);
+	deleteEdge(newedge,TH);
+	deleteEdge(originedge,TH);
 
 
 	do
@@ -501,19 +501,19 @@ void glueEdges(edge *newedge, edge *originedge, point *newedgei, point *newedgej
 			if(temp->flag != edge::ACTIVE && temp->flag != edge::BOUNDARY && temp->flag != edge::DELETED)
 				int kkkkk = 0;
 			size_t i;
-			for(i = 0;i<edfr.loopheads.size();i++)
+			for(i = 0;i<TH->edfr.loopheads.size();i++)
 			{
-				if(edfr.loopheads[i]->flag != edge::ACTIVE && edfr.loopheads[i]->flag != edge::BOUNDARY && edfr.loopheads[i]->flag != edge::DELETED)
+				if(TH->edfr.loopheads[i]->flag != edge::ACTIVE && TH->edfr.loopheads[i]->flag != edge::BOUNDARY && TH->edfr.loopheads[i]->flag != edge::DELETED)
 				int kkkkk = 0;
-				if(edgeEqual(edfr.loopheads[i],temp))
+				if(edgeEqual(TH->edfr.loopheads[i],temp))
 					break;
 			}
 
 			temp->ishead = false;
 			
-			edfr.loopheads.erase(edfr.loopheads.begin()+i);
-			edfr.loopnum -= 1;
-			if(edfr.loopnum == 15)
+			TH->edfr.loopheads.erase(TH->edfr.loopheads.begin()+i);
+			TH->edfr.loopnum -= 1;
+			if(TH->edfr.loopnum == 15)
 				int kkkkk = 0;
 			break;
 		}
