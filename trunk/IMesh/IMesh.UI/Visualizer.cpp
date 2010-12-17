@@ -91,7 +91,7 @@ void CVisualizer::InitializeDS()
 	};
 
 	m_workerThread = new WorkerThread(m_cloudEngine);
-	bool isCreated = m_workerThread->CreateThread();
+	bool isCreated = m_workerThread->CreateThread(CREATE_SUSPENDED);
 	if (isCreated) 
 	{
 		m_workerThread->Run();

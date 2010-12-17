@@ -11,8 +11,7 @@
 #define new DEBUG_NEW
 #endif
 
-namespace IMesh { 
-namespace UI { // namespace IMesh::UI
+BEGIN_NAMESPACE2(IMesh, UI)
 
 // CMainFrame
 
@@ -463,5 +462,4 @@ void CMainFrame::AddBuild( const CString& str )
 //	AddDebug(_T("active"));
 //}
 
-
-}}
+END_NAMESPACE2(IMesh, UI)

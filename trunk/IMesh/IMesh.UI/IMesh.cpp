@@ -15,8 +15,7 @@
 #define new DEBUG_NEW
 #endif
 
-namespace IMesh { 
-namespace UI { // namespace IMesh::UI
+BEGIN_NAMESPACE2(IMesh, UI)
 
 // CIMeshApp
 
@@ -243,4 +242,4 @@ void CAboutDlg::OnMouseMove(UINT nFlags, CPoint point)
 	CDialogEx::OnMouseMove(nFlags, point);
 }
 
-}}
+END_NAMESPACE2(IMesh, UI)

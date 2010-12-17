@@ -9,8 +9,7 @@
 #include "PropertiesWnd.h"
 
 
-namespace IMesh { 
-namespace UI { // namespace IMesh::UI
+BEGIN_NAMESPACE2(IMesh, UI)
 
 class CMainFrame : public CMDIFrameWndEx
 {
@@ -68,4 +67,4 @@ public:
 //	afx_msg void OnActivate(UINT nState, CWnd* pWndOther, BOOL bMinimized);
 };
 
-}}
+END_NAMESPACE2(IMesh, UI)
