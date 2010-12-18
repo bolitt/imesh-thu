@@ -42,5 +42,6 @@ namespace IMesh { namespace Num { namespace GL {
 	typedef Num::Vec3<GLdouble> Vec3GLdouble;
 	
 	typedef Num::Vec3<GLfloat> RGBColor;
+	typedef Vec3GLdouble PosVec3d;
 } } }
 

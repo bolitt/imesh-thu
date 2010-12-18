@@ -1,18 +1,19 @@
 #pragma once
 #include "predefs.h"
-//#include "SeedSelection.h"
-//#include "EdgePivot.h"
+#include "SeedSelection.h"
+#include "EdgePivot.h"
 
 //: TODO: CHANGED!
-//#include "EventCommon.h"
+#include "EventCommon.h"
 
 
-class TriangulationHandler{
+class TriangulationHandler
+{
 	grid *modelgrid;
-	all_point_list *apl;
 	double ball_radius;
 
 public:
+	all_point_list *apl;
 	vector<triangle *> triangleList;
 	edgefront edfr;
 	deque<edge *> frontEdgeQueue;
@@ -22,10 +23,10 @@ public:
 	void triangulateModel();
 
 
-//public:
-//
-//	EdgeEvent m_edgeEvent; //: TODO: CHANGED!
-//	void OnEdgeActivated(edge* currentAxis); //: TODO: CHANGED!
-//	void OnTriangleCreated(triangle* newTriangel);
+public:
+
+	EdgeEvent m_edgeEvent; //: TODO: CHANGED!
+	void OnEdgeActivated(edge* currentAxis); //: TODO: CHANGED!
+	void OnTriangleCreated(triangle* newTriangel);
 
 };

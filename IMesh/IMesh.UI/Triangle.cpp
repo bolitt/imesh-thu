@@ -20,8 +20,9 @@ Triangle::~Triangle()
 
 void Triangle::OnRender()
 {
-	parent_type::OnRender();
+	if (!m_IsVisible) return;
 
+	parent_type::OnRender();
 
 	{
 		using namespace Config;
@@ -29,9 +30,16 @@ void Triangle::OnRender()
 		//glEnable(GL_DEPTH_TEST);
 		//glEnable(GL_CULL_FACE);
 		ASSERT(_pV0 != NULL && _pV1 !=NULL && _pV2 != NULL);
-		glBegin(GL_POLYGON);
+		glBegin(GL_TRIANGLES);
 		{
 			glColor3fv(m_fill.ConstPtr());
+			
+			Num::Vec3f& v10 = _pV1->m_pos - _pV0->m_pos;
+			Num::Vec3f& v21 = _pV2->m_pos - _pV1->m_pos;
+			Num::Vec3f& nVec = v10.Cross(v21);
+			nVec.Normalize();
+			glNormal3fv(nVec.ConstPtr());
+			
 			glVertex3fv(_pV0->m_pos.ConstPtr());
 			glVertex3fv(_pV1->m_pos.ConstPtr());
 			glVertex3fv(_pV2->m_pos.ConstPtr());

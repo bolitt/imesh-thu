@@ -11,7 +11,7 @@ namespace Norm { //: namespace IMesh::Norm
 		v_num=0;
 		k = 15;
 		r = 0;
-		outname = new char[255];
+		outname = new char[4096];
 		norm_finished = false;
 	}
 
@@ -52,9 +52,8 @@ namespace Norm { //: namespace IMesh::Norm
 			*str++;
 		}
 		outname[k]='\0';
-		strcat_s(outname,255,"_norm.obj");
+		strcat_s(outname, 4096, "_norm.obj");
 	
-
 		while(!feof(m_FileHandler))
 		{
 			// 获得obj文件中的当前行的第一个字符

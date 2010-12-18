@@ -36,7 +36,10 @@ public:
 public:
 	Model();
 	virtual ~Model();
-	
+
+public:
+	bool m_IsVisible;
+
 public:
 	void OnRender();
 	virtual void OnSetup();

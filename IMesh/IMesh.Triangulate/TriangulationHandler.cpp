@@ -21,7 +21,7 @@ void TriangulationHandler::triangulateModel()
 			printf("\ngetActiveEdge()");
 			long newpointindex = ballPivot(currentaxis,modelgrid,ball_radius,this);
 			{
-				//OnEdgeActivated(currentaxis); //: TODO: CHANGED!
+				OnEdgeActivated(currentaxis); //: TODO: CHANGED!
 				triangle* newTriangel = triangleList[triangleList.size() - 1];
 				//OnTriangleCreated(newTriangel);
 			}
@@ -41,21 +41,20 @@ void TriangulationHandler::triangulateModel()
 			return;
 	}
 }
-//void TriangulationHandler::OnEdgeActivated(edge* currentAxis)
-//{
-//	EdgeEventArg arg;
-//	EdgeEventArg::EventType type = EdgeEventArg::Activatied;
-//	arg.Initialize(type, 
-//					currentAxis, &edfr, 
-//					apl, &triangleList, &frontEdgeQueue);
-//	void* source = currentAxis;
-//	
-//	// The change is originated by "source", and
-//	// Influenced variables would be "arg"
-//	m_edgeEvent.OnNotify(source, arg);
-//}
-//
-//void TriangulationHandler::OnTriangleCreated(triangle* newTriangel)
-//{
-//
-//}
+void TriangulationHandler::OnEdgeActivated(edge* currentAxis)
+{
+	EdgeEventArg arg;
+	EdgeEventArg::EventType type = EdgeEventArg::Activatied;
+	arg.Initialize(type, 
+					currentAxis, this);
+	void* source = currentAxis;
+	
+	// The change is originated by "source", and
+	// Influenced variables would be "arg"
+	m_edgeEvent.OnNotify(source, arg);
+}
+
+void TriangulationHandler::OnTriangleCreated(triangle* newTriangel)
+{
+
+}

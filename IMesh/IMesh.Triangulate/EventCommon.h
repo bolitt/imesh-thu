@@ -14,6 +14,8 @@
   #pragma comment(lib, "../Release/IMesh.Share.lib")
 #endif
 
+class TriangulationHandler;
+
 class EdgeEvent : public IMesh::Interface::Event
 {
 };
@@ -29,6 +31,7 @@ public:
 public:
 	EventType			  m_eventType;
 
+	TriangulationHandler* m_pTriangulationHandler;
 	edge*                 m_pSourceEdge;
 	all_point_list*       m_pAllPointList;
 	vector<triangle *>*   m_pTriangleList;
@@ -38,9 +41,6 @@ public:
 public:
 	void Initialize(event_type eventType,
 					edge* pSourceEdge,
-					edgefront* pEdgeFront, 
-					all_point_list* pAllPointList,
-					vector<triangle *>* pTriangleList, 
-					deque<edge *>* pFrontEdgeQueue);
+					TriangulationHandler* pTriangulationHandler);
 };
 

@@ -1,15 +1,15 @@
 #include "EventCommon.h"
-
+#include "TriangulationHandler.h"
 
 void EdgeEventArg::Initialize( event_type eventType,
-							edge* pSourceEdge, edgefront* pEdgeFront, 
-							all_point_list* pAllPointList, 
-							vector<triangle *>* pTriangleList, deque<edge *>* pFrontEdgeQueue )
+							edge* pSourceEdge,
+							TriangulationHandler* pTriangulationHandler)
 {
 	m_eventType = eventType;
 	m_pSourceEdge = pSourceEdge;
-	m_pEdgeFront = pEdgeFront;
-	m_pAllPointList = pAllPointList;
-	m_pTriangleList = pTriangleList;
-	m_pFrontEdgeQueue = pFrontEdgeQueue;
+	m_pTriangulationHandler = pTriangulationHandler;
+	m_pEdgeFront = &pTriangulationHandler->edfr;
+	m_pAllPointList = pTriangulationHandler->apl;
+	m_pTriangleList = &pTriangulationHandler->triangleList;
+	m_pFrontEdgeQueue = &pTriangulationHandler->frontEdgeQueue;
 }

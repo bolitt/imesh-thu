@@ -4,40 +4,16 @@
 #include "stdafx.h"
 #include "IMesh.h"
 #include "Visualizer.h"
+#include "PositionHelper.h"
 #include "Config.h"
 
 
-namespace IMesh { 
+namespace IMesh {
 namespace UI { // namespace IMesh::UI
-
-	class Helper
-	{
-	public:
-		static PosVec3d Orth2Sphere(const PosVec3d& v) {
-			PosVec3d orth;
-			return orth;
-		}
-
-		static PosVec3d Sphere2Orth(const PosVec3d& v) {
-			PosVec3d orth;
-			GLdouble smallRadius = v._radius * sin(v._coLatitude);
-			orth._x = smallRadius * cos(v._longtitude);
-			orth._y = smallRadius * sin(v._longtitude);
-			orth._z = v._radius * cos(v._coLatitude);
-			return orth;
-		}
-
-		static PosVec3d SphereFindTopOrth(const PosVec3d& v) {
-			PosVec3d topSphere = v;
-			topSphere._coLatitude -= M_PI_2;
-			PosVec3d topOrth = Sphere2Orth(topSphere);
-			return topOrth;
-		}
-	};
 
 
 // CPainter
-CVisualizer::CVisualizer()
+CVisualizer::CVisualizer() : m_renderLock(&m_renderCriticalSection)
 {
 	m_GLPixelIndex = 0;
 	m_hGLContext = NULL;
@@ -67,16 +43,28 @@ void CVisualizer::PreCreateWindow( CREATESTRUCT& cs )
 	cs.style |= (WS_CLIPCHILDREN | WS_CLIPSIBLINGS);
 }
 
-
-void CVisualizer::InitializeDS()
+void CVisualizer::OnSetup()
 {
-	m_cloudEngine.Initialize();
+	m_scene.OnSetup();
+	
+	// for test:
+	/*InitializeDS();
+	OnTriangulate();*/
+}
+
+void CVisualizer::InitializeDS(char* filepath /* =NULL */)
+{
+	if (filepath == NULL) {
+		m_cloudEngine.Initialize();
+	}
+	else {
+		m_cloudEngine.Initialize(filepath);
+	}
 	
 	m_cloudEngine.m_triangleHandler.m_edgeEvent.Attach(m_edgeEventListener);
-	m_edgeEventListener.Initialize(this, &m_scene.m_demoLayer);
+	m_edgeEventListener.Initialize(this, &m_scene.m_meshLayer);
+	m_scene.m_cloudLayer.SetLayer(m_cloudEngine);
 
-	m_scene.OnSetup(m_cloudEngine);
-	
 	class WorkerThread : public CWinThread
 	{
 	public:
@@ -91,13 +79,17 @@ void CVisualizer::InitializeDS()
 	};
 
 	m_workerThread = new WorkerThread(m_cloudEngine);
-	bool isCreated = m_workerThread->CreateThread(CREATE_SUSPENDED);
-	if (isCreated) 
+	BOOL isCreated = m_workerThread->CreateThread(CREATE_SUSPENDED);
+	if (isCreated)
 	{
-		m_workerThread->Run();
+		//m_workerThread->Run();
 	}
 }
 
+void CVisualizer::OnTriangulate()
+{
+	m_workerThread->Run();  //m_cloudEngine.RunTriangulate();
+}
 
 void CVisualizer::OnSize( UINT nType, int cx, int cy )
 {
@@ -107,14 +99,14 @@ void CVisualizer::OnSize( UINT nType, int cx, int cy )
 Num::GL::Vec3GLdouble CVisualizer::CameraToPos()
 {
 	PosVec3d& spherePos = m_camera.ToPolarVec3();
-	PosVec3d& orthPos = Helper::Sphere2Orth(spherePos);
+	PosVec3d& orthPos = PositionHelper::Sphere2Orth(spherePos);
 	return orthPos;
 }
 
 Num::GL::Vec3GLdouble CVisualizer::CameraFindUp()
 {
 	PosVec3d& spherePos = m_camera.ToPolarVec3();
-	PosVec3d& orthPos = Helper::SphereFindTopOrth(spherePos);
+	PosVec3d& orthPos = PositionHelper::SphereFindTopOrth(spherePos);
 	return orthPos;
 }
 
@@ -131,6 +123,8 @@ void CVisualizer::OnRender()
 {
 	using namespace Config;
 	
+	m_renderLock.Lock();
+
 	ActivateCurrentContext();
 	{
 		GLsizei width = m_canvasSize.cx;
@@ -162,17 +156,17 @@ void CVisualizer::OnRender()
 	}
 
 	{
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		{
 			m_scene.OnRender();
-		}
-
-		{
-			
 		}
 	}
 	
 	glFlush();
+
+	::SwapBuffers(m_hDC);
+
+	m_renderLock.Unlock();
 }
 
 BOOL CVisualizer::CreateViewGLContext( HDC hDC )
@@ -187,39 +181,49 @@ BOOL CVisualizer::CreateViewGLContext( HDC hDC )
 
 BOOL CVisualizer::SetWindowPixelFormat( HDC hDC )
 {
+	/*PIXELFORMATDESCRIPTOR x = {
+
+		BYTE  iLayerType;
+		BYTE  bReserved;
+		DWORD dwLayerMask;
+		DWORD dwVisibleMask;
+		DWORD dwDamageMask;
+	} */
+
 	//定义窗口的像素格式
-	PIXELFORMATDESCRIPTOR pixelDesc=
+	PIXELFORMATDESCRIPTOR dsp =
 	{
-		sizeof(PIXELFORMATDESCRIPTOR),
-		1,
-		PFD_DRAW_TO_WINDOW|PFD_SUPPORT_OPENGL|
-		PFD_DOUBLEBUFFER|PFD_SUPPORT_GDI,
-		PFD_TYPE_RGBA,
-		24,
-		0,0,0,0,0,0,
-		0,
-		0,
-		0,
-		0,0,0,0,
-		32,
-		0,
-		0,
-		PFD_MAIN_PLANE,
-		0,
-		0,0,0
+		dsp.nSize = sizeof(PIXELFORMATDESCRIPTOR),
+		dsp.nVersion = 1,
+		dsp.dwFlags = PFD_DRAW_TO_WINDOW|PFD_SUPPORT_OPENGL| 
+						PFD_DOUBLEBUFFER|PFD_SUPPORT_GDI,
+		dsp.iPixelType = PFD_TYPE_RGBA,
+		dsp.cColorBits = 24,
+		dsp.cRedBits=0, dsp.cRedShift=0,
+		dsp.cGreenBits=0, dsp.cGreenShift=0,
+		dsp.cBlueBits=0, dsp.cBlueShift=0,
+		dsp.cAlphaBits=0, dsp.cAlphaShift=0,
+		dsp.cAccumBits=0,
+		dsp.cAccumRedBits=0, dsp.cAccumGreenBits=0, dsp.cAccumBlueBits=0, dsp.cAccumAlphaBits=0,
+		dsp.cDepthBits=32,
+		dsp.cStencilBits=0,
+		dsp.cAuxBuffers=0,
+		dsp.iLayerType=PFD_MAIN_PLANE,
+		dsp.bReserved=0,
+		dsp.dwLayerMask=0, dsp.dwVisibleMask=0, dsp.dwDamageMask=0
 	};
 
-	this->m_GLPixelIndex = ChoosePixelFormat(hDC, &pixelDesc);
+	this->m_GLPixelIndex = ChoosePixelFormat(hDC, &dsp);
 	if(this->m_GLPixelIndex==0)
 	{
 		this->m_GLPixelIndex = 1;
-		if(DescribePixelFormat(hDC,this->m_GLPixelIndex, sizeof(PIXELFORMATDESCRIPTOR),&pixelDesc)==0)
+		if(DescribePixelFormat(hDC,this->m_GLPixelIndex, sizeof(PIXELFORMATDESCRIPTOR),&dsp)==0)
 		{
 			return FALSE;
 		}
 	}
 
-	if(SetPixelFormat(hDC,this->m_GLPixelIndex,&pixelDesc)==FALSE)
+	if(SetPixelFormat(hDC,this->m_GLPixelIndex,&dsp)==FALSE)
 	{
 		return FALSE;
 	}
@@ -240,7 +244,7 @@ int CVisualizer::OnCreate( HDC hDC )
 	if(this->ActivateCurrentContext() == FALSE) {
 		return -1;
 	}
-	InitializeDS();
+	OnSetup();
 	return 0;
 }
 

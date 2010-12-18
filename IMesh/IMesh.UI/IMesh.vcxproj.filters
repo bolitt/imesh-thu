@@ -44,6 +44,9 @@
     <Filter Include="external\Triangulate">
       <UniqueIdentifier>{16f0c84d-3153-44cd-b82e-7bcda5bd023f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="helpers">
+      <UniqueIdentifier>{59080d79-c217-43d7-affa-375d0d91a845}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -259,6 +262,18 @@
     <ClInclude Include="..\IMesh.Triangulate\CloudInit.h">
       <Filter>external\Triangulate</Filter>
     </ClInclude>
+    <ClInclude Include="CloudLayer.h">
+      <Filter>models</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshLayer.h">
+      <Filter>models</Filter>
+    </ClInclude>
+    <ClInclude Include="TriangulateHelper.h">
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="PositionHelper.h">
+      <Filter>helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ChildFrm.cpp">
@@ -344,6 +359,18 @@
     </ClCompile>
     <ClCompile Include="Structures.cpp">
       <Filter>DS</Filter>
+    </ClCompile>
+    <ClCompile Include="CloudLayer.cpp">
+      <Filter>models</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshLayer.cpp">
+      <Filter>models</Filter>
+    </ClCompile>
+    <ClCompile Include="TriangulateHelper.cpp">
+      <Filter>helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="PositionHelper.cpp">
+      <Filter>helpers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

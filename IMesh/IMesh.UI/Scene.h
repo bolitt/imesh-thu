@@ -2,6 +2,9 @@
 
 #include "IModel.h"
 #include "Layer.h"
+#include "CloudLayer.h"
+#include "MeshLayer.h"
+
 #include "Grid.h"
 
 #include "Axis.h"
@@ -22,28 +25,22 @@ public:
 
 public:
 	Layer m_baseLayer;
-	Layer m_overLayer;
-	Layer m_demoLayer;
+	CloudLayer m_cloudLayer;
+	MeshLayer m_meshLayer;
 
-	// m_baseLayer Children:
 	Grid m_worldGrid;
 	Axis m_worldAxis;
 
-	// m_overLayer Children:
-	Sphere m_sphere;
-	Triangle m_triangle;
-	std::vector<Vertex*> m_verties;
-	std::vector<Edge*> m_edges;
 
-	// m_demotLayer Children:
-
+	
 
 public:
 	Scene(void);
 	~Scene(void);
-	void OnSetup(CloudInit& loader);
+	void OnSetup();
 	void OnRender();
 
+	void InitializeLighting();
 };
 
 } } }

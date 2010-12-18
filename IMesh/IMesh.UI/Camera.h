@@ -2,13 +2,17 @@
 
 #include "Config.h"
 #include "Structures.h"
+#include "PositionHelper.h"
 
 namespace IMesh { namespace UI {
 
-typedef Num::GL::Vec3GLdouble PosVec3d;
+typedef Num::GL::PosVec3d  PosVec3d;
 
 class Camera
 {
+public:
+	
+
 public:
 	enum ZoomType 
 	{ 

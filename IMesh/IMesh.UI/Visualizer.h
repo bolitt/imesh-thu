@@ -35,6 +35,13 @@ public:
 public:
 	CWinThread* m_workerThread;
 
+	// for synchronize:
+protected:
+	CCriticalSection m_renderCriticalSection;
+
+public:
+	CSingleLock m_renderLock;
+
 protected:
 	BOOL CreateViewGLContext(HDC hDC); 
 	BOOL SetWindowPixelFormat(HDC hDC);
@@ -42,9 +49,15 @@ protected:
 	void OnView();
 
 public:
+	void OnSetup();
+	void InitializeDS(char* filepath = NULL);
+	void OnTriangulate();
+
+public:
 	BOOL ActivateCurrentContext();
 	int OnCreate(HDC hDC);
-	void InitializeDS();
+	
+	
 	void PreCreateWindow(CREATESTRUCT& cs);
 	void OnSize(UINT nType, int cx, int cy);
 	void OnRender();
@@ -57,6 +70,9 @@ public:
 	
 	void DrawGrid(float size, float step);
 	void DrawAxis(float size);
+	
+
+
 };
 
 }}

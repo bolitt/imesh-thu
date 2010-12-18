@@ -37,11 +37,14 @@ void Sphere::OnSetup()
 
 void Sphere::OnRender()
 {
+	if (!m_IsVisible) return;
+
 	parent_type::OnRender();
 
 	using namespace Config;
 	{
 		glPushMatrix();
+		glTranslatef(m_pos._x, m_pos._y, m_pos._z);
 		glColor3fv(Colors::WHITE.ConstPtr());	
 		gluSphere(m_pQuadric, m_radius, m_slices, m_stacks); // why this cause INVALID_OPERATION_ERROR
 		glPopMatrix();

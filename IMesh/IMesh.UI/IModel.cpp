@@ -4,7 +4,7 @@
 
 namespace IMesh { namespace UI { namespace Models {
 
-Model::Model()
+Model::Model() : m_IsVisible(true)
 {
 
 }
@@ -33,6 +33,8 @@ void Model::OnDestroy()
 
 void ModelCollection::OnRender()
 {
+	if (!m_IsVisible) return;
+	
 	parent_type::OnRender();
 
 	children_type& children = this->m_children;
@@ -42,6 +44,7 @@ void ModelCollection::OnRender()
 			pModel->OnRender();
 		}
 	}
+	
 }
 
 } } } ///:~ IMesh::UI::Models
