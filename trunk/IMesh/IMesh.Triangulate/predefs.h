@@ -244,7 +244,7 @@ typedef struct grid grid;
 /*extern vector<triangle *> triangleList;
 extern edgefront edfr;
 extern deque<edge *> frontEdgeQueue;*///mainly active, some boundary, actually "active queue"
-extern class TriangulationHandler;
+class TriangulationHandler;
 
 edge *getActiveEdge(TriangulationHandler *TH);
 long ballPivot(edge *edgeaxis,grid *m_grid, double ballradius, TriangulationHandler *TH);

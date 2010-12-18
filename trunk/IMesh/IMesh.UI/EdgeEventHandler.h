@@ -3,12 +3,10 @@
 
 #include "Structures.h"
 #include "Camera.h"
-#include "Layer.h"
+#include "MeshLayer.h"
 #include "Triangle.h"
 #include "Vertex.h"
 #include "Edge.h"
-
-
 
 
 namespace IMesh { namespace UI {
@@ -17,8 +15,10 @@ class CVisualizer;
 
 class EdgeEventListener : public IMesh::Interface::EventListener
 {
-public:
-	typedef IMesh::UI::Models::Layer layer_type;
+protected:
+	typedef IMesh::UI::Models::MeshLayer layer_type;
+	typedef vector<triangle* > triangle_list_type;
+	typedef vector<point> points_type;
 
 protected:
 	IMesh::UI::CVisualizer* m_pVisualizer;
@@ -33,7 +33,6 @@ protected:
 
 public:
 	void Initialize(IMesh::UI::CVisualizer* pVisualizer, layer_type* pDemoLayer);
-
 	void OnHandle(void* source, const IMesh::Interface::EventArg& eventArgs);
 	
 public:

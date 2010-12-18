@@ -10,8 +10,7 @@ public:
 	typedef  ModelCollection   parent_type;
 	typedef  Layer			   self_type;
 
-public:
-	bool m_IsVisible;
+
 
 public:
 	Layer(void);

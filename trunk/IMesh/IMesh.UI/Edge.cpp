@@ -23,6 +23,8 @@ Edge::~Edge()
 
 void Edge::OnRender()
 {
+	if (!m_IsVisible) return;
+
 	glLineWidth(m_lineWidth);
 	glBegin(GL_LINES);
 	{

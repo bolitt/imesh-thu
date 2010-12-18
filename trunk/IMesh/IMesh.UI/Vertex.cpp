@@ -24,6 +24,8 @@ Vertex::~Vertex(void)
 
 void Vertex::OnRender()
 {
+	if (!m_IsVisible) return;
+
 	glPointSize(m_pointSize);
 	glBegin(GL_POINTS);
 	{

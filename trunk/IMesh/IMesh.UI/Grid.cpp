@@ -15,6 +15,8 @@ Grid::~Grid(void)
 
 void Grid::OnRender()
 {
+	if (!m_IsVisible) return;
+
 	parent_type::OnRender();
 
 	float step = m_step, 

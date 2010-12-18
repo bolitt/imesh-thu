@@ -17,6 +17,8 @@ Axis::~Axis(void)
 
 void Axis::OnRender()
 {
+	if (!m_IsVisible) return;
+
 	parent_type::OnRender();
 
 	float size = m_size;

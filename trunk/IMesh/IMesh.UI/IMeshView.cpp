@@ -20,6 +20,18 @@
 
 BEGIN_NAMESPACE2(IMesh, UI)
 
+	class StringHelper 
+	{public:
+		static void CStringToMultiByte(char* dst, CString& sourceStr)
+		{
+			TCHAR*  wstr = sourceStr.GetBuffer();
+			int   nLen   =   wcslen(wstr)+1;
+			WideCharToMultiByte(CP_ACP, 0, wstr, nLen, dst, 2*nLen, NULL, NULL);
+			sourceStr.ReleaseBuffer();
+		}
+	};
+
+
 // CIMeshView
 
 IMPLEMENT_DYNCREATE(CIMeshView, CView)
@@ -39,6 +51,10 @@ BEGIN_MESSAGE_MAP(CIMeshView, CView)
 	ON_WM_LBUTTONDOWN()
 	ON_WM_LBUTTONUP()
 	ON_WM_MOUSEMOVE()
+	ON_COMMAND(ID_Triangulate, &CIMeshView::OnTriangulate)
+	ON_COMMAND(ID_FILE_OPEN, &CIMeshView::OnFileOpen)
+//	ON_WM_MOUSELEAVE()
+ON_WM_NCMOUSELEAVE()
 END_MESSAGE_MAP()
 
 // CIMeshView 构造/析构
@@ -155,17 +171,15 @@ void CIMeshView::OnSize(UINT nType, int cx, int cy)
 
 void CIMeshView::OnPaint()
 {
-	CPaintDC dc(this); // device context for painting
+	//CPaintDC dc(this); // device context for painting
 	// TODO: 在此处添加消息处理程序代码
 	// 不为绘图消息调用 CView::OnPaint()
-	HDC hDC = dc.GetSafeHdc();
-	CString str;
-	/*str.Format(_T("OnPaint %s"), this->GetDocument()->GetTitle());
-	theApp.GetMainFrame()->AddDebug(str);*/
+	//HDC hDC = dc.GetSafeHdc();
+	//CString str;
+	//str.Format(_T("OnPaint %s"), this->GetDocument()->GetTitle());
+	// theApp.GetMainFrame()->AddDebug(str);
 	//m_painter.ActivateCurrentContext(hDC);
 	m_vis.OnRender();
-
-	::SwapBuffers(hDC);
 }
 
 
@@ -227,6 +241,24 @@ void CIMeshView::OnLButtonUp(UINT nFlags, CPoint point)
 	CView::OnLButtonUp(nFlags, point);
 }
 
+void CIMeshView::OnNcMouseLeave()
+{
+	// 该功能要求使用 Windows 2000 或更高版本。
+	// 符号 _WIN32_WINNT 和 WINVER 必须 >= 0x0500。
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	m_bLeftButtonDown = false;
+	CView::OnNcMouseLeave();
+}
+
+//void CIMeshView::OnMouseLeave()
+//{
+//	// TODO: 在此添加消息处理程序代码和/或调用默认值
+//	m_bLeftButtonDown = false;
+//	theApp.GetMainFrame()->AddDebug(_T("OnMouseLeave"));
+//	CView::OnMouseLeave();
+//}
+
+
 void CIMeshView::OnMouseMove(UINT nFlags, CPoint point)
 {
 	// TODO: Add your message handler code here and/or call default
@@ -249,5 +281,56 @@ void CIMeshView::OnMouseMove(UINT nFlags, CPoint point)
 	CView::OnMouseMove(nFlags, point);
 }
 
+void CIMeshView::OnTriangulate()
+{
+	// TODO: 在此添加命令处理程序代码
+	//CMainFrame* pMainFrame = static_cast<CMainFrame*>(this->GetActiveWindow());
+	//// SDI:
+	////   CView* pView = pMainFrame->GetActiveView(); 
+	//// MDI:
+	//CView* pView = pMainFrame->MDIGetActive()->GetActiveView();
+	//CIMeshView* pChildView = static_cast<CIMeshView*>(pView);
+	//
+	//if (pChildView != NULL)
+	//{
+	//	theApp.GetMainFrame()->AddDebug(_T("CIMeshView::OnTriangulate()"));
+	//}
+	//else 
+	//{
+	//	theApp.GetMainFrame()->AddDebug(_T("CIMeshView::OnTriangulate() Failed"));
+	//}
+	theApp.GetMainFrame()->AddDebug(_T("CIMeshView::OnTriangulate()"));
+	m_vis.OnTriangulate();
+	OnPaint();
+	theApp.GetMainFrame()->AddDebug(_T("CIMeshView::OnTriangulate() OK"));
+}
+
+
+void CIMeshView::OnFileOpen()
+{
+	// TODO: 在此添加命令处理程序代码
+	theApp.GetMainFrame()->AddDebug(_T("OnFileOpen"));
+	CFileDialog openFileDialog(TRUE, _T(".obj"), NULL, 0, 
+					_T("Obj Files (*.obj)|*.obj|All Files (*.*)|*.*|"));
+	
+	if (openFileDialog.DoModal() == IDOK) {
+		CString filePathName;
+		filePathName = openFileDialog.GetPathName();
+		theApp.GetMainFrame()->AddDebug(_T("Open:") + filePathName);
+		
+		char pFilePath[4096];
+		StringHelper::CStringToMultiByte(pFilePath, filePathName);
+		
+		m_vis.InitializeDS(pFilePath);
+		OnPaint();
+	}
+}
 
 END_NAMESPACE2(IMesh, UI)
+
+
+
+
+
+
+
