@@ -6,7 +6,7 @@ namespace IMesh { namespace UI { namespace Models {
 
 Axis::Axis(void)
 {
-	m_size = 50;
+	m_size = 100;
 	m_isXEnabled = m_isYEnabled = m_isZEnabled = true;
 }
 

@@ -45,7 +45,6 @@ void MeshLayer::ClearLayer()
 		delete m_edgesHolder[i];
 	}
 	m_edgesHolder.clear();
-
 }
 
 void MeshLayer::UpdateLayer( triangle_list_type &triangles, points_type& points ) 
@@ -145,7 +144,6 @@ void MeshLayer::OnRender()
 	if (m_pCurrentEdge != NULL) m_pCurrentEdge->OnRender();
 	if (m_pCurrentTriangle != NULL) m_pCurrentTriangle->OnRender();
 	_DEBUG_ONRENDER_CHECK_ERROR_();
-
 }
 
 void MeshLayer::InitializeLightEnum(GLenum lightEnum, 

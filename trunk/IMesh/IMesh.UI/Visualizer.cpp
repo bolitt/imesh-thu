@@ -143,6 +143,7 @@ void CVisualizer::OnRender()
 	{
 		GLsizei width = m_canvasSize.cx;
 		GLsizei height = m_canvasSize.cy;
+		if (width == 0 || height == 0) { m_renderLock.Unlock(); return; } // to avoid zero-size assertion
 		GLdouble aspect = (height != 0) ? (GLdouble)width / (GLdouble)height : 1;
 	
 		glViewport(0, 0, width, height);

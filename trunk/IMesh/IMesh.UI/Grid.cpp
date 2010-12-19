@@ -5,7 +5,7 @@ namespace IMesh { namespace UI { namespace Models {
 
 Grid::Grid(void)
 {
-	m_size = 50;
+	m_size = 80;
 	m_step = 5;
 }
 
