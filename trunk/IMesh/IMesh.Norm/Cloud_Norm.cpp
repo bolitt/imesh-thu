@@ -261,9 +261,9 @@ namespace IMesh { //: namespace IMesh
 			mid = Vector3(mx,my,mz);
 			density = std::pow((hx-lx) * (hy-ly) * (hz-lz)/v_num, 1.0/3 );//r = 1.5density
 			grid_width = density * 4;
-			grid_x = (hx-lx)/grid_width + 1;
-			grid_y = (hy-ly)/grid_width + 1;
-			grid_z = (hz-lz)/grid_width + 1;
+			grid_x = (int)((hx-lx)/grid_width) + 1;
+			grid_y = (int)((hy-ly)/grid_width) + 1;
+			grid_z = (int)((hz-lz)/grid_width) + 1;
 			return 0;
 		}
 
