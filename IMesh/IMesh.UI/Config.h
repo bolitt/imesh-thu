@@ -12,6 +12,7 @@ namespace UI { // namespace IMesh::UI
 			const extern Num::GL::RGBColor RED;
 			const extern Num::GL::RGBColor GREEN;
 			const extern Num::GL::RGBColor BLUE;
+			const extern Num::GL::RGBColor YELLOW;
 			const extern Num::GL::RGBColor WHITE;
 		}
 
@@ -32,6 +33,7 @@ namespace UI { // namespace IMesh::UI
 			const extern double DEFAULT_TOP;
 			const extern double DEFAULT_NEAR;
 			const extern double DEFAULT_FAR;
+			const extern double DEFAULT_MODEL_VIEW_SIZE;
 
 			// For DEG-RAD Transform
 			const extern double DEG2RAD;

@@ -4,39 +4,9 @@
 
 namespace IMesh { namespace UI { namespace Models {
 
-	static Vertex* CreateVertexFromPoint(point& p)
-	{
-		point3D pos = p.position;
-		Vertex* v0 = new Vertex();
-		float ratio = 30.0f;
-		v0->m_pos._x = (float)pos.x * ratio;
-		v0->m_pos._y = (float)pos.y * ratio;
-		v0->m_pos._z = (float)pos.z * ratio;
-		return v0;
-	}
-
-	static Triangle* CreateTriangleFromVertex(Vertex* pV0, Vertex* pV1, Vertex* pV2)
-	{
-		Triangle* tri = new Triangle();
-		tri->_pV0 = pV0;
-		tri->_pV1 = pV1;
-		tri->_pV2 = pV2;
-		return tri;
-	}
-
-	static Edge* CreateEdgeFromVertex(Vertex* pV0, Vertex* pV1)
-	{
-		Edge* e = new Edge();
-		e->_pV0 = pV0;
-		e->_pV1 = pV1;
-		//e->m_color = Edge::color_type(0.5f, 0.3f, 0.7f);
-		return e;
-	}
-
-
-
 Scene::Scene(void)
 {
+	// For Model:
 }
 
 
@@ -57,7 +27,11 @@ void Scene::OnSetup()
 	m_baseLayer.m_children.push_back(&m_worldGrid);
 	m_baseLayer.m_children.push_back(&m_worldAxis);
 	
+	m_cloudLayer.OnSetup();
+	m_cloudLayer.m_pAdjuster = &m_adjuster;
+
 	m_meshLayer.OnSetup();
+	m_meshLayer.m_pAdjuster = &m_adjuster;
 	// m_overlayer
 	//m_overLayer.m_children.push_back(&m_sphere);
 	//m_overLayer.m_children.push_back(&m_triangle);
@@ -77,12 +51,12 @@ void Scene::OnRender()
 	m_cloudLayer.OnRender();
 	_DEBUG_ONRENDER_CHECK_ERROR_();
 
-	glPushMatrix();
+	/*glPushMatrix();
 	{
 		glDepthFunc(GL_LESS);
 		GLboolean bGL_DEPTH_TEST = glIsEnabled(GL_DEPTH_TEST); glEnable(GL_DEPTH_TEST);
 		GLboolean bGL_LIGHTING = glIsEnabled(GL_LIGHTING); glEnable(GL_LIGHTING);
-		
+
 		InitializeLighting();
 
 		m_meshLayer.OnRender();
@@ -91,7 +65,9 @@ void Scene::OnRender()
 		if (!bGL_DEPTH_TEST) glDisable(GL_DEPTH_TEST);
 		if (!bGL_LIGHTING) glDisable(GL_LIGHTING);
 	}
-	glPopMatrix();
+	glPopMatrix();*/
+
+	m_meshLayer.OnRender();
 	_DEBUG_ONRENDER_CHECK_ERROR_();
 }
 
@@ -110,9 +86,11 @@ void Scene::InitializeLighting()
 		GLfloat light1_specular[] = { 0.0f, 0.6f, 0.0f, 1.0f };
 		GLfloat light2_specular[] = { 0.0f, 0.0f, 0.6f, 1.0f };
 
-		GLfloat light0_position[] = { 200.0f, 0.0f, 0.0f, 1.0f };
-		GLfloat light1_position[] = { 0.0f, 200.0f, 0.0f, 1.0f };
-		GLfloat light2_position[] = { 0.0f, 0.0f, 200.0f, 1.0f };
+		float inf = (float)Config::Navigation::DEFAULT_FAR; 
+
+		GLfloat light0_position[] = { inf, 0.0f, 0.0f, 1.0f };
+		GLfloat light1_position[] = { 0.0f, inf, 0.0f, 1.0f };
+		GLfloat light2_position[] = { 0.0f, 0.0f, inf, 1.0f };
 
 		GLfloat light0_spot_direction[] = { -1.0f, 0.0f, 0.0f };
 		GLfloat light1_spot_direction[] = { 0.0f, -1.0f, 0.0f };

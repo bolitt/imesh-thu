@@ -1,12 +1,12 @@
 #pragma once
 
 #include "Layer.h"
-
 #include "Axis.h"
 #include "Sphere.h"
 #include "Triangle.h"
 #include "Vertex.h"
 #include "Edge.h"
+#include "ModelViewAdjuster.h"
 
 namespace IMesh { namespace UI { namespace Models {
 
@@ -20,13 +20,16 @@ public:
 	std::vector<Vertex*> m_vertiesHolder;
 	std::vector<Edge*> m_edgesHolder;
 
+	// For Model:
+	ModelViewAdjuster* m_pAdjuster;
+
 public:
 	CloudLayer(void);
 	~CloudLayer(void);
 
 	void ClearLayer();
 	void SetLayer(CloudInit& cloud);
-
+	void OnRender();
 };
 
 } } }

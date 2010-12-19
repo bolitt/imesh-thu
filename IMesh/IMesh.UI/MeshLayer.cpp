@@ -1,18 +1,25 @@
 #include "StdAfx.h"
 #include "MeshLayer.h"
-#include "TriangulateHelper.h"
+#include "MeshHelper.h"
 
 namespace IMesh { namespace UI { namespace Models {
 
+using namespace IMesh::UI::Config;
 
 MeshLayer::MeshLayer(void)
 {
+	m_pAdjuster = NULL;
+
+	m_pCurrentEdge = NULL;
+	m_pCurrentTriangle = NULL;
 }
 
 
 MeshLayer::~MeshLayer(void)
 {
 	ClearLayer();
+	ClearCurrentEdge();
+	ClearCurrentTriangle();
 }
 
 
@@ -45,7 +52,7 @@ void MeshLayer::UpdateLayer( triangle_list_type &triangles, points_type& points 
 {
 	ClearLayer();
 	
-	IMesh::UI::TriangularHelper helper;
+	IMesh::UI::MeshHelper helper(m_pAdjuster);
 
 	for (size_t i = 0; i < triangles.size(); ++i) 
 	{
@@ -97,7 +104,8 @@ void MeshLayer::UpdateLayer( triangle_list_type &triangles, points_type& points 
 void MeshLayer::OnSetup()
 {
 	m_sphere.OnSetup();
-	m_sphere.m_pos = Num::Vec3f(-20, -20, -20);
+	m_sphere.m_radius = 0.05f;
+	m_sphere.m_pos = Num::Vec3f(0, 0, 0);
 
 	m_triangle.OnSetup();
 	m_triangle._pV0 = new Vertex();
@@ -113,14 +121,166 @@ void MeshLayer::OnRender()
 {
 	if (!m_IsVisible) return;
 	
-	m_sphere.OnRender();
+	glPushMatrix();
+	{
+		glDepthFunc(GL_LESS);
+		GLboolean bGL_DEPTH_TEST = glIsEnabled(GL_DEPTH_TEST); glEnable(GL_DEPTH_TEST);
+		GLboolean bGL_LIGHTING = glIsEnabled(GL_LIGHTING); glEnable(GL_LIGHTING);
+		InitializeLighting();
+
+		//m_triangle.OnRender();
+		//_DEBUG_ONRENDER_CHECK_ERROR_();
+
+		m_sphere.OnRender();
+		_DEBUG_ONRENDER_CHECK_ERROR_();
+
+		parent_type::OnRender();
+		_DEBUG_ONRENDER_CHECK_ERROR_();
+
+		if (!bGL_DEPTH_TEST) glDisable(GL_DEPTH_TEST);
+		if (!bGL_LIGHTING) glDisable(GL_LIGHTING);
+	}
+	glPopMatrix();
+
+	if (m_pCurrentEdge != NULL) m_pCurrentEdge->OnRender();
+	if (m_pCurrentTriangle != NULL) m_pCurrentTriangle->OnRender();
 	_DEBUG_ONRENDER_CHECK_ERROR_();
 
-	m_triangle.OnRender();
-	_DEBUG_ONRENDER_CHECK_ERROR_();
+}
 
-	parent_type::OnRender();
-	_DEBUG_ONRENDER_CHECK_ERROR_();
+
+void MeshLayer::InitializeLighting()
+{
+	{
+		glEnable(GL_LIGHT0); glEnable(GL_LIGHT1); glEnable(GL_LIGHT2);
+
+		GLfloat light_ambient[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+
+		GLfloat light0_diffuse[] = { 0.6f, 0.0f, 0.0f, 1.0f };
+		GLfloat light1_diffuse[] = { 0.0f, 0.6f, 0.0f, 1.0f };
+		GLfloat light2_diffuse[] = { 0.0f, 0.0f, 0.6f, 1.0f };
+
+		GLfloat light0_specular[] = { 0.6f, 0.0f, 0.0f, 1.0f };
+		GLfloat light1_specular[] = { 0.0f, 0.6f, 0.0f, 1.0f };
+		GLfloat light2_specular[] = { 0.0f, 0.0f, 0.6f, 1.0f };
+
+		float inf = (float)Config::Navigation::DEFAULT_FAR; 
+
+		GLfloat light0_position[] = { inf, 0.0f, 0.0f, 1.0f };
+		GLfloat light1_position[] = { 0.0f, inf, 0.0f, 1.0f };
+		GLfloat light2_position[] = { 0.0f, 0.0f, inf, 1.0f };
+
+		GLfloat light0_spot_direction[] = { -1.0f, 0.0f, 0.0f };
+		GLfloat light1_spot_direction[] = { 0.0f, -1.0f, 0.0f };
+		GLfloat light2_spot_direction[] = { 0.0f, 0.0f, -1.0f };
+
+		glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+		glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);
+		glLightfv(GL_LIGHT0, GL_SPECULAR, light0_specular);
+		glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
+		glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, light0_spot_direction);
+
+		glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient);
+		glLightfv(GL_LIGHT1, GL_DIFFUSE, light1_diffuse);
+		glLightfv(GL_LIGHT1, GL_SPECULAR, light1_specular);
+		glLightfv(GL_LIGHT1, GL_POSITION, light1_position);
+		glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, light1_spot_direction);
+
+		glLightfv(GL_LIGHT2, GL_AMBIENT, light_ambient);
+		glLightfv(GL_LIGHT2, GL_DIFFUSE, light2_diffuse);
+		glLightfv(GL_LIGHT2, GL_SPECULAR, light2_specular);
+		glLightfv(GL_LIGHT2, GL_POSITION, light2_position);
+		glLightfv(GL_LIGHT2, GL_SPOT_DIRECTION, light2_spot_direction);
+	}
+
+	{
+		GLfloat mat_ambient[]= { 0.2f, 0.2f, 0.2f, 1.0f };  
+		GLfloat mat_diffuse[]= { 0.8f, 0.8f, 0.8f, 1.0f }; 
+		GLfloat mat_specular[] = {1.0f, 1.0f, 1.0f, 1.0f };
+		GLfloat mat_shininess[] = { 50.0f };
+		glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);  
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse); 
+		glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+		glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+	}
+
+	{
+		GLfloat light_model_ambient[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, light_model_ambient);
+
+		glShadeModel(GL_SMOOTH);
+	}
+}
+
+void MeshLayer::ClearCurrentEdge()
+{
+	if (m_pCurrentEdge != NULL)
+	{
+		delete m_pCurrentEdge->_pV0;
+		delete m_pCurrentEdge->_pV1;
+		delete m_pCurrentEdge;
+		m_pCurrentEdge = NULL;
+	}
+}
+
+void MeshLayer::ClearCurrentTriangle()
+{
+	if (m_pCurrentTriangle != NULL)
+	{
+		delete m_pCurrentTriangle->_pV0;
+		delete m_pCurrentTriangle->_pV1;
+		delete m_pCurrentTriangle->_pV2;
+		delete m_pCurrentTriangle;
+		m_pCurrentTriangle = NULL;
+	}
+}
+
+void MeshLayer::UpdateCurrentEdge( edge& e, points_type& points )
+{
+	ClearCurrentEdge();
+
+	IMesh::UI::MeshHelper helper(m_pAdjuster);
+	point& p0 = points[e.idx_i];
+	point& p1 = points[e.idx_j];
+	
+	Vertex* pV0 = helper.CreateVertexFromPoint(p0);
+	pV0->m_id = e.idx_i;
+	Vertex* pV1 = helper.CreateVertexFromPoint(p1);
+	pV1->m_id = e.idx_j;
+
+	Edge* pE = helper.CreateEdgeFromVertex(pV0, pV1);
+	pE->m_color = Colors::RED;
+	pE->m_lineWidth = 2;
+	m_pCurrentEdge = pE;
+}
+
+void MeshLayer::UpdateCurrentTriangle( triangle& t, points_type& points )
+{
+	ClearCurrentTriangle();
+
+	IMesh::UI::MeshHelper helper(m_pAdjuster);
+	
+	point& p0 = points[t.idx_i];
+	point& p1 = points[t.idx_j];
+	point& p2 = points[t.idx_k];
+	
+	Vertex* pV0 = helper.CreateVertexFromPoint(p0);
+	pV0->m_id = t.idx_i;
+	Vertex* pV1 = helper.CreateVertexFromPoint(p1);
+	pV1->m_id = t.idx_j;
+	Vertex* pV2 = helper.CreateVertexFromPoint(p2);
+	pV2->m_id = t.idx_k;
+
+	Triangle* pT = helper.CreateTriangleFromVertex(pV0, pV1, pV2);
+	pT->m_fill = Colors::YELLOW;
+	m_pCurrentTriangle = pT;
+}
+
+void MeshLayer::UpdateSpherePos(point3D& center, float radius)
+{
+	Num::Vec3f pos = m_pAdjuster->Adjust((float)center.x, (float)center.y, (float)center.z);
+	m_sphere.m_pos = pos;
+	m_sphere.m_radius = radius * m_pAdjuster->m_scaleRate;
 }
 
 } } }

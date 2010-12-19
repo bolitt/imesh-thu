@@ -5,6 +5,8 @@ namespace IMesh { namespace UI { namespace Models {
 
 CloudLayer::CloudLayer(void)
 {
+	m_pAdjuster = NULL;
+
 }
 
 
@@ -42,10 +44,11 @@ void CloudLayer::SetLayer(CloudInit& cloud)
 		std::vector<Num::Vec3f>& norms = cloud.GetNorms();
 		ASSERT(points.size() == norms.size());
 
-		float ratio = 30;
 		for (size_t i = 0; i < points.size(); i++) {
 			Num::Vec3f& point = points[i];
-			point.Mul(ratio);
+			if (m_pAdjuster != NULL) {
+				point = m_pAdjuster->Adjust(point);
+			}
 			Num::Vec3f& norm = norms[i];
 
 			Vertex* v0 = new Vertex();
@@ -62,12 +65,29 @@ void CloudLayer::SetLayer(CloudInit& cloud)
 			e->_pV0 = v0;
 			e->_pV1 = v1;
 			m_edgesHolder.push_back(e);
-
-			this->m_children.push_back(v0);
-			this->m_children.push_back(e);
+		}
+		for (size_t i = 0; i < m_vertiesHolder.size(); i++)
+		{
+			this->m_children.push_back(m_vertiesHolder[i]);
+		}
+		for (size_t i = 0; i < m_edgesHolder.size(); i++)
+		{
+			this->m_children.push_back(m_edgesHolder[i]);
 		}
 	}
 }
 
+void CloudLayer::OnRender()
+{
+	if (!m_IsVisible) return;
+
+	glPushMatrix();
+
+	parent_type::OnRender();
+
+	glPopMatrix();
+
+	_DEBUG_ONRENDER_CHECK_ERROR_();
+}
 
 } } }

@@ -18,6 +18,9 @@ CVisualizer::CVisualizer() : m_renderLock(&m_renderCriticalSection)
 	m_GLPixelIndex = 0;
 	m_hGLContext = NULL;
 	m_hDC = NULL;
+	m_workerThread = NULL;
+	m_isLoaded = false;
+	m_isWorkerRunning = false;
 }
 
 CVisualizer::~CVisualizer()
@@ -33,6 +36,14 @@ CVisualizer::~CVisualizer()
 		this->m_hGLContext = NULL;
 	}
 	//SAFE_DELETE(m_hDC);
+	if (m_workerThread != NULL)
+	{
+		//try {
+			m_workerThread->ExitInstance();
+		/*} catch (exception e) {
+
+		}*/
+	}
 }
 
 
@@ -52,8 +63,10 @@ void CVisualizer::OnSetup()
 	OnTriangulate();*/
 }
 
-void CVisualizer::InitializeDS(char* filepath /* =NULL */)
+void CVisualizer::LoadCloud(char* filepath /* =NULL */)
 {
+	if (m_isLoaded) return;
+
 	if (filepath == NULL) {
 		m_cloudEngine.Initialize();
 	}
@@ -61,8 +74,10 @@ void CVisualizer::InitializeDS(char* filepath /* =NULL */)
 		m_cloudEngine.Initialize(filepath);
 	}
 	
-	m_cloudEngine.m_triangleHandler.m_edgeEvent.Attach(m_edgeEventListener);
-	m_edgeEventListener.Initialize(this, &m_scene.m_meshLayer);
+	m_cloudEngine.m_triangleHandler.m_event.Attach(m_triangulateEventListener);
+	m_triangulateEventListener.Initialize(this, &m_scene.m_meshLayer);
+	
+	m_scene.m_adjuster.Initialize(m_cloudEngine.GetLowestDim(), m_cloudEngine.GetHighestDim());
 	m_scene.m_cloudLayer.SetLayer(m_cloudEngine);
 
 	class WorkerThread : public CWinThread
@@ -82,13 +97,22 @@ void CVisualizer::InitializeDS(char* filepath /* =NULL */)
 	BOOL isCreated = m_workerThread->CreateThread(CREATE_SUSPENDED);
 	if (isCreated)
 	{
+		m_workerThread->InitInstance();
 		//m_workerThread->Run();
 	}
+
+	m_isLoaded = true;
 }
 
 void CVisualizer::OnTriangulate()
 {
-	m_workerThread->Run();  //m_cloudEngine.RunTriangulate();
+	if (!m_isLoaded) return;
+
+	m_triangulateEventListener.SetSignal(TriangulateEventListener::Continue);
+	if (!m_isWorkerRunning) {
+		m_isWorkerRunning = true;
+		m_workerThread->Run();  //m_cloudEngine.RunTriangulate();
+	}
 }
 
 void CVisualizer::OnSize( UINT nType, int cx, int cy )

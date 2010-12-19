@@ -16,6 +16,7 @@ public:
 	void Initialize();
 	std::vector<Num::Vec3f> GetPoints();
 	std::vector<Num::Vec3f> GetNorms();
+
 };
 
 } } 

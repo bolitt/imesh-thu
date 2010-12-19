@@ -12,6 +12,7 @@ namespace UI { // namespace IMesh::UI
 			const Num::GL::RGBColor RED(1.0f, 0.0f, 0.0f);
 			const Num::GL::RGBColor GREEN(0.0f, 1.0f, 0.0f);
 			const Num::GL::RGBColor BLUE(0.0f, 0.0f, 1.0f);
+			const Num::GL::RGBColor YELLOW(1.0f, 1.0f, 1.0f);
 			const Num::GL::RGBColor WHITE(1.0f, 1.0f, 1.0f);
 		}
 
@@ -32,6 +33,7 @@ namespace UI { // namespace IMesh::UI
 			const double DEFAULT_TOP = 0.5;
 			const double DEFAULT_NEAR = 1;
 			const double DEFAULT_FAR = 1e5;
+			const double DEFAULT_MODEL_VIEW_SIZE = 100;
 
 			// For DEG-RAD Transform
 			const double DEG2RAD = PI / 180.0;
