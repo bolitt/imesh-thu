@@ -243,3 +243,4 @@ void CAboutDlg::OnMouseMove(UINT nFlags, CPoint point)
 }
 
 END_NAMESPACE2(IMesh, UI)
+
