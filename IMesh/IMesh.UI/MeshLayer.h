@@ -39,6 +39,9 @@ public:
 	~MeshLayer(void);
 	void OnSetup();
 	void OnRender();
+	void InitializeLightEnum(GLenum lightEnum, 
+							GLfloat* ambient, GLfloat* diffuse, GLfloat* specular, 
+							GLfloat* position, GLfloat* spotDirection );
 	void InitializeLighting();
 
 	void ClearLayer();

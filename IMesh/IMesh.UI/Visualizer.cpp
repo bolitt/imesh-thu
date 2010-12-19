@@ -104,16 +104,6 @@ void CVisualizer::LoadCloud(char* filepath /* =NULL */)
 	m_isLoaded = true;
 }
 
-void CVisualizer::OnTriangulate()
-{
-	if (!m_isLoaded) return;
-
-	m_triangulateEventListener.SetSignal(TriangulateEventListener::Continue);
-	if (!m_isWorkerRunning) {
-		m_isWorkerRunning = true;
-		m_workerThread->Run();  //m_cloudEngine.RunTriangulate();
-	}
-}
 
 void CVisualizer::OnSize( UINT nType, int cx, int cy )
 {
@@ -301,6 +291,44 @@ void CVisualizer::OnViewRotate( double deltaX, double deltaY )
 	double rotateY = deltaY / m_canvasSize.cy * DEG_PER_ROTATE_RATE;
 	m_camera.Rotate(rotateX, rotateY);
 	OnView();
+}
+
+void CVisualizer::OnTriangulate(TriangulateEventListener::ControlSignal signal)
+{
+	if (!m_isLoaded) {
+		//CView* pView = theApp.GetMainFrame()->MDIGetActive()->GetActiveView();
+		//HWND h = (pView != NULL) ? pView->GetSafeHwnd() : NULL;
+		//MessageBox(NULL, _T("请先导入模型"), _T("操作错误"), MB_ICONERROR | MB_OK);
+		theApp.GetMainFrame()->AddDebug(_T("请先导入点云模型"));
+		MessageBeep(MB_ICONERROR);
+		return;
+	}
+
+	m_triangulateEventListener.SetSignal(signal);
+	if (!m_isWorkerRunning) {
+		m_isWorkerRunning = true;
+		m_workerThread->Run();  //m_cloudEngine.RunTriangulate();
+	}
+}
+
+void CVisualizer::OnTriangulateStep()
+{
+	OnTriangulate(TriangulateEventListener::Step);
+}
+
+void CVisualizer::OnTriangulateDemo()
+{
+	OnTriangulate(TriangulateEventListener::Continue);
+}
+
+void CVisualizer::OnTriangulatePause()
+{
+	OnTriangulate(TriangulateEventListener::Pause);
+}
+
+void CVisualizer::OnTriangulateToEnd()
+{
+	OnTriangulate(TriangulateEventListener::RunToEnd);
 }
 
 

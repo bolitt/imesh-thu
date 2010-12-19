@@ -51,8 +51,11 @@ protected:
 public:
 	void OnSetup();
 	void LoadCloud(char* filepath = NULL);
-	void OnTriangulate();
-
+	void OnTriangulate(TriangulateEventListener::ControlSignal signal);
+	void OnTriangulateStep();
+	void OnTriangulateDemo();
+	void OnTriangulatePause();
+	void OnTriangulateToEnd();
 public:
 	BOOL ActivateCurrentContext();
 	int OnCreate(HDC hDC);

@@ -69,8 +69,10 @@ public:
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnTriangulate();
 	afx_msg void OnFileOpen();
-	
-
+	afx_msg void OnTriangulateStep();
+	afx_msg void OnTriangulateDemo();
+	afx_msg void OnTriangulatePause();
+	afx_msg void OnTriangulateToEnd();
 };
 
 #ifndef _DEBUG  // IMeshView.cpp 中的调试版本
