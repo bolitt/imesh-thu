@@ -30,7 +30,10 @@ public:
 
 	std::vector<Num::Vec3f> GetPoints();
 	std::vector<Num::Vec3f> GetNorms();
-	
+
+	Num::Vec3f GetLowestDim();
+	Num::Vec3f GetHighestDim();
+	Num::Vec3f GetMiddleDim();
 	/*std::vector<point3D> GetPoints();
 	std::vector<vect> GetNorms();*/
 };
