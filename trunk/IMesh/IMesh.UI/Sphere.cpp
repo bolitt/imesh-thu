@@ -2,7 +2,7 @@
 #include "Sphere.h"
 #include "Config.h"
 
-namespace IMesh { namespace UI { namespace Models { 
+namespace IMesh { namespace UI { namespace Models {
 
 const static int DEFAULT_SLICES = 36;
 const static int DEFAULT_STACKS = 36;

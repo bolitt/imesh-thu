@@ -130,9 +130,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MeshData.h">
-      <Filter>views</Filter>
-    </ClInclude>
     <ClInclude Include="Visualizer.h">
       <Filter>views</Filter>
     </ClInclude>
@@ -250,9 +247,6 @@
     <ClInclude Include="..\IMesh.Triangulate\TriangulationHandler.h">
       <Filter>external\Triangulate</Filter>
     </ClInclude>
-    <ClInclude Include="EdgeEventHandler.h">
-      <Filter>DS</Filter>
-    </ClInclude>
     <ClInclude Include="..\IMesh.Triangulate\EdgePivot.h">
       <Filter>external\Triangulate</Filter>
     </ClInclude>
@@ -268,11 +262,20 @@
     <ClInclude Include="MeshLayer.h">
       <Filter>models</Filter>
     </ClInclude>
-    <ClInclude Include="TriangulateHelper.h">
-      <Filter>helpers</Filter>
-    </ClInclude>
     <ClInclude Include="PositionHelper.h">
       <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelViewAdjuster.h">
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshHelper.h">
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="TriangulateEventListener.h">
+      <Filter>DS</Filter>
+    </ClInclude>
+    <ClInclude Include="IAnimation.h">
+      <Filter>models</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -308,9 +311,6 @@
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>window\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="MeshData.cpp">
-      <Filter>views</Filter>
     </ClCompile>
     <ClCompile Include="Visualizer.cpp">
       <Filter>views</Filter>
@@ -354,9 +354,6 @@
     <ClCompile Include="CloudLoader.cpp">
       <Filter>DS</Filter>
     </ClCompile>
-    <ClCompile Include="EdgeEventHandler.cpp">
-      <Filter>DS</Filter>
-    </ClCompile>
     <ClCompile Include="Structures.cpp">
       <Filter>DS</Filter>
     </ClCompile>
@@ -366,11 +363,20 @@
     <ClCompile Include="MeshLayer.cpp">
       <Filter>models</Filter>
     </ClCompile>
-    <ClCompile Include="TriangulateHelper.cpp">
-      <Filter>helpers</Filter>
-    </ClCompile>
     <ClCompile Include="PositionHelper.cpp">
       <Filter>helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelViewAdjuster.cpp">
+      <Filter>helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshHelper.cpp">
+      <Filter>helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="TriangulateEventListener.cpp">
+      <Filter>DS</Filter>
+    </ClCompile>
+    <ClCompile Include="IAnimation.cpp">
+      <Filter>models</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

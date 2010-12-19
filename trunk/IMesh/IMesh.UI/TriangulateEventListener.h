@@ -8,12 +8,11 @@
 #include "Vertex.h"
 #include "Edge.h"
 
-
 namespace IMesh { namespace UI {
 
 class CVisualizer;
 
-class EdgeEventListener : public IMesh::Interface::EventListener
+class TriangulateEventListener : public IMesh::Interface::EventListener
 {
 protected:
 	typedef IMesh::UI::Models::MeshLayer layer_type;
@@ -23,21 +22,32 @@ protected:
 protected:
 	IMesh::UI::CVisualizer* m_pVisualizer;
 	layer_type* m_pDemoLayer;
-	std::vector<IMesh::UI::Models::Vertex *> m_verticesHolder;
-	std::vector<IMesh::UI::Models::Edge *>   m_edgesHolder;
-	std::vector<IMesh::UI::Models::Triangle *> m_trianglesHolder;
+
+public:
+	enum ControlSignal {
+		Step, Continue, Pause, RunToEnd 
+	};
+	
+	void SetSignal(ControlSignal signal);
+	ControlSignal GetSignal();
+	void UpdateSignal();
+	void DispatchUIMessage();
+	bool IsBlocked();
 
 protected:
-	void UpdateLayer(edge& newEdge, EdgeEventArg& edgeEventArg);
-	void Clear();
+	ControlSignal m_ctrlSignal;
+	CMutex m_ctrlSignalMutex;
+
+protected:
 
 public:
 	void Initialize(IMesh::UI::CVisualizer* pVisualizer, layer_type* pDemoLayer);
 	void OnHandle(void* source, const IMesh::Interface::EventArg& eventArgs);
-	
+
+
 public:
-	EdgeEventListener();
-	~EdgeEventListener();	
+	TriangulateEventListener();
+	~TriangulateEventListener();	
 };
 
 } } 

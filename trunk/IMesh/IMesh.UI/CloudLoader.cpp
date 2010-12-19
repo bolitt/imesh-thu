@@ -45,4 +45,5 @@ std::vector<Num::Vec3f> CloudLoader::GetNorms()
 
 }
 
+
 } }

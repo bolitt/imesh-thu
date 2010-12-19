@@ -31,8 +31,8 @@ public:
 	Grid m_worldGrid;
 	Axis m_worldAxis;
 
-
-	
+	// For Model:
+	ModelViewAdjuster m_adjuster;
 
 public:
 	Scene(void);

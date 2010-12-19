@@ -7,7 +7,7 @@
 #include "Triangle.h"
 #include "Vertex.h"
 #include "Edge.h"
-
+#include "ModelViewAdjuster.h"
 
 namespace IMesh { namespace UI { namespace Models {
 
@@ -29,13 +29,28 @@ public:
 	std::vector<Edge *>   m_edgesHolder;
 	std::vector<Triangle *> m_trianglesHolder;
 
+	Edge*		m_pCurrentEdge;
+	Triangle*	m_pCurrentTriangle;
+
+	ModelViewAdjuster* m_pAdjuster;
+
 public:
 	MeshLayer(void);
 	~MeshLayer(void);
 	void OnSetup();
-	void UpdateLayer( triangle_list_type &triangles, points_type& points );
-	void ClearLayer();
 	void OnRender();
+	void InitializeLighting();
+
+	void ClearLayer();
+	void UpdateLayer( triangle_list_type &triangles, points_type& points );
+	
+	void ClearCurrentEdge();
+	void UpdateCurrentEdge(edge& e, points_type& points);
+
+	void ClearCurrentTriangle();
+	void UpdateCurrentTriangle(triangle& t, points_type& points);
+
+	void UpdateSpherePos(point3D& center, float radius);
 };
 
 } } }

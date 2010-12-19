@@ -305,7 +305,6 @@ void CIMeshView::OnTriangulate()
 	theApp.GetMainFrame()->AddDebug(_T("CIMeshView::OnTriangulate() OK"));
 }
 
-
 void CIMeshView::OnFileOpen()
 {
 	// TODO: 在此添加命令处理程序代码
@@ -321,7 +320,7 @@ void CIMeshView::OnFileOpen()
 		char pFilePath[4096];
 		StringHelper::CStringToMultiByte(pFilePath, filePathName);
 		
-		m_vis.InitializeDS(pFilePath);
+		m_vis.LoadCloud(pFilePath);
 		OnPaint();
 	}
 }

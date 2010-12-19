@@ -4,10 +4,9 @@
 #include "Camera.h"
 #include "Projection.h"
 #include "Scene.h"
-#include "EdgeEventHandler.h"
+#include "TriangulateEventListener.h"
 
-
-namespace IMesh { 
+namespace IMesh {
 namespace UI { // namespace IMesh::UI
 
 // CPainter ÃüÁîÄ¿±ê
@@ -29,19 +28,20 @@ public:
 	CSize m_canvasSize;
 
 	CloudInit m_cloudEngine;
-	EdgeEventListener m_edgeEventListener;
+	TriangulateEventListener m_triangulateEventListener;
 	Models::Scene m_scene;
 
 public:
 	CWinThread* m_workerThread;
-
+	bool m_isWorkerRunning;
+	bool m_isLoaded;
 	// for synchronize:
 protected:
 	CCriticalSection m_renderCriticalSection;
 
 public:
 	CSingleLock m_renderLock;
-
+	
 protected:
 	BOOL CreateViewGLContext(HDC hDC); 
 	BOOL SetWindowPixelFormat(HDC hDC);
@@ -50,7 +50,7 @@ protected:
 
 public:
 	void OnSetup();
-	void InitializeDS(char* filepath = NULL);
+	void LoadCloud(char* filepath = NULL);
 	void OnTriangulate();
 
 public:
