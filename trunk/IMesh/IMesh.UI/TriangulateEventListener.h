@@ -37,6 +37,7 @@ public:
 protected:
 	ControlSignal m_ctrlSignal;
 	CMutex m_ctrlSignalMutex;
+	CTime m_lastSignalTime;
 
 protected:
 

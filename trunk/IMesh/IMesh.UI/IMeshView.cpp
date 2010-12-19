@@ -51,10 +51,14 @@ BEGIN_MESSAGE_MAP(CIMeshView, CView)
 	ON_WM_LBUTTONDOWN()
 	ON_WM_LBUTTONUP()
 	ON_WM_MOUSEMOVE()
-	ON_COMMAND(ID_Triangulate, &CIMeshView::OnTriangulate)
+	//	ON_WM_MOUSELEAVE()
+	ON_WM_NCMOUSELEAVE()
 	ON_COMMAND(ID_FILE_OPEN, &CIMeshView::OnFileOpen)
-//	ON_WM_MOUSELEAVE()
-ON_WM_NCMOUSELEAVE()
+	ON_COMMAND(ID_TRIANGULATE, &CIMeshView::OnTriangulate)
+	ON_COMMAND(ID_TRIANGULATE_STEP, &CIMeshView::OnTriangulateStep)
+	ON_COMMAND(ID_TRIANGULATE_DEMO, &CIMeshView::OnTriangulateDemo)
+	ON_COMMAND(ID_TRIANGULATE_PAUSE, &CIMeshView::OnTriangulatePause)
+	ON_COMMAND(ID_TRIANGULATE_TO_END, &CIMeshView::OnTriangulateToEnd)
 END_MESSAGE_MAP()
 
 // CIMeshView ¹¹Ôì/Îö¹¹
@@ -300,9 +304,7 @@ void CIMeshView::OnTriangulate()
 	//	theApp.GetMainFrame()->AddDebug(_T("CIMeshView::OnTriangulate() Failed"));
 	//}
 	theApp.GetMainFrame()->AddDebug(_T("CIMeshView::OnTriangulate()"));
-	m_vis.OnTriangulate();
-	OnPaint();
-	theApp.GetMainFrame()->AddDebug(_T("CIMeshView::OnTriangulate() OK"));
+	m_vis.OnTriangulateDemo();
 }
 
 void CIMeshView::OnFileOpen()
@@ -325,11 +327,28 @@ void CIMeshView::OnFileOpen()
 	}
 }
 
+void CIMeshView::OnTriangulateStep()
+{
+	theApp.GetMainFrame()->AddDebug(_T("CIMeshView::OnTriangulateStep()"));
+	m_vis.OnTriangulateStep();
+}
+
+void CIMeshView::OnTriangulateDemo()
+{
+	theApp.GetMainFrame()->AddDebug(_T("CIMeshView::OnTriangulateDemo()"));
+	m_vis.OnTriangulateDemo();
+}
+
+void CIMeshView::OnTriangulatePause()
+{
+	theApp.GetMainFrame()->AddDebug(_T("CIMeshView::OnTriangulatePause()"));
+	m_vis.OnTriangulatePause();
+}
+
+void CIMeshView::OnTriangulateToEnd()
+{
+	theApp.GetMainFrame()->AddDebug(_T("CIMeshView::OnTriangulateToEnd()"));
+	m_vis.OnTriangulateToEnd();
+}
+
 END_NAMESPACE2(IMesh, UI)
-
-
-
-
-
-
-

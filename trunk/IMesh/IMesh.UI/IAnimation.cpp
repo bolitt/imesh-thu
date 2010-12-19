@@ -9,7 +9,6 @@ Animation::Animation() : m_animationThread(NULL), m_isSetuped(false)
 
 }
 
-	
 Animation::~Animation()
 {
 	if (m_animationThread != NULL) 
@@ -25,8 +24,15 @@ void Animation::OnSetup()
 	public:
 		Animation& m_animation;
 	protected:
-		void SpinWait(double millionSeconds)
+		void SpinWait(DWORD millionSeconds)
 		{
+			BOOL bRet;
+			MSG msg;
+			if ( (bRet = GetMessage(&msg, NULL, 0, 0)) != 0)
+			{ 
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
 			Sleep(millionSeconds);
 		}
 	public:

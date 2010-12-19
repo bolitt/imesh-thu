@@ -148,49 +148,73 @@ void MeshLayer::OnRender()
 
 }
 
+void MeshLayer::InitializeLightEnum(GLenum lightEnum, 
+						GLfloat* ambient, GLfloat* diffuse, GLfloat* specular, 
+						GLfloat* position, GLfloat* spotDirection )
+{
+	glLightfv(lightEnum, GL_AMBIENT, ambient);
+	glLightfv(lightEnum, GL_DIFFUSE, diffuse);
+	glLightfv(lightEnum, GL_SPECULAR, specular);
+	glLightfv(lightEnum, GL_POSITION, position);
+	glLightfv(lightEnum, GL_SPOT_DIRECTION, spotDirection);
+}
 
 void MeshLayer::InitializeLighting()
 {
 	{
 		glEnable(GL_LIGHT0); glEnable(GL_LIGHT1); glEnable(GL_LIGHT2);
+		glEnable(GL_LIGHT3); glEnable(GL_LIGHT4); glEnable(GL_LIGHT5);
 
 		GLfloat light_ambient[] = { 0.2f, 0.2f, 0.2f, 1.0f };
 
 		GLfloat light0_diffuse[] = { 0.6f, 0.0f, 0.0f, 1.0f };
 		GLfloat light1_diffuse[] = { 0.0f, 0.6f, 0.0f, 1.0f };
 		GLfloat light2_diffuse[] = { 0.0f, 0.0f, 0.6f, 1.0f };
+		GLfloat light3_diffuse[] = { 0.3f, 0.3f, 0.0f, 1.0f };
+		GLfloat light4_diffuse[] = { 0.0f, 0.3f, 0.3f, 1.0f };
+		GLfloat light5_diffuse[] = { 0.3f, 0.0f, 0.3f, 1.0f };
 
 		GLfloat light0_specular[] = { 0.6f, 0.0f, 0.0f, 1.0f };
 		GLfloat light1_specular[] = { 0.0f, 0.6f, 0.0f, 1.0f };
 		GLfloat light2_specular[] = { 0.0f, 0.0f, 0.6f, 1.0f };
+		GLfloat light3_specular[] = { 0.3f, 0.3f, 0.0f, 1.0f };
+		GLfloat light4_specular[] = { 0.0f, 0.3f, 0.3f, 1.0f };
+		GLfloat light5_specular[] = { 0.3f, 0.0f, 0.3f, 1.0f };
 
 		float inf = (float)Config::Navigation::DEFAULT_FAR; 
 
 		GLfloat light0_position[] = { inf, 0.0f, 0.0f, 1.0f };
 		GLfloat light1_position[] = { 0.0f, inf, 0.0f, 1.0f };
 		GLfloat light2_position[] = { 0.0f, 0.0f, inf, 1.0f };
+		GLfloat light3_position[] = { -inf, 0.0f, 0.0f, 1.0f };
+		GLfloat light4_position[] = { 0.0f, -inf, 0.0f, 1.0f };
+		GLfloat light5_position[] = { 0.0f, 0.0f, -inf, 1.0f };
 
 		GLfloat light0_spot_direction[] = { -1.0f, 0.0f, 0.0f };
 		GLfloat light1_spot_direction[] = { 0.0f, -1.0f, 0.0f };
 		GLfloat light2_spot_direction[] = { 0.0f, 0.0f, -1.0f };
+		GLfloat light3_spot_direction[] = { 1.0f, 0.0f, 0.0f };
+		GLfloat light4_spot_direction[] = { 0.0f, 1.0f, 0.0f };
+		GLfloat light5_spot_direction[] = { 0.0f, 0.0f, 1.0f };
 
-		glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
-		glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);
-		glLightfv(GL_LIGHT0, GL_SPECULAR, light0_specular);
-		glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
-		glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, light0_spot_direction);
-
-		glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient);
-		glLightfv(GL_LIGHT1, GL_DIFFUSE, light1_diffuse);
-		glLightfv(GL_LIGHT1, GL_SPECULAR, light1_specular);
-		glLightfv(GL_LIGHT1, GL_POSITION, light1_position);
-		glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, light1_spot_direction);
-
-		glLightfv(GL_LIGHT2, GL_AMBIENT, light_ambient);
-		glLightfv(GL_LIGHT2, GL_DIFFUSE, light2_diffuse);
-		glLightfv(GL_LIGHT2, GL_SPECULAR, light2_specular);
-		glLightfv(GL_LIGHT2, GL_POSITION, light2_position);
-		glLightfv(GL_LIGHT2, GL_SPOT_DIRECTION, light2_spot_direction);
+		InitializeLightEnum(GL_LIGHT0, 
+							light_ambient, light0_diffuse, light0_specular, 
+							light0_position, light0_spot_direction);
+		InitializeLightEnum(GL_LIGHT1, 
+							light_ambient, light1_diffuse, light1_specular, 
+							light1_position, light1_spot_direction);
+		InitializeLightEnum(GL_LIGHT2, 
+							light_ambient, light2_diffuse, light2_specular, 
+							light2_position, light2_spot_direction);
+		InitializeLightEnum(GL_LIGHT3, 
+							light_ambient, light3_diffuse, light3_specular, 
+							light3_position, light3_spot_direction);
+		InitializeLightEnum(GL_LIGHT4, 
+							light_ambient, light4_diffuse, light4_specular, 
+							light4_position, light4_spot_direction);
+		InitializeLightEnum(GL_LIGHT5, 
+							light_ambient, light5_diffuse, light5_specular, 
+							light5_position, light5_spot_direction);
 	}
 
 	{

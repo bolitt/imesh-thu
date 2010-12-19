@@ -2,6 +2,7 @@
 #include "TriangulateEventListener.h"
 #include "Visualizer.h"
 #include "IAnimation.h"
+#include "IMesh.h"
 
 namespace IMesh { namespace UI {
 
@@ -33,6 +34,8 @@ void TriangulateEventListener::OnHandle( void* source, const IMesh::Interface::E
 	{
 		case TriangulateEventArg::EdgeActivatied:
 		{
+			if (GetSignal() == TriangulateEventListener::RunToEnd) { break; }
+
 			edge& newEdge = *((edge*) source);
 			m_pDemoLayer->ClearCurrentEdge();
 			m_pDemoLayer->UpdateCurrentEdge(newEdge, 
@@ -46,6 +49,8 @@ void TriangulateEventListener::OnHandle( void* source, const IMesh::Interface::E
 		}
 		case TriangulateEventArg::SeedTriangleFound:
 		{
+			if (GetSignal() == TriangulateEventListener::RunToEnd) { break; }
+
 			triangle& newTriangle = *((triangle*) source);
 			m_pDemoLayer->ClearCurrentEdge();
 			
@@ -94,6 +99,7 @@ void TriangulateEventListener::OnHandle( void* source, const IMesh::Interface::E
 		}
 		case TriangulateEventArg::TriangleCreated:
 		{
+			if (GetSignal() == TriangulateEventListener::RunToEnd) { break; }
 			triangle& newTriangle = *((triangle*) source);
 			m_pDemoLayer->ClearCurrentEdge();
 
@@ -118,7 +124,17 @@ void TriangulateEventListener::OnHandle( void* source, const IMesh::Interface::E
 
 			m_pDemoLayer->UpdateLayer(*eventArg.m_pTriangleList,
 										(*eventArg.m_pAllPointList).points);
+			
 			m_pVisualizer->OnRender();
+			
+			CTime currentTime = CTime::GetCurrentTime();
+			CTimeSpan duration = currentTime - m_lastSignalTime;
+			CString str, str1, str2, str3;
+			str1.Format(_T("#Points: %d\r\n"), (*eventArg.m_pAllPointList).points.size());
+			str2.Format(_T("#Triangule: %d\r\n"), eventArg.m_pTriangleList->size());
+			str3.Format(_T("#Time: %d seconds\r\n"), duration.GetTotalSeconds());
+			str = str1 + str2 + str3;
+			theApp.GetMainFrame()->AddDebug(str);
 			break;
 		}
 
@@ -129,13 +145,13 @@ void TriangulateEventListener::OnHandle( void* source, const IMesh::Interface::E
 	}
 
 	DWORD millonSecond = 1;
-
 	UpdateSignal();
 	do
 	{
 		DispatchUIMessage();
-		Sleep(millonSecond);
-	} while(IsBlocked());
+		if (IsBlocked()) {Sleep(millonSecond);}
+		else { break; }
+	} while(true);
 }
 
 void TriangulateEventListener::DispatchUIMessage()
@@ -151,6 +167,7 @@ void TriangulateEventListener::DispatchUIMessage()
 
 void TriangulateEventListener::SetSignal( TriangulateEventListener::ControlSignal signal )
 {
+	m_lastSignalTime = CTime::GetCurrentTime();
 	CSingleLock lock(&m_ctrlSignalMutex);
 	lock.Lock();
 	m_ctrlSignal = signal;
