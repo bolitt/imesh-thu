@@ -66,6 +66,25 @@ std::vector<Num::Vec3f> CloudInit::GetNorms()
 	return norms;
 
 }
+
+Num::Vec3f CloudInit::GetLowestDim()
+{
+	Norm::Vector3& v = m_cloud.lowestDim;
+	return Num::Vec3f(v.x, v.y, v.z);
+}
+
+Num::Vec3f CloudInit::GetHighestDim()
+{
+	Norm::Vector3& v = m_cloud.highestDim;
+	return Num::Vec3f(v.x, v.y, v.z);
+}
+
+Num::Vec3f CloudInit::GetMiddleDim()
+{
+	Norm::Vector3& v = m_cloud.middleDim;
+	return Num::Vec3f(v.x, v.y, v.z);
+}
+
 //
 //std::vector<point3D> CloudInit::GetPoints()
 //{

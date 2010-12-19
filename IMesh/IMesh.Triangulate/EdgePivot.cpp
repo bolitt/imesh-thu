@@ -23,7 +23,7 @@ edge *getActiveEdge(TriangulationHandler *TH)
 	return e;
 }
 
-long ballPivot(edge *edgeaxis, grid *m_grid, double ballradius,TriangulationHandler *TH)
+long ballPivot(edge *edgeaxis, grid *m_grid, double ballradius, point3D& outBallCenter, TriangulationHandler *TH)
 {
 	if((edgeaxis->idx_i == 13 && edgeaxis->idx_j == 1)||(edgeaxis->idx_j == 1 && edgeaxis->idx_i == 13))
 		int iii = 0;
@@ -110,7 +110,7 @@ long ballPivot(edge *edgeaxis, grid *m_grid, double ballradius,TriangulationHand
 	double yoffset = rc*sin(min_angle);
 
 	point3D newballcenter(m.x+xoffset*nx.x+yoffset*ny.x,m.y+xoffset*nx.y+yoffset*ny.y,m.z+xoffset*nx.z+yoffset*ny.z);
-
+	outBallCenter = newballcenter;
 	joinEdge(edgeaxis, min_index, m_grid, newballcenter,TH);
 
 	return min_index;

@@ -3,8 +3,7 @@
 #include "TriangulationHandler.h"
 
 extern edge *getActiveEdge(TriangulationHandler *TH);
-extern long ballPivot(edge *edgeaxis,grid *m_grid, double ballradius, TriangulationHandler *TH);
-
+extern long ballPivot(edge *edgeaxis,grid *m_grid, double ballradius, point3D& outBallCenter, TriangulationHandler *TH);
 
 extern void joinEdge(edge *edgeaxis, long pointindex, grid *m_grid, point3D ballcenter, TriangulationHandler *TH);
 extern void glueEdges(edge *newedge, edge *originedge, point *newedgei, point *newedgej, TriangulationHandler *TH);

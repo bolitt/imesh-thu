@@ -16,31 +16,46 @@
 
 class TriangulationHandler;
 
-class EdgeEvent : public IMesh::Interface::Event
+class TriangulateEvent : public IMesh::Interface::Event
 {
 };
 
-class EdgeEventArg : public IMesh::Interface::EventArg
+class TriangulateEventArg : public IMesh::Interface::EventArg
 {
 public:
 	enum EventType {
-		Activatied,    // 增加算法过程中的事件
+		EdgeActivatied,    // 增加算法过程中的事件
+		TriangleCreated,
+		SeedTriangleFound,
+		Completed
 	};
 	typedef EventType event_type;
 
 public:
 	EventType			  m_eventType;
+	void*                 m_pEventSource;
 
 	TriangulationHandler* m_pTriangulationHandler;
-	edge*                 m_pSourceEdge;
+
+	// for outer use
 	all_point_list*       m_pAllPointList;
 	vector<triangle *>*   m_pTriangleList;
 	edgefront*            m_pEdgeFront;
 	deque<edge *>*        m_pFrontEdgeQueue;
+	float                 m_ballRadius;
+	point3D				  m_ballCenter;
+
+protected:
+	void _Initialize(TriangulationHandler* pTriangulationHandler);
 
 public:
 	void Initialize(event_type eventType,
 					edge* pSourceEdge,
+					TriangulationHandler* pTriangulationHandler);
+	void Initialize(event_type eventType,
+					triangle* pSourceTriangle,
+					TriangulationHandler* pTriangulationHandler);
+	void Initialize(event_type eventType,
 					TriangulationHandler* pTriangulationHandler);
 };
 

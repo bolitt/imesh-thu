@@ -232,7 +232,7 @@ namespace IMesh { //: namespace IMesh
 		}
 
 		int Cloud::MoveToZero(){
-			double lx = 0,ly = 0,lz = 0;
+			double lx = 0, ly = 0, lz = 0;
 			double hx = 0, hy = 0, hz = 0;
 			for( int i = 0 ; i < v_num ; i++ )
 			{
@@ -253,12 +253,20 @@ namespace IMesh { //: namespace IMesh
 					hz = m_vertices[i].z;
 			}
 			Vector3 v(lx,ly,lz);
+			lowestDim = Vector3(lx, ly, lz);
+			double mx = (lx+hx)/2, 
+				   my = (ly+hy)/2, 
+				   mz = (lz+hz)/2;
+			middleDim = Vector3(mx, my, mz);
+			highestDim = Vector3(hx, hy, hz);
 			for( int i = 0 ; i < v_num ; i++ )
 			{
 				m_vertices[i]-=v;
 			}
-			mx = (lx+hx)/2, my = (ly+hy)/2, mz = (lz+hz)/2;
-			mid = Vector3(mx,my,mz);
+			lowestDim -= v;
+			middleDim -= v;
+			highestDim -= v;
+			
 			density = std::pow((hx-lx) * (hy-ly) * (hz-lz)/v_num, 1.0/3 );//r = 1.5density
 			grid_width = density * 4;
 			grid_x = (int)((hx-lx)/grid_width) + 1;

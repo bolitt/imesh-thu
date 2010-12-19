@@ -22,8 +22,12 @@ namespace Norm { //: namespace IMesh::Norm
 		int k;				//compute for k nearest neighbours;
 		double r;				//radious
 		int lowest;			//lowest point
-		double mx,my,mz;	//mid point
-		Vector3 mid;
+		
+		// modelScale
+		Vector3 lowestDim;
+		Vector3 middleDim;
+		Vector3 highestDim;
+
 		double density,grid_width;
 		int grid_x,grid_y,grid_z;
 
