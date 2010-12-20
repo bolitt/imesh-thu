@@ -89,6 +89,9 @@ protected:
 			m4.Add(Vec3i(1, 2, 3));
 			ASSERT(m4._x == 5 && m4._y == 6 && m4._z == 7);
 
+			m4.Add(1, 2, 3);
+			ASSERT(m4._x == 6 && m4._y == 8 && m4._z == 10);
+
 			m4.Zeros();
 			ASSERT(m4._x == 0 && m4._y == 0 && m4._z == 0);
 
