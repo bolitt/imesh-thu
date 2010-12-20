@@ -29,8 +29,9 @@ void Animation::OnSetup()
 		{
 			LARGE_INTEGER prev, now, freq;
 			QueryPerformanceFrequency(&freq);
-			double ms_per_tick = 1000.0 / freq.QuadPart;
 			QueryPerformanceCounter(&prev);
+
+			double ms_per_tick = 1000.0 / freq.QuadPart;
 			while (true) 
 			{
 				QueryPerformanceCounter(&now);
@@ -41,12 +42,16 @@ void Animation::OnSetup()
 
 				BOOL bRet;
 				MSG msg;
-				if ( (bRet = GetMessage(&msg, NULL, 0, 0)) != 0)
+				if ( (bRet = PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) != 0)
 				{ 
-					TranslateMessage(&msg);
-					DispatchMessage(&msg);
+					//GetMessage(&msg, NULL, 0, PM_NOREMOVE);
+					//TranslateMessage(&msg);
+					//DispatchMessage(&msg);
+					if ( ! AfxGetApp()->PumpMessage() ) {
+						AfxGetApp()->ExitInstance();
+					}
 				}
-				this->OnIdle(1); //Sleep(1);
+				Sleep(1);
 			}
 			
 		}

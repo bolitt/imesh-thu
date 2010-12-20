@@ -154,12 +154,13 @@ void TriangulateEventListener::OnHandle( void* source, const IMesh::Interface::E
 	DWORD millonSecond = 1;
 	UpdateSignal();
 	do
-	{
+	{	
 		DispatchUIMessage();
 		if (IsBlocked()) {
 			Sleep(millonSecond);
 		}
 		else { break; }
+		
 	} while(true);
 }
 
@@ -167,13 +168,14 @@ void TriangulateEventListener::DispatchUIMessage()
 {
 	BOOL bRet;
 	MSG msg;
-	if ( (bRet = GetMessage(&msg, NULL, 0, PM_NOREMOVE)) != 0)
+	if ( (bRet = PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) != 0)
 	{ 
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
-		/*if ( ! AfxGetApp()->PumpMessage() ) {
+		//GetMessage(&msg, NULL, 0, PM_NOREMOVE);
+		//TranslateMessage(&msg);
+		//DispatchMessage(&msg);
+		if ( ! AfxGetApp()->PumpMessage() ) {
 			AfxGetApp()->ExitInstance();
-		}*/
+		}
 	}
 }
 
