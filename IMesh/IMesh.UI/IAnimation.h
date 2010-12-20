@@ -9,7 +9,7 @@ class IAnimation
 public:
 	int m_fps;
 	int m_frameNum;
-	bool m_isRepeat;
+	bool m_isRepeat;	
 
 public:
 	IAnimation() : m_fps(0), m_frameNum(-1), m_isRepeat(false) {}
@@ -23,6 +23,7 @@ class Animation : public IAnimation
 {
 protected:
 	CWinThread* m_animationThread;
+	CEvent m_animationCompleted;
 	bool m_isSetuped;
 
 public:
@@ -32,6 +33,7 @@ public:
 	void StartAnimation();
 	void StopAnimation();
 	void OnAnimationFrame(int i);
+	void JoinAnimation();
 };
 
 } } }

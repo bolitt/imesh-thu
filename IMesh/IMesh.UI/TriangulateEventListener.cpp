@@ -91,6 +91,7 @@ void TriangulateEventListener::OnHandle( void* source, const IMesh::Interface::E
 			BallDropAnimation animation(m_pVisualizer, m_pDemoLayer, eventArg.m_ballCenter, eventArg.m_ballRadius);
 			animation.OnSetup();
 			animation.StartAnimation();
+			animation.JoinAnimation();
 			/*m_pDemoLayer->UpdateLayer(*eventArg.m_pTriangleList,
 									(*eventArg.m_pAllPointList).points);*/
 			m_pDemoLayer->UpdateSpherePos(eventArg.m_ballCenter, eventArg.m_ballRadius);
