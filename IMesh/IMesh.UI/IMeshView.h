@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Visualizer.h"
+#include "DisplayDialog.h"
 
 BEGIN_NAMESPACE2(IMesh, UI)
 
@@ -18,7 +19,7 @@ public:
 
 // 操作
 public:
-	
+	CDisplayDialog* m_pSettingDialog;
 
 // 重写
 public:
@@ -72,6 +73,7 @@ public:
 	afx_msg void OnTriangulateToEnd();
 	afx_msg void OnNcPaint();
 	afx_msg void OnPaint();
+	afx_msg void OnSettingDialogOpen();
 };
 
 #ifndef _DEBUG  // IMeshView.cpp 中的调试版本

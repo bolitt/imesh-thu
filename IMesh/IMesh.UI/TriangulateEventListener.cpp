@@ -11,11 +11,17 @@ using namespace IMesh::UI::Models;
 TriangulateEventListener::TriangulateEventListener(void)
 {
 	m_ctrlSignal = TriangulateEventListener::Pause;
+	m_pCtrlLock = new CSingleLock(&m_ctrlSignalMutex);
 }
 
 
 TriangulateEventListener::~TriangulateEventListener(void)
 {
+	if (m_pCtrlLock->IsLocked()) {
+		m_pCtrlLock->Unlock();
+	}
+	delete m_pCtrlLock;
+	m_pCtrlLock = NULL;
 }
 
 void TriangulateEventListener::Initialize( IMesh::UI::CVisualizer* pVisualizer, layer_type* pDemoLayer )
@@ -161,46 +167,44 @@ void TriangulateEventListener::DispatchUIMessage()
 {
 	BOOL bRet;
 	MSG msg;
-	if ( (bRet = GetMessage(&msg, NULL, 0, 0)) != 0)
+	if ( (bRet = GetMessage(&msg, NULL, 0, PM_NOREMOVE)) != 0)
 	{ 
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
+		/*if ( ! AfxGetApp()->PumpMessage() ) {
+			AfxGetApp()->ExitInstance();
+		}*/
 	}
 }
 
 void TriangulateEventListener::SetSignal( TriangulateEventListener::ControlSignal signal )
 {
 	m_lastSignalTime = CTime::GetCurrentTime();
-	CSingleLock lock(&m_ctrlSignalMutex);
-	lock.Lock();
+	m_pCtrlLock->Lock();
 	m_ctrlSignal = signal;
-	lock.Unlock();
+	m_pCtrlLock->Unlock();
 }
 
 TriangulateEventListener::ControlSignal TriangulateEventListener::GetSignal()
 {
-	TriangulateEventListener::ControlSignal signal;
-	CSingleLock lock(&m_ctrlSignalMutex);
-	lock.Lock();
-	signal = m_ctrlSignal;
-	lock.Unlock();
+	m_pCtrlLock->Lock();
+	TriangulateEventListener::ControlSignal signal = m_ctrlSignal;
+	m_pCtrlLock->Unlock();
 	return signal;
 }
 
 void TriangulateEventListener::UpdateSignal()
 {
-	CSingleLock lock(&m_ctrlSignalMutex);
-	lock.Lock();
+	m_pCtrlLock->Lock();
 	if (m_ctrlSignal == TriangulateEventListener::Step) {
 		m_ctrlSignal = TriangulateEventListener::Pause;
 	}
-	lock.Unlock();
+	m_pCtrlLock->Unlock();
 }
 
 bool TriangulateEventListener::IsBlocked()
 {
-	TriangulateEventListener::ControlSignal signal = GetSignal();
-	return (signal == TriangulateEventListener::Pause);
+	return (GetSignal() == TriangulateEventListener::Pause);
 }
 
 

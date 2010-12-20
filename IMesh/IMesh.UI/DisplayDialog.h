@@ -24,7 +24,8 @@ protected:
 	BOOL m_bEnabledSurface;
 	BOOL m_bEnabledMesh;
 	BOOL m_bEnabledNormal;
-	CVisualizer* m_vis;
+public:
+	CVisualizer* m_pVis;
 
 public:
 	void UpdateDisplay();

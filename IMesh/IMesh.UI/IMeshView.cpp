@@ -58,6 +58,7 @@ BEGIN_MESSAGE_MAP(CIMeshView, CView)
 	ON_COMMAND(ID_TRIANGULATE_DEMO, &CIMeshView::OnTriangulateDemo)
 	ON_COMMAND(ID_TRIANGULATE_PAUSE, &CIMeshView::OnTriangulatePause)
 	ON_COMMAND(ID_TRIANGULATE_TO_END, &CIMeshView::OnTriangulateToEnd)
+	ON_COMMAND(ID_SETTING_DIALOG_OPEN, &CIMeshView::OnSettingDialogOpen)
 END_MESSAGE_MAP()
 
 // CIMeshView 构造/析构
@@ -66,11 +67,15 @@ CIMeshView::CIMeshView()
 {
 	// TODO: 在此处添加构造代码
 	m_bLeftButtonDown = false;
+	m_pSettingDialog = NULL;
 }
 
 CIMeshView::~CIMeshView()
 {
-	
+	if (m_pSettingDialog != NULL) {
+		m_pSettingDialog->DestroyWindow();
+		m_pSettingDialog = NULL;
+	}
 }
 
 BOOL CIMeshView::PreCreateWindow(CREATESTRUCT& cs)
@@ -171,6 +176,7 @@ int CIMeshView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CView::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
+
 	// TODO:  在此添加您专用的创建代码
 	theApp.GetMainFrame()->AddDebug(_T("OnCreate"));
 	HWND hwnd = GetSafeHwnd();
@@ -202,6 +208,13 @@ void CIMeshView::OnLButtonDown(UINT nFlags, CPoint point)
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	m_bLeftButtonDown = true;
 
+#ifndef SHARED_HANDLERS
+	HMENU hmenu = theApp.GetContextMenuManager()->GetMenuById(IDR_POPUP_EDIT);
+	DestroyMenu(hmenu);
+	//theApp.GetContextMenuManager()->ShowPopupMenu(IDR_POPUP_EDIT, point.x, point.y, this, TRUE);
+#endif
+	
+	
 	CView::OnLButtonDown(nFlags, point);
 }
 
@@ -327,6 +340,20 @@ void CIMeshView::OnPaint()
 	m_vis.OnRender();
 }
 
+void CIMeshView::OnSettingDialogOpen()
+{
+	if (m_pSettingDialog == NULL) {
+		m_pSettingDialog = new CDisplayDialog();
+		m_pSettingDialog->m_pVis = &m_vis;
+		m_pSettingDialog->Create(IDD_DISPLAY_DIALOG, this);
+		m_pSettingDialog->ShowWindow(SW_SHOW);
+		m_pSettingDialog->BringWindowToTop();
+	} else {
+		m_pSettingDialog->ShowWindow(SW_SHOW);
+		m_pSettingDialog->BringWindowToTop();
+		m_pSettingDialog->SetFocus();
+	}
+}
+
 
 END_NAMESPACE2(IMesh, UI)
-
