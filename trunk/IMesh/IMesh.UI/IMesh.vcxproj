@@ -142,6 +142,7 @@
     <ClInclude Include="ClassView.h" />
     <ClInclude Include="CloudLoader.h" />
     <ClInclude Include="Config.h" />
+    <ClInclude Include="DisplayDialog.h" />
     <ClInclude Include="IAnimation.h" />
     <ClInclude Include="MeshLayer.h" />
     <ClInclude Include="TriangulateEventListener.h" />
@@ -180,6 +181,7 @@
     <ClCompile Include="ClassView.cpp" />
     <ClCompile Include="CloudLoader.cpp" />
     <ClCompile Include="Config.cpp" />
+    <ClCompile Include="DisplayDialog.cpp" />
     <ClCompile Include="IAnimation.cpp" />
     <ClCompile Include="MeshLayer.cpp" />
     <ClCompile Include="TriangulateEventListener.cpp" />

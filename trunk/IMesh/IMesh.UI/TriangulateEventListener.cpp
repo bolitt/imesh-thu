@@ -150,7 +150,9 @@ void TriangulateEventListener::OnHandle( void* source, const IMesh::Interface::E
 	do
 	{
 		DispatchUIMessage();
-		if (IsBlocked()) {Sleep(millonSecond);}
+		if (IsBlocked()) {
+			Sleep(millonSecond);
+		}
 		else { break; }
 	} while(true);
 }

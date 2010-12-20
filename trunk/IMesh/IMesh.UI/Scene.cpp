@@ -29,9 +29,10 @@ void Scene::OnSetup()
 	
 	m_cloudLayer.OnSetup();
 	m_cloudLayer.m_pAdjuster = &m_adjuster;
-
+	
 	m_meshLayer.OnSetup();
 	m_meshLayer.m_pAdjuster = &m_adjuster;
+	
 	// m_overlayer
 	//m_overLayer.m_children.push_back(&m_sphere);
 	//m_overLayer.m_children.push_back(&m_triangle);

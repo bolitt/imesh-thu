@@ -18,7 +18,7 @@ public:
 
 // 操作
 public:
-
+	
 
 // 重写
 public:
@@ -48,7 +48,6 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
-	afx_msg void OnPaint();
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 
 protected:
@@ -60,11 +59,9 @@ protected:
 	CPoint m_ptPrevMouseMove;
 
 public:
-	afx_msg void OnNcPaint();
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
-//	afx_msg void OnMouseLeave();
 	afx_msg void OnNcMouseLeave();
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnTriangulate();
@@ -73,6 +70,8 @@ public:
 	afx_msg void OnTriangulateDemo();
 	afx_msg void OnTriangulatePause();
 	afx_msg void OnTriangulateToEnd();
+	afx_msg void OnNcPaint();
+	afx_msg void OnPaint();
 };
 
 #ifndef _DEBUG  // IMeshView.cpp 中的调试版本

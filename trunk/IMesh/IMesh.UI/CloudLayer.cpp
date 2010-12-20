@@ -6,7 +6,6 @@ namespace IMesh { namespace UI { namespace Models {
 CloudLayer::CloudLayer(void)
 {
 	m_pAdjuster = NULL;
-
 }
 
 
@@ -18,7 +17,8 @@ CloudLayer::~CloudLayer(void)
 
 void CloudLayer::ClearLayer()
 {
-	this->m_children.clear();
+	m_vertiesLayer.m_children.clear();
+	m_normalsLayer.m_children.clear();
 
 	for (size_t i = 0; i < m_vertiesHolder.size(); ++i)
 	{
@@ -26,11 +26,11 @@ void CloudLayer::ClearLayer()
 	}
 	m_vertiesHolder.clear();
 
-	for (size_t i = 0; i < m_edgesHolder.size(); ++i)
+	for (size_t i = 0; i < m_normalsHolder.size(); ++i)
 	{
-		delete m_edgesHolder[i];
+		delete m_normalsHolder[i];
 	}
-	m_edgesHolder.clear();
+	m_normalsHolder.clear();
 }
 
 void CloudLayer::SetLayer(CloudInit& cloud)
@@ -43,6 +43,13 @@ void CloudLayer::SetLayer(CloudInit& cloud)
 		std::vector<Num::Vec3f>& points = cloud.GetPoints();
 		std::vector<Num::Vec3f>& norms = cloud.GetNorms();
 		ASSERT(points.size() == norms.size());
+		
+		const int SIZE = points.size();
+
+		m_vertiesHolder.resize(2 * SIZE);
+		m_normalsHolder.resize(SIZE);
+		m_vertiesLayer.m_children.resize(SIZE);
+		m_normalsLayer.m_children.resize(SIZE);
 
 		for (size_t i = 0; i < points.size(); i++) {
 			Num::Vec3f& point = points[i];
@@ -59,21 +66,18 @@ void CloudLayer::SetLayer(CloudInit& cloud)
 			Vertex* v1 = new Vertex();
 			// v1->m_id = 2 * i + 1; //helper vertex doesn't has id
 			v1->m_pos = point + norm;
+			m_vertiesHolder.push_back(v0);
 
 			Edge* e = new Edge();
 			e->m_id = i;
 			e->_pV0 = v0;
 			e->_pV1 = v1;
-			m_edgesHolder.push_back(e);
+			m_normalsHolder.push_back(e);
+
+			m_vertiesLayer.m_children.push_back(v0);
+			m_normalsLayer.m_children.push_back(e);
 		}
-		for (size_t i = 0; i < m_vertiesHolder.size(); i++)
-		{
-			this->m_children.push_back(m_vertiesHolder[i]);
-		}
-		for (size_t i = 0; i < m_edgesHolder.size(); i++)
-		{
-			this->m_children.push_back(m_edgesHolder[i]);
-		}
+
 	}
 }
 
@@ -86,8 +90,16 @@ void CloudLayer::OnRender()
 	parent_type::OnRender();
 
 	glPopMatrix();
-
 	_DEBUG_ONRENDER_CHECK_ERROR_();
+}
+
+void CloudLayer::OnSetup()
+{
+	m_vertiesLayer.OnSetup();
+	m_normalsLayer.OnSetup();
+
+	m_children.push_back(&m_vertiesLayer);
+	m_children.push_back(&m_normalsLayer);
 }
 
 } } }

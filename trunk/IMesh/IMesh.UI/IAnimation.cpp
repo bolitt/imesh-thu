@@ -15,7 +15,6 @@ Animation::~Animation()
 	if (m_animationThread != NULL) 
 	{
 		m_animationThread->ExitInstance();
-		m_animationThread->Delete();
 	}
 }
 
