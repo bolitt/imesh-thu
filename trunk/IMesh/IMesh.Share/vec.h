@@ -81,12 +81,20 @@ namespace IMesh { namespace Num {
 				this->_z = this->_z op v1._z;         \
 			}
 
-			#define DEFINE_SELF_OPERATOR_EACH_DIM(func, op)    \
-			void func (const TValue& v)				\
-			{										\
-				this->_x = this->_x op v;           \
-				this->_y = this->_y op v;           \
-				this->_z = this->_z op v;           \
+			#define DEFINE_SELF_OPERATOR_TO_ALL_DIMS(func, op)    \
+			void func (const value_type& value_to_all)			\
+			{													\
+				this->_x = this->_x op value_to_all;           \
+				this->_y = this->_y op value_to_all;           \
+				this->_z = this->_z op value_to_all;           \
+			}
+
+			#define DEFINE_SELF_OPERATOR_EACH_DIM(func, op) \
+			void func (value_type x, value_type y, value_type z)		\
+			{												\
+				this->_x = this->_x op x;					\
+				this->_y = this->_y op y;					\
+				this->_z = this->_z op z;					\
 			}
 
 			#define DEFINE_ASSIGN_OPERATOR(op) \
@@ -120,6 +128,15 @@ namespace IMesh { namespace Num {
 			DEFINE_SELF_OPERATOR(Xor, ^)
 			DEFINE_SELF_OPERATOR(And, &)
 			DEFINE_SELF_OPERATOR(Or, |)
+
+			DEFINE_SELF_OPERATOR_TO_ALL_DIMS(Add, +)
+			DEFINE_SELF_OPERATOR_TO_ALL_DIMS(Sub, -)
+			DEFINE_SELF_OPERATOR_TO_ALL_DIMS(Mul, *)
+			DEFINE_SELF_OPERATOR_TO_ALL_DIMS(Div, /)
+			DEFINE_SELF_OPERATOR_TO_ALL_DIMS(Mod, %)
+			DEFINE_SELF_OPERATOR_TO_ALL_DIMS(Xor, ^)
+			DEFINE_SELF_OPERATOR_TO_ALL_DIMS(And, &)
+			DEFINE_SELF_OPERATOR_TO_ALL_DIMS(Or, |)
 
 			DEFINE_SELF_OPERATOR_EACH_DIM(Add, +)
 			DEFINE_SELF_OPERATOR_EACH_DIM(Sub, -)
