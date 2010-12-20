@@ -44,6 +44,9 @@ CVisualizer::~CVisualizer()
 
 		}*/
 	}
+	if (m_renderLock.IsLocked()) {
+		m_renderLock.Unlock();
+	}
 }
 
 
@@ -94,7 +97,9 @@ void CVisualizer::LoadCloud(char* filepath /* =NULL */)
 	};
 
 	m_workerThread = new WorkerThread(m_cloudEngine);
+	m_workerThread->m_bAutoDelete = TRUE;
 	BOOL isCreated = m_workerThread->CreateThread(CREATE_SUSPENDED);
+	
 	if (isCreated)
 	{
 		m_workerThread->InitInstance();

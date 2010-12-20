@@ -66,7 +66,7 @@ void CloudLayer::SetLayer(CloudInit& cloud)
 			Vertex* v1 = new Vertex();
 			// v1->m_id = 2 * i + 1; //helper vertex doesn't has id
 			v1->m_pos = point + norm;
-			m_vertiesHolder.push_back(v0);
+			m_vertiesHolder.push_back(v1);
 
 			Edge* e = new Edge();
 			e->m_id = i;

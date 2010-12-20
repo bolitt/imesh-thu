@@ -46,7 +46,7 @@ void Animation::OnSetup()
 					TranslateMessage(&msg);
 					DispatchMessage(&msg);
 				}
-				Sleep(1);
+				this->OnIdle(1); //Sleep(1);
 			}
 			
 		}
@@ -73,6 +73,7 @@ void Animation::OnSetup()
 	};
 
 	m_animationThread = new AnimationThread(*this);
+	m_animationThread->m_bAutoDelete = TRUE;
 	BOOL bRet = (m_animationThread->CreateThread(CREATE_SUSPENDED));
 	if (bRet) {
 		m_animationThread->InitInstance();
