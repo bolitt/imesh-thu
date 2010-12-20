@@ -40,7 +40,6 @@ CVisualizer::~CVisualizer()
 	{
 		//try {
 			m_workerThread->ExitInstance();
-			m_workerThread->Delete();
 		/*} catch (exception e) {
 
 		}*/
@@ -144,7 +143,7 @@ void CVisualizer::OnRender()
 	{
 		GLsizei width = m_canvasSize.cx;
 		GLsizei height = m_canvasSize.cy;
-		if (width == 0 || height == 0) { m_renderLock.Unlock(); return; } // to avoid zero-size assertion
+		//if (width == 0 || height == 0) { m_renderLock.Unlock(); return; } // to avoid zero-size assertion
 		GLdouble aspect = (height != 0) ? (GLdouble)width / (GLdouble)height : 1;
 	
 		glViewport(0, 0, width, height);
@@ -282,7 +281,6 @@ void CVisualizer::OnViewZoom( double delta )
 {
 	Camera::ZoomType z = (delta < 0) ? Camera::CAMERA_ZOOM_IN : Camera::CAMERA_ZOOM_OUT;
 	m_camera.Zoom(z);
-	OnView();
 }
 
 void CVisualizer::OnViewRotate( double deltaX, double deltaY )
@@ -292,7 +290,6 @@ void CVisualizer::OnViewRotate( double deltaX, double deltaY )
 	double rotateX = - deltaX / m_canvasSize.cx * DEG_PER_ROTATE_RATE;
 	double rotateY = deltaY / m_canvasSize.cy * DEG_PER_ROTATE_RATE;
 	m_camera.Rotate(rotateX, rotateY);
-	OnView();
 }
 
 void CVisualizer::OnTriangulate(TriangulateEventListener::ControlSignal signal)

@@ -25,8 +25,9 @@ MeshLayer::~MeshLayer(void)
 
 
 void MeshLayer::ClearLayer()
-{	
-	this->m_children.clear();
+{
+	m_trianglesLayer.m_children.clear();
+	m_edgesLayer.m_children.clear();
 
 	for (size_t i = 0; i < m_verticesHolder.size(); ++i)
 	{
@@ -52,6 +53,13 @@ void MeshLayer::UpdateLayer( triangle_list_type &triangles, points_type& points 
 	ClearLayer();
 	
 	IMesh::UI::MeshHelper helper(m_pAdjuster);
+
+	const int SIZE = triangles.size();
+	m_verticesHolder.resize( 3 * SIZE );
+	m_edgesHolder.resize( 3 * SIZE );
+	m_trianglesHolder.resize( SIZE );
+	m_trianglesLayer.m_children.resize(SIZE);
+	m_edgesLayer.m_children.resize(SIZE);
 
 	for (size_t i = 0; i < triangles.size(); ++i) 
 	{
@@ -85,16 +93,16 @@ void MeshLayer::UpdateLayer( triangle_list_type &triangles, points_type& points 
 		m_edgesHolder.push_back(e1);
 		m_edgesHolder.push_back(e2);
 	}
-
+	
 	for (size_t i = 0; i < m_trianglesHolder.size(); ++i)
 	{
 		Triangle& refTri = * m_trianglesHolder[i];
-		this->m_children.push_back(&refTri);
+		m_trianglesLayer.m_children.push_back(&refTri);
 	}
 	for (size_t i = 0; i < m_edgesHolder.size(); ++i)
 	{
 		Edge& refEdge = * m_edgesHolder[i];
-		this->m_children.push_back(&refEdge);
+		m_edgesLayer.m_children.push_back(&refEdge);
 	}
 
 }
@@ -106,14 +114,8 @@ void MeshLayer::OnSetup()
 	m_sphere.m_radius = 0.05f;
 	m_sphere.m_pos = Num::Vec3f(0, 0, 0);
 
-	m_triangle.OnSetup();
-	m_triangle._pV0 = new Vertex();
-	m_triangle._pV1 = new Vertex();
-	m_triangle._pV2 = new Vertex();
-	m_triangle._pV0->m_pos = Num::Vec3f(-10.0f, -10.0f, -1.0f);
-	m_triangle._pV1->m_pos = Num::Vec3f(0.0f, 0.0f, -1.0f);
-	m_triangle._pV2->m_pos = Num::Vec3f(-10.0f, 0.0f, -1.0f);
-	m_triangle.m_fill = Triangle::color_type(1.0f, 1.0f, 0.0f);
+	m_children.push_back(&m_trianglesLayer);
+	m_children.push_back(&m_edgesLayer);
 }
 
 void MeshLayer::OnRender()

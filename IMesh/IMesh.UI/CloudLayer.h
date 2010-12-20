@@ -18,7 +18,10 @@ public:
 
 public:
 	std::vector<Vertex*> m_vertiesHolder;
-	std::vector<Edge*> m_edgesHolder;
+	std::vector<Edge*> m_normalsHolder;
+
+	Layer		m_vertiesLayer;
+	Layer		m_normalsLayer;
 
 	// For Model:
 	ModelViewAdjuster* m_pAdjuster;
@@ -27,6 +30,7 @@ public:
 	CloudLayer(void);
 	~CloudLayer(void);
 
+	void OnSetup();
 	void ClearLayer();
 	void SetLayer(CloudInit& cloud);
 	void OnRender();

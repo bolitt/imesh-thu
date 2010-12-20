@@ -277,6 +277,9 @@
     <ClInclude Include="IAnimation.h">
       <Filter>models</Filter>
     </ClInclude>
+    <ClInclude Include="DisplayDialog.h">
+      <Filter>window</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ChildFrm.cpp">
@@ -377,6 +380,9 @@
     </ClCompile>
     <ClCompile Include="IAnimation.cpp">
       <Filter>models</Filter>
+    </ClCompile>
+    <ClCompile Include="DisplayDialog.cpp">
+      <Filter>window</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
