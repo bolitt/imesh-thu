@@ -4,9 +4,10 @@
 namespace IMesh { namespace UI { namespace Models {
 
 
-Animation::Animation() : m_animationThread(NULL), m_isSetuped(false)
+Animation::Animation() : m_animationThread(NULL), m_animationCompleted()
+						, m_isSetuped(false)
 {
-
+	//m_animationCompleted.ResetEvent();
 }
 
 Animation::~Animation()
@@ -14,6 +15,7 @@ Animation::~Animation()
 	if (m_animationThread != NULL) 
 	{
 		m_animationThread->ExitInstance();
+		m_animationThread->Delete();
 	}
 }
 
@@ -24,16 +26,30 @@ void Animation::OnSetup()
 	public:
 		Animation& m_animation;
 	protected:
-		void SpinWait(DWORD millionSeconds)
+		void Wait(DWORD millionSeconds)
 		{
-			BOOL bRet;
-			MSG msg;
-			if ( (bRet = GetMessage(&msg, NULL, 0, 0)) != 0)
-			{ 
-				TranslateMessage(&msg);
-				DispatchMessage(&msg);
+			LARGE_INTEGER prev, now, freq;
+			QueryPerformanceFrequency(&freq);
+			double ms_per_tick = 1000.0 / freq.QuadPart;
+			QueryPerformanceCounter(&prev);
+			while (true) 
+			{
+				QueryPerformanceCounter(&now);
+				double elapsed = (now.QuadPart - prev.QuadPart) * ms_per_tick;
+				if (elapsed > millionSeconds) {
+					break;
+				}
+
+				BOOL bRet;
+				MSG msg;
+				if ( (bRet = GetMessage(&msg, NULL, 0, 0)) != 0)
+				{ 
+					TranslateMessage(&msg);
+					DispatchMessage(&msg);
+				}
+				Sleep(1);
 			}
-			Sleep(millionSeconds);
+			
 		}
 	public:
 		AnimationThread(Animation& animation) : m_animation(animation) {}
@@ -48,10 +64,11 @@ void Animation::OnSetup()
 				for (int i = 0; i < m_animation.m_frameNum; ++i) 
 				{
 					m_animation.OnAnimationFrame(i);
-					SpinWait(millionSeconds);
+					Wait(millionSeconds);
 				}
 			} while(m_animation.m_isRepeat);
-
+			
+			m_animation.m_animationCompleted.SetEvent();
 			return 0;
 		}
 	};
@@ -80,12 +97,20 @@ void Animation::StopAnimation()
 	if (m_animationThread != NULL) 
 	{
 		m_animationThread->ExitInstance();
+		m_animationCompleted.SetEvent();
 	}
+}
+
+
+void Animation::JoinAnimation()
+{
+	WaitForSingleObject(m_animationCompleted.m_hObject, INFINITE);
 }
 
 void Animation::OnAnimationFrame( int i )
 {
 	throw std::exception("Not Implemented Exception!");
 }
+
 
 } } }
