@@ -163,21 +163,21 @@ void MeshLayer::InitializeLighting()
 		glEnable(GL_LIGHT0); glEnable(GL_LIGHT1); glEnable(GL_LIGHT2);
 		glEnable(GL_LIGHT3); glEnable(GL_LIGHT4); glEnable(GL_LIGHT5);
 
-		GLfloat light_ambient[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+		GLfloat light_ambient[] = { 0.1f, 0.1f, 0.1f, 1.0f };
 
 		GLfloat light0_diffuse[] = { 0.6f, 0.0f, 0.0f, 1.0f };
 		GLfloat light1_diffuse[] = { 0.0f, 0.6f, 0.0f, 1.0f };
 		GLfloat light2_diffuse[] = { 0.0f, 0.0f, 0.6f, 1.0f };
-		GLfloat light3_diffuse[] = { 0.3f, 0.3f, 0.0f, 1.0f };
-		GLfloat light4_diffuse[] = { 0.0f, 0.3f, 0.3f, 1.0f };
-		GLfloat light5_diffuse[] = { 0.3f, 0.0f, 0.3f, 1.0f };
+		GLfloat light3_diffuse[] = { 0.4f, 0.2f, 0.0f, 1.0f };
+		GLfloat light4_diffuse[] = { 0.0f, 0.4f, 0.2f, 1.0f };
+		GLfloat light5_diffuse[] = { 0.2f, 0.0f, 0.4f, 1.0f };
 
 		GLfloat light0_specular[] = { 0.6f, 0.0f, 0.0f, 1.0f };
 		GLfloat light1_specular[] = { 0.0f, 0.6f, 0.0f, 1.0f };
 		GLfloat light2_specular[] = { 0.0f, 0.0f, 0.6f, 1.0f };
-		GLfloat light3_specular[] = { 0.3f, 0.3f, 0.0f, 1.0f };
-		GLfloat light4_specular[] = { 0.0f, 0.3f, 0.3f, 1.0f };
-		GLfloat light5_specular[] = { 0.3f, 0.0f, 0.3f, 1.0f };
+		GLfloat light3_specular[] = { 0.4f, 0.2f, 0.0f, 1.0f };
+		GLfloat light4_specular[] = { 0.0f, 0.4f, 0.2f, 1.0f };
+		GLfloat light5_specular[] = { 0.2f, 0.0f, 0.4f, 1.0f };
 
 		float inf = (float)Config::Navigation::DEFAULT_FAR; 
 

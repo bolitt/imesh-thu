@@ -40,6 +40,7 @@ CVisualizer::~CVisualizer()
 	{
 		//try {
 			m_workerThread->ExitInstance();
+			m_workerThread->Delete();
 		/*} catch (exception e) {
 
 		}*/
