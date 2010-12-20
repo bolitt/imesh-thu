@@ -176,7 +176,6 @@ int CIMeshView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CView::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
-
 	// TODO:  在此添加您专用的创建代码
 	theApp.GetMainFrame()->AddDebug(_T("OnCreate"));
 	HWND hwnd = GetSafeHwnd();
