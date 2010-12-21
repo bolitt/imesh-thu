@@ -26,25 +26,22 @@ CVisualizer::CVisualizer() : m_renderLock(&m_renderCriticalSection)
 CVisualizer::~CVisualizer()
 {
 	// TODO: Add your message handler code here
-	if(wglGetCurrentContext()!=NULL)
-	{
-		wglMakeCurrent(NULL,NULL);
-	}
+	DisactivateCurrentContext();
 	if(this->m_hGLContext!=NULL)
 	{
 		wglDeleteContext(this->m_hGLContext);
 		this->m_hGLContext = NULL;
 	}
-	//SAFE_DELETE(m_hDC);
+	
 	if (m_workerThread != NULL)
 	{
-		//try {
-			m_workerThread->ExitInstance();
-		/*} catch (exception e) {
-
-		}*/
+		m_workerThread->SuspendThread();
+		m_workerThread->ExitInstance();
+		//m_workerThread->Delete();
+		m_workerThread = NULL;
 	}
-	if (m_renderLock.IsLocked()) {
+	if (m_renderLock.IsLocked()) 
+	{
 		m_renderLock.Unlock();
 	}
 }
@@ -60,7 +57,8 @@ void CVisualizer::PreCreateWindow( CREATESTRUCT& cs )
 void CVisualizer::OnSetup()
 {
 	m_scene.OnSetup();
-	
+
+	m_triangulateEventListener.Initialize(this, &m_scene.m_meshLayer);
 	// for test:
 	/*InitializeDS();
 	OnTriangulate();*/
@@ -68,44 +66,66 @@ void CVisualizer::OnSetup()
 
 void CVisualizer::LoadCloud(char* filepath /* =NULL */)
 {
-	if (m_isLoaded) return;
+	if (m_isLoaded) {
+		theApp.GetMainFrame()->AddDebug(_T("已经导入！"));
+		theApp.GetMainFrame()->AddDebug(_T("如需导入新模型，请先新建页面"));
+		MessageBeep(MB_ICONERROR);
+		return;
+	}
 
 	if (filepath == NULL) {
-		m_cloudEngine.Initialize();
+		m_cloud.Initialize();
 	}
 	else {
-		m_cloudEngine.Initialize(filepath);
+		m_cloud.Initialize(filepath);
 	}
-	
-	m_cloudEngine.m_triangleHandler.m_event.Attach(m_triangulateEventListener);
-	m_triangulateEventListener.Initialize(this, &m_scene.m_meshLayer);
-	
-	m_scene.m_adjuster.Initialize(m_cloudEngine.GetLowestDim(), m_cloudEngine.GetHighestDim());
-	m_scene.m_cloudLayer.SetLayer(m_cloudEngine);
+
+	// attach event
+	m_scene.m_adjuster.Initialize(m_cloud.GetLowestDim(), m_cloud.GetHighestDim());
+	m_scene.m_cloudLayer.SetLayer(m_cloud);
 
 	class WorkerThread : public CWinThread
 	{
 	public:
 		CloudInit& m_cloud;
-		WorkerThread(CloudInit& cloud) : m_cloud(cloud) {}
+		TriangulateEventListener& m_listener;
+		WorkerThread(CloudInit& cloud, 
+					TriangulateEventListener& listener) 
+						: m_cloud(cloud), m_listener(listener)
+		{
+			m_bAutoDelete = TRUE;
+		}
+
+		~WorkerThread() 
+		{
+		}
 	public:
+		BOOL InitInstance()
+		{
+			m_cloud.m_triangleHandler.m_event.Attach(m_listener);
+			return CWinThread::InitInstance();
+		}
+		int ExitInstance()
+		{
+			m_listener.m_bExitThread = TRUE;
+			m_cloud.m_triangleHandler.m_event.Detach(m_listener);
+			return CWinThread::ExitInstance();
+		}
 		int Run()
 		{
+			m_listener.SetOwnerThreadId(this->m_nThreadID);
 			m_cloud.RunTriangulate();
 			return 0;
 		}
 	};
 
-	m_workerThread = new WorkerThread(m_cloudEngine);
-	m_workerThread->m_bAutoDelete = TRUE;
+	m_workerThread = new WorkerThread(m_cloud, m_triangulateEventListener);
 	BOOL isCreated = m_workerThread->CreateThread(CREATE_SUSPENDED);
 	
 	if (isCreated)
 	{
 		m_workerThread->InitInstance();
-		//m_workerThread->Run();
 	}
-
 	m_isLoaded = true;
 }
 
@@ -183,9 +203,9 @@ void CVisualizer::OnRender()
 	}
 	
 	glFlush();
-
 	::SwapBuffers(m_hDC);
 
+	DisactivateCurrentContext();
 	m_renderLock.Unlock();
 }
 
@@ -268,6 +288,16 @@ int CVisualizer::OnCreate( HDC hDC )
 	return 0;
 }
 
+
+void CVisualizer::DisactivateCurrentContext()
+{
+	if(wglGetCurrentContext()!=NULL)
+	{
+		wglMakeCurrent(NULL,NULL);
+	}
+}
+
+
 BOOL CVisualizer::ActivateCurrentContext()
 {
 	if (wglGetCurrentContext() != this->m_hGLContext) {
@@ -311,7 +341,8 @@ void CVisualizer::OnTriangulate(TriangulateEventListener::ControlSignal signal)
 	m_triangulateEventListener.SetSignal(signal);
 	if (!m_isWorkerRunning) {
 		m_isWorkerRunning = true;
-		m_workerThread->Run();  //m_cloudEngine.RunTriangulate();
+		m_workerThread->Run();
+		//m_cloudEngine.RunTriangulate();
 	}
 }
 

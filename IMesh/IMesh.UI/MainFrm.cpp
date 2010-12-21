@@ -30,6 +30,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_UPDATE_COMMAND_UI_RANGE(ID_VIEW_APPLOOK_WIN_2000, ID_VIEW_APPLOOK_WINDOWS_7, &CMainFrame::OnUpdateApplicationLook)
 	ON_WM_SETTINGCHANGE()
 //	ON_WM_ACTIVATE()
+ON_WM_CLOSE()
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -437,7 +438,7 @@ void CMainFrame::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 
 void CMainFrame::AddDebug( const CString& str )
 {
-	this->m_wndOutput.AddBuild(str);
+	this->m_wndOutput.AddDebug(str);
 }
 
 void CMainFrame::AddFind( const CString& str )
@@ -453,6 +454,15 @@ void CMainFrame::AddBuild( const CString& str )
 #pragma endregion log
 
 
+void CMainFrame::OnClose()
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	//CMDIFrameWndEx::OnClose();
+	ExitProcess(0); // TODO: -- by TT
+					// It is to fix the issue when click on close button, but prompt:
+					//     "遇到不恰当参数"
+					// It could be dangerous without saving any states!
+}
 
 //void CMainFrame::OnActivate(UINT nState, CWnd* pWndOther, BOOL bMinimized)
 //{
@@ -463,3 +473,5 @@ void CMainFrame::AddBuild( const CString& str )
 //}
 
 END_NAMESPACE2(IMesh, UI)
+
+

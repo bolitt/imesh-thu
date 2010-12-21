@@ -33,18 +33,28 @@ public:
 	void UpdateSignal();
 	void DispatchUIMessage();
 	bool IsBlocked();
+	volatile BOOL m_bExitThread;
 
 protected:
 	ControlSignal m_ctrlSignal;
-	CMutex m_ctrlSignalMutex;
-	CSingleLock* m_pCtrlLock;
+	CCriticalSection m_ctrlCS;
+	CSingleLock m_ctrlLock;
 	CTime m_lastSignalTime;
+	DWORD m_ownerThreadId;
 
-protected:
+public:
+	void SetOwnerThreadId(DWORD ownerThreadId);
+	
 
 public:
 	void Initialize(IMesh::UI::CVisualizer* pVisualizer, layer_type* pDemoLayer);
 	void OnHandle(void* source, const IMesh::Interface::EventArg& eventArgs);
+
+	void OutputEdgeInfo( CString& info, TriangulateEventArg &eventArg, edge &newEdge );
+
+	void OutputCompleteInfo( CString& info, TriangulateEventArg &eventArg );
+
+	void OutputTriangleInfo( CString& info, TriangulateEventArg &eventArg, triangle &newTriangle );
 
 
 public:

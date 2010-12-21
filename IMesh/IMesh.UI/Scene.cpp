@@ -12,7 +12,6 @@ Scene::Scene(void)
 
 Scene::~Scene(void)
 {
-	
 }
 
 void Scene::OnSetup()

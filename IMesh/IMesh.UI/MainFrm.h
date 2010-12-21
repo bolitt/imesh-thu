@@ -65,6 +65,7 @@ public:
 	void AddFind(const CString& str);
 	void AddBuild(const CString& str);
 //	afx_msg void OnActivate(UINT nState, CWnd* pWndOther, BOOL bMinimized);
+	afx_msg void OnClose();
 };
 
 END_NAMESPACE2(IMesh, UI)
