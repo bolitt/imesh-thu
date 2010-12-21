@@ -14,7 +14,8 @@ Animation::~Animation()
 {
 	if (m_animationThread != NULL) 
 	{
-		m_animationThread->ExitInstance();
+		m_animationThread->Delete();
+		m_animationThread = NULL;
 	}
 }
 
@@ -51,12 +52,14 @@ void Animation::OnSetup()
 						AfxGetApp()->ExitInstance();
 					}
 				}
-				Sleep(1);
+				Sleep(0);
 			}
 			
 		}
 	public:
-		AnimationThread(Animation& animation) : m_animation(animation) {}
+		AnimationThread(Animation& animation) : m_animation(animation) {
+			m_bAutoDelete = TRUE;
+		}
 		int Run()
 		{
 			ASSERT(m_animation.m_fps > 0);
@@ -78,7 +81,6 @@ void Animation::OnSetup()
 	};
 
 	m_animationThread = new AnimationThread(*this);
-	m_animationThread->m_bAutoDelete = TRUE;
 	BOOL bRet = (m_animationThread->CreateThread(CREATE_SUSPENDED));
 	if (bRet) {
 		m_animationThread->InitInstance();

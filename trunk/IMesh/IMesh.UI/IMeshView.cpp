@@ -177,7 +177,8 @@ int CIMeshView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 
 	// TODO:  在此添加您专用的创建代码
-	theApp.GetMainFrame()->AddDebug(_T("OnCreate"));
+	theApp.GetMainFrame()->AddDebug(_T("Created New Demo Scene"));
+	theApp.GetMainFrame()->AddDebug(_T("++ Please Load Model First! ++"));
 	HWND hwnd = GetSafeHwnd();
 	HDC hDC = ::GetDC(hwnd);
 	return m_vis.OnCreate(hDC);
@@ -257,6 +258,27 @@ void CIMeshView::OnMouseMove(UINT nFlags, CPoint point)
 	CView::OnMouseMove(nFlags, point);
 }
 
+
+void CIMeshView::OnFileOpen()
+{
+	// TODO: 在此添加命令处理程序代码
+	CFileDialog openFileDialog(TRUE, _T(".obj"), NULL, 0, 
+					_T("Obj Files (*.obj)|*.obj|All Files (*.*)|*.*|"));
+	
+	if (openFileDialog.DoModal() == IDOK) {
+		CString filePathName;
+		filePathName = openFileDialog.GetPathName();
+		theApp.GetMainFrame()->AddDebug(_T("Open Model:") + filePathName);
+		
+		char pFilePath[4096];
+		StringHelper::CStringToMultiByte(pFilePath, filePathName);
+		
+		m_vis.LoadCloud(pFilePath);
+		m_vis.OnRender();
+	}
+}
+
+
 void CIMeshView::OnTriangulate()
 {
 	// TODO: 在此添加命令处理程序代码
@@ -275,51 +297,30 @@ void CIMeshView::OnTriangulate()
 	//{
 	//	theApp.GetMainFrame()->AddDebug(_T("CIMeshView::OnTriangulate() Failed"));
 	//}
-	theApp.GetMainFrame()->AddDebug(_T("CIMeshView::OnTriangulate()"));
-	m_vis.OnTriangulateDemo();
-}
-
-void CIMeshView::OnFileOpen()
-{
-	// TODO: 在此添加命令处理程序代码
-	theApp.GetMainFrame()->AddDebug(_T("OnFileOpen"));
-	CFileDialog openFileDialog(TRUE, _T(".obj"), NULL, 0, 
-					_T("Obj Files (*.obj)|*.obj|All Files (*.*)|*.*|"));
-	
-	if (openFileDialog.DoModal() == IDOK) {
-		CString filePathName;
-		filePathName = openFileDialog.GetPathName();
-		theApp.GetMainFrame()->AddDebug(_T("Open:") + filePathName);
-		
-		char pFilePath[4096];
-		StringHelper::CStringToMultiByte(pFilePath, filePathName);
-		
-		m_vis.LoadCloud(pFilePath);
-		m_vis.OnRender();
-	}
+	OnTriangulateDemo();
 }
 
 void CIMeshView::OnTriangulateStep()
 {
-	theApp.GetMainFrame()->AddDebug(_T("CIMeshView::OnTriangulateStep()"));
+	theApp.GetMainFrame()->AddDebug(_T("Step"));
 	m_vis.OnTriangulateStep();
 }
 
 void CIMeshView::OnTriangulateDemo()
 {
-	theApp.GetMainFrame()->AddDebug(_T("CIMeshView::OnTriangulateDemo()"));
+	theApp.GetMainFrame()->AddDebug(_T("Run: Demo"));
 	m_vis.OnTriangulateDemo();
 }
 
 void CIMeshView::OnTriangulatePause()
 {
-	theApp.GetMainFrame()->AddDebug(_T("CIMeshView::OnTriangulatePause()"));
+	theApp.GetMainFrame()->AddDebug(_T("Pause"));
 	m_vis.OnTriangulatePause();
 }
 
 void CIMeshView::OnTriangulateToEnd()
 {
-	theApp.GetMainFrame()->AddDebug(_T("CIMeshView::OnTriangulateToEnd()"));
+	theApp.GetMainFrame()->AddDebug(_T("Run: To End"));
 	m_vis.OnTriangulateToEnd();
 }
 

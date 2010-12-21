@@ -27,7 +27,7 @@ public:
 	Projection m_projection;
 	CSize m_canvasSize;
 
-	CloudInit m_cloudEngine;
+	CloudInit m_cloud;
 	TriangulateEventListener m_triangulateEventListener;
 	Models::Scene m_scene;
 
@@ -58,13 +58,18 @@ public:
 	void OnTriangulateToEnd();
 public:
 	BOOL ActivateCurrentContext();
+	void DisactivateCurrentContext();
+
 	int OnCreate(HDC hDC);
 	
 	
 	void PreCreateWindow(CREATESTRUCT& cs);
 	void OnSize(UINT nType, int cx, int cy);
 	void OnRender();
+
 	
+
+
 	void OnViewZoom(double delta);
 	void OnViewRotate(double deltaX, double deltaY);
 	

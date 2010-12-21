@@ -278,7 +278,7 @@
       <Filter>models</Filter>
     </ClInclude>
     <ClInclude Include="DisplayDialog.h">
-      <Filter>window</Filter>
+      <Filter>window\header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -382,7 +382,7 @@
       <Filter>models</Filter>
     </ClCompile>
     <ClCompile Include="DisplayDialog.cpp">
-      <Filter>window</Filter>
+      <Filter>window\cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -137,17 +137,24 @@ void COutputWnd::UpdateFonts()
 
 void COutputWnd::AddDebug( const CString& str )
 {
-	m_wndOutputDebug.AddString(str);
+	m_wndOutputBuild.AddString(str);
+	//CString strText(_T(""));
+	//m_wndOutputBuild.GetWindowText(strText);
+	int count = m_wndOutputBuild.GetSelCount();
+	m_wndOutputBuild.SetSel(count - 1, 1);
+	//m_wndOutputBuild.ReplaceSel(str);
 }
 
 void COutputWnd::AddFind( const CString& str )
 {
-	m_wndOutputBuild.AddString(str);
+	//m_wndOutputBuild.AddString(str);
+	AddDebug(str);
 }
 
 void COutputWnd::AddBuild( const CString& str )
 {
-	m_wndOutputBuild.AddString(str);
+	//m_wndOutputBuild.AddString(str);
+	AddDebug(str);
 }
 
 /////////////////////////////////////////////////////////////////////////////
