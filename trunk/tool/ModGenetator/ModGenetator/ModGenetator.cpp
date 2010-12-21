@@ -7,47 +7,60 @@
 #include<fstream>
 #include<math.h>
 
+void makeCubeOffset();
+
 using namespace std;
 
-void makeCube(int n)
-{
-	char *fn = "cube.obj";
-	FILE *m_out;
-	fopen_s(&m_out, fn, "w");
-	
 
-	fprintf(m_out, "v %lf %lf %lf\n", 1.0,1.0, 1.0);
-	fprintf(m_out, "v %lf %lf %lf\n", 0.0,1.0, 1.0);
-	fprintf(m_out, "v %lf %lf %lf\n", 1.0,0.0, 1.0);
-	fprintf(m_out, "v %lf %lf %lf\n", 0.0,0.0, 1.0);
-	fprintf(m_out, "v %lf %lf %lf\n", 1.0,1.0, 0);
-	fprintf(m_out, "v %lf %lf %lf\n", 0.0,1.0, 0);
-	fprintf(m_out, "v %lf %lf %lf\n", 1.0,0.0, 0);
-	fprintf(m_out, "v %lf %lf %lf\n", 0.0,0.0, 0);
+
+void makeCubeOffset(FILE *m_out, int n, double dx = 0, double dy = 0, double dz = 0)
+{
+	fprintf(m_out, "v %lf %lf %lf\n", dx+1.0, dy+1.0, dz+1.0);
+	fprintf(m_out, "v %lf %lf %lf\n", dx+0.0, dy+1.0, dz+1.0);
+	fprintf(m_out, "v %lf %lf %lf\n", dx+1.0, dy+0.0, dz+1.0);
+	fprintf(m_out, "v %lf %lf %lf\n", dx+0.0, dy+0.0, dz+1.0);
+	fprintf(m_out, "v %lf %lf %lf\n", dx+1.0, dy+1.0, dz+0);
+	fprintf(m_out, "v %lf %lf %lf\n", dx+0.0, dy+1.0, dz+0);
+	fprintf(m_out, "v %lf %lf %lf\n", dx+1.0, dy+0.0, dz+0);
+	fprintf(m_out, "v %lf %lf %lf\n", dx+0.0, dy+0.0, dz+0);
 	for( int i = 1; i < n ; i++)
 	{
 		for( int j = 1 ; j < n ; j++ )
 		{
-			fprintf(m_out, "v %lf %lf %lf\n", 1.0,1.0/n*i, 1.0/n*j);
-			fprintf(m_out, "v %lf %lf %lf\n", 0.0,1.0/n*i, 1.0/n*j);
-			fprintf(m_out, "v %lf %lf %lf\n", 1.0/n*i,1.0, 1.0/n*j);
-			fprintf(m_out, "v %lf %lf %lf\n", 1.0/n*i,0.0, 1.0/n*j);
-			fprintf(m_out, "v %lf %lf %lf\n", 1.0/n*i, 1.0/n*j,1.0);
-			fprintf(m_out, "v %lf %lf %lf\n", 1.0/n*i, 1.0/n*j,0.0);
+			fprintf(m_out, "v %lf %lf %lf\n", dx+1.0, dy+1.0/n*i, dz+1.0/n*j);
+			fprintf(m_out, "v %lf %lf %lf\n", dx+0.0, dy+1.0/n*i, dz+1.0/n*j);
+			fprintf(m_out, "v %lf %lf %lf\n", dx+1.0/n*i, dy+1.0, dz+1.0/n*j);
+			fprintf(m_out, "v %lf %lf %lf\n", dx+1.0/n*i, dy+0.0, dz+1.0/n*j);
+			fprintf(m_out, "v %lf %lf %lf\n", dx+1.0/n*i, dy+1.0/n*j, dz+1.0);
+			fprintf(m_out, "v %lf %lf %lf\n", dx+1.0/n*i, dy+1.0/n*j, dz+0.0);
 		}
-		fprintf(m_out, "v %lf %lf %lf\n", 1.0,1.0, 1.0/n*i);
-		fprintf(m_out, "v %lf %lf %lf\n", 0.0,1.0, 1.0/n*i);
-		fprintf(m_out, "v %lf %lf %lf\n", 1.0,0.0, 1.0/n*i);
-		fprintf(m_out, "v %lf %lf %lf\n", 0.0,0.0, 1.0/n*i);
-		fprintf(m_out, "v %lf %lf %lf\n", 1.0/n*i, 1.0,1.0);
-		fprintf(m_out, "v %lf %lf %lf\n", 1.0/n*i, 0.0,1.0);
-		fprintf(m_out, "v %lf %lf %lf\n", 1.0/n*i, 1.0,0.0);
-		fprintf(m_out, "v %lf %lf %lf\n", 1.0/n*i, 0.0,0.0);
-		fprintf(m_out, "v %lf %lf %lf\n", 1.0, 1.0/n*i,1.0);
-		fprintf(m_out, "v %lf %lf %lf\n", 0.0, 1.0/n*i,1.0);
-		fprintf(m_out, "v %lf %lf %lf\n", 1.0, 1.0/n*i,0.0);
-		fprintf(m_out, "v %lf %lf %lf\n", 0.0, 1.0/n*i,0.0);
+		fprintf(m_out, "v %lf %lf %lf\n", dx+1.0, dy+1.0, dz+1.0/n*i);
+		fprintf(m_out, "v %lf %lf %lf\n", dx+0.0, dy+1.0, dz+1.0/n*i);
+		fprintf(m_out, "v %lf %lf %lf\n", dx+1.0, dy+0.0, dz+1.0/n*i);
+		fprintf(m_out, "v %lf %lf %lf\n", dx+0.0, dy+0.0, dz+1.0/n*i);
+		fprintf(m_out, "v %lf %lf %lf\n", dx+1.0/n*i, dy+1.0, dz+1.0);
+		fprintf(m_out, "v %lf %lf %lf\n", dx+1.0/n*i, dy+0.0, dz+1.0);
+		fprintf(m_out, "v %lf %lf %lf\n", dx+1.0/n*i, dy+1.0, dz+0.0);
+		fprintf(m_out, "v %lf %lf %lf\n", dx+1.0/n*i, dy+0.0, dz+0.0);
+		fprintf(m_out, "v %lf %lf %lf\n", dx+1.0, dy+1.0/n*i, dz+1.0);
+		fprintf(m_out, "v %lf %lf %lf\n", dx+0.0, dy+1.0/n*i, dz+1.0);
+		fprintf(m_out, "v %lf %lf %lf\n", dx+1.0, dy+1.0/n*i, dz+0.0);
+		fprintf(m_out, "v %lf %lf %lf\n", dx+0.0, dy+1.0/n*i, dz+0.0);
 	}
+}
+
+
+void makeCube(int n)
+{
+	char *fn = "cube_triple.obj";
+	FILE *m_out;
+	fopen_s(&m_out, fn, "w");
+	
+	makeCubeOffset(m_out, n);
+	makeCubeOffset(m_out, n, -0.5, -0.5, 0);
+	makeCubeOffset(m_out, n, 0.5, 0.5, 0);
+	
+
 	fclose(m_out);
 }
 
@@ -151,6 +164,7 @@ void makeCylinder(int n)
 int _tmain(int argc, _TCHAR* argv[])
 {
 	makeCylinder(8);
+	//makeCube(6);
 	return 0;
 }
 
