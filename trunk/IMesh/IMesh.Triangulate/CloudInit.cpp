@@ -1,7 +1,6 @@
 #include "CloudInit.h"
 
 
-
 namespace IMesh { namespace UI {
 
 CloudInit::CloudInit(void)
@@ -23,7 +22,10 @@ void CloudInit::RunTriangulate()
 		temp.norm = vect(m_cloud.m_norm[i].x,m_cloud.m_norm[i].y,m_cloud.m_norm[i].z);
 		nps.push_back(temp);
 	}
-	m_triangleHandler.Initialize(nps, m_cloud.grid_x,m_cloud.grid_y,m_cloud.grid_z,m_cloud.grid_width,m_cloud.density*1.5);
+	m_triangleHandler.Initialize(nps, 
+							m_cloud.grid_x,m_cloud.grid_y,m_cloud.grid_z,
+							m_cloud.grid_width, 
+							m_cloud.density);
 	m_triangleHandler.triangulateModel();
 }
 
