@@ -76,7 +76,7 @@ void Scene::InitializeLighting()
 	{
 		glEnable(GL_LIGHT0); glEnable(GL_LIGHT1); glEnable(GL_LIGHT2);
 
-		GLfloat light_ambient[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+		GLfloat light_ambient[] = { 0.05f, 0.05f, 0.05f, 1.0f };
 
 		GLfloat light0_diffuse[] = { 0.6f, 0.0f, 0.0f, 1.0f };
 		GLfloat light1_diffuse[] = { 0.0f, 0.6f, 0.0f, 1.0f };
