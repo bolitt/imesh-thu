@@ -28,6 +28,7 @@ public:
 	std::vector<Vertex *> m_verticesHolder;
 	std::vector<Edge *>   m_edgesHolder;
 	std::vector<Triangle *> m_trianglesHolder;
+	Layer		m_verticesLayer;
 	Layer		m_edgesLayer;
 	Layer		m_trianglesLayer;
 

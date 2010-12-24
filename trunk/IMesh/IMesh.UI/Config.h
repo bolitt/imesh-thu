@@ -14,6 +14,8 @@ namespace UI { // namespace IMesh::UI
 			const extern Num::GL::RGBColor BLUE;
 			const extern Num::GL::RGBColor YELLOW;
 			const extern Num::GL::RGBColor WHITE;
+			const extern Num::GL::RGBColor LIGHT_GREY;
+			const extern Num::GL::RGBColor GREY;
 		}
 
 		namespace Navigation

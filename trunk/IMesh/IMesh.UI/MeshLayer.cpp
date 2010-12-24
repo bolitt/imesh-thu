@@ -28,6 +28,7 @@ void MeshLayer::ClearLayer()
 {
 	m_trianglesLayer.m_children.clear();
 	m_edgesLayer.m_children.clear();
+	m_verticesLayer.m_children.clear();
 
 	for (size_t i = 0; i < m_verticesHolder.size(); ++i)
 	{
@@ -50,6 +51,8 @@ void MeshLayer::ClearLayer()
 
 void MeshLayer::UpdateLayer( triangle_list_type &triangles, points_type& points ) 
 {
+	using namespace IMesh::UI::Config;
+
 	ClearLayer();
 	
 	IMesh::UI::MeshHelper helper(m_pAdjuster);
@@ -58,9 +61,11 @@ void MeshLayer::UpdateLayer( triangle_list_type &triangles, points_type& points 
 	m_verticesHolder.resize( 3 * SIZE );
 	m_edgesHolder.resize( 3 * SIZE );
 	m_trianglesHolder.resize( SIZE );
-	m_trianglesLayer.m_children.resize(SIZE);
-	m_edgesLayer.m_children.resize(SIZE);
 
+	m_verticesLayer.m_children.resize( 3 * SIZE );
+	m_edgesLayer.m_children.resize( 3 * SIZE);
+	m_trianglesLayer.m_children.resize(SIZE);
+	
 	for (size_t i = 0; i < triangles.size(); ++i) 
 	{
 		triangle& t = *(triangles[i]);
@@ -70,10 +75,13 @@ void MeshLayer::UpdateLayer( triangle_list_type &triangles, points_type& points 
 
 		Vertex* pV0 = helper.CreateVertexFromPoint(p0);
 		pV0->m_id = t.idx_i;
+		pV0->m_color = Colors::BLUE;
 		Vertex* pV1 = helper.CreateVertexFromPoint(p1);
 		pV1->m_id = t.idx_j;
+		pV1->m_color = Colors::BLUE;
 		Vertex* pV2 = helper.CreateVertexFromPoint(p2);
 		pV2->m_id = t.idx_k;
+		pV1->m_color = Colors::BLUE;
 
 		m_verticesHolder.push_back(pV0);
 		m_verticesHolder.push_back(pV1);
@@ -94,6 +102,11 @@ void MeshLayer::UpdateLayer( triangle_list_type &triangles, points_type& points 
 		m_edgesHolder.push_back(e2);
 	}
 	
+	for (size_t i = 0; i < m_verticesHolder.size(); ++i)
+	{
+		Vertex& refV = * m_verticesHolder[i];
+		m_verticesLayer.m_children.push_back(&refV);
+	}
 	for (size_t i = 0; i < m_trianglesHolder.size(); ++i)
 	{
 		Triangle& refTri = * m_trianglesHolder[i];
@@ -116,6 +129,7 @@ void MeshLayer::OnSetup()
 
 	m_children.push_back(&m_trianglesLayer);
 	m_children.push_back(&m_edgesLayer);
+	m_children.push_back(&m_verticesLayer);
 }
 
 void MeshLayer::OnRender()
