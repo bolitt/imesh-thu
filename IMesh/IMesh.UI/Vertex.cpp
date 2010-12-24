@@ -7,7 +7,7 @@ using namespace IMesh::UI::Config;
 
 const static Vertex::id_type UNINITIALIZED_ID = -1;
 const static float DETAULT_POINTSIZE = 2.0f;
-const static Vertex::color_type DEFAULT_COLOR = Colors::RED;
+const static Vertex::color_type DEFAULT_COLOR = Colors::WHITE;
 
 
 Vertex::Vertex(void) : m_id(UNINITIALIZED_ID),

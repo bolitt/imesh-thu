@@ -39,6 +39,7 @@ void CloudLayer::SetLayer(CloudInit& cloud)
 	{
 		using namespace IMesh::UI;
 		using namespace IMesh::Norm;
+		using namespace IMesh::UI::Config;
 
 		std::vector<Num::Vec3f>& points = cloud.GetPoints();
 		std::vector<Num::Vec3f>& norms = cloud.GetNorms();
@@ -61,6 +62,7 @@ void CloudLayer::SetLayer(CloudInit& cloud)
 			Vertex* v0 = new Vertex();
 			v0->m_id = i;
 			v0->m_pos = point;
+			v0->m_color = Colors::RED;
 			m_vertiesHolder.push_back(v0);
 
 			Vertex* v1 = new Vertex();
