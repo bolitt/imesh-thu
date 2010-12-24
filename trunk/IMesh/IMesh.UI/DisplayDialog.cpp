@@ -23,7 +23,7 @@ CDisplayDialog::CDisplayDialog(CWnd* pParent /*=NULL*/)
 	m_bEnabledSurface = TRUE;
 	m_bEnabledMesh = TRUE;
 	m_bEnabledNormal = TRUE;
-
+	m_bEnabledSiftPoints = TRUE;
 	m_pVis = NULL;
 }
 
@@ -47,6 +47,8 @@ void CDisplayDialog::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHECK_DISPLAY_SURFACE, m_bEnabledSurface);
 	DDX_Check(pDX, IDC_CHECK_DISPLAY_MESH, m_bEnabledMesh);
 	DDX_Check(pDX, IDC_CHECK_DISPLAY_NORMAL, m_bEnabledNormal);
+	DDX_Check(pDX, IDC_CHECK_DISPLAY_SIFT_POINTS, m_bEnabledSiftPoints);
+	
 	UpdateDisplay();
 }
 
@@ -76,9 +78,10 @@ void CDisplayDialog::UpdateDisplay()
 {
 	if (m_pVis != NULL) {
 		Models::Scene& scene = m_pVis->m_scene;
-		scene.m_cloudLayer.m_normalsLayer.m_IsVisible = m_bEnabledNormal == TRUE ? true : false;
-		scene.m_meshLayer.m_edgesLayer.m_IsVisible = m_bEnabledMesh == TRUE ? true : false;
-		scene.m_meshLayer.m_trianglesLayer.m_IsVisible = m_bEnabledSurface == TRUE ? true : false;
+		scene.m_cloudLayer.m_normalsLayer.m_IsVisible = (m_bEnabledNormal == TRUE ? true : false);
+		scene.m_meshLayer.m_edgesLayer.m_IsVisible = (m_bEnabledMesh == TRUE ? true : false);
+		scene.m_meshLayer.m_trianglesLayer.m_IsVisible = (m_bEnabledSurface == TRUE ? true : false);
+		scene.m_meshLayer.m_verticesLayer.m_IsVisible = (m_bEnabledSiftPoints == TRUE ? true : false);
 		m_pVis->OnRender();
 	}
 }

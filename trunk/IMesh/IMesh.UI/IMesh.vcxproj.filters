@@ -190,12 +190,6 @@
     <ClInclude Include="PropertiesWnd.h">
       <Filter>window\header</Filter>
     </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>window\header</Filter>
-    </ClInclude>
-    <ClInclude Include="stdafx.h">
-      <Filter>window\header</Filter>
-    </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>window\header</Filter>
     </ClInclude>
@@ -280,6 +274,12 @@
     <ClInclude Include="DisplayDialog.h">
       <Filter>window\header</Filter>
     </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>window</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>window</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ChildFrm.cpp">
@@ -310,9 +310,6 @@
       <Filter>window\cpp</Filter>
     </ClCompile>
     <ClCompile Include="PropertiesWnd.cpp">
-      <Filter>window\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="stdafx.cpp">
       <Filter>window\cpp</Filter>
     </ClCompile>
     <ClCompile Include="Visualizer.cpp">
@@ -383,6 +380,9 @@
     </ClCompile>
     <ClCompile Include="DisplayDialog.cpp">
       <Filter>window\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>window</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
