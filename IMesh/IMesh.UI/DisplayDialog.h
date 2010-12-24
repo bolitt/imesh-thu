@@ -24,6 +24,8 @@ protected:
 	BOOL m_bEnabledSurface;
 	BOOL m_bEnabledMesh;
 	BOOL m_bEnabledNormal;
+	BOOL m_bEnabledSiftPoints;
+
 public:
 	CVisualizer* m_pVis;
 

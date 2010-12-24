@@ -161,7 +161,7 @@ void GLCheckError()
 void CVisualizer::OnRender()
 {
 	using namespace Config;
-	
+
 	m_renderLock.Lock();
 
 	ActivateCurrentContext();
@@ -203,6 +203,7 @@ void CVisualizer::OnRender()
 	}
 	
 	glFlush();
+
 	::SwapBuffers(m_hDC);
 
 	DisactivateCurrentContext();
@@ -235,8 +236,9 @@ BOOL CVisualizer::SetWindowPixelFormat( HDC hDC )
 	{
 		dsp.nSize = sizeof(PIXELFORMATDESCRIPTOR),
 		dsp.nVersion = 1,
-		dsp.dwFlags = PFD_DRAW_TO_WINDOW|PFD_SUPPORT_OPENGL| 
-						PFD_DOUBLEBUFFER|PFD_SUPPORT_GDI,
+		dsp.dwFlags = PFD_DRAW_TO_WINDOW |PFD_SUPPORT_OPENGL |
+						PFD_DOUBLEBUFFER //|PFD_SUPPORT_GDI
+						,
 		dsp.iPixelType = PFD_TYPE_RGBA,
 		dsp.cColorBits = 24,
 		dsp.cRedBits=0, dsp.cRedShift=0,
@@ -272,18 +274,21 @@ BOOL CVisualizer::SetWindowPixelFormat( HDC hDC )
 
 int CVisualizer::OnCreate( HDC hDC )
 {
-	if(this->SetWindowPixelFormat(hDC) == FALSE)
-	{
-		return -1;
-	}
-	if(this->CreateViewGLContext(hDC) == FALSE)
-	{
-		return -1;
-	}
 	m_hDC = hDC;
+
+	if(this->SetWindowPixelFormat(m_hDC) == FALSE)
+	{
+		return -1;
+	}
+	if(this->CreateViewGLContext(m_hDC) == FALSE)
+	{
+		return -1;
+	}
 	if(this->ActivateCurrentContext() == FALSE) {
 		return -1;
 	}
+	
+
 	OnSetup();
 	return 0;
 }

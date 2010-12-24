@@ -22,6 +22,7 @@ protected:
 	int m_GLPixelIndex;
 	HDC m_hDC;
 
+
 public:
 	Camera m_camera;
 	Projection m_projection;
