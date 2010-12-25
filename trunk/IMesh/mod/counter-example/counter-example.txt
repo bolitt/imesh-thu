@@ -1,3 +1,0 @@
-cube_double10.obj    right normal, but will fail
-
-cube_double8.obj     half: error normal, but can finish
