@@ -7,6 +7,7 @@
 #include "Triangle.h"
 #include "Vertex.h"
 #include "Edge.h"
+#include "HDTimer.h"
 
 namespace IMesh { namespace UI {
 
@@ -39,7 +40,7 @@ protected:
 	ControlSignal m_ctrlSignal;
 	CCriticalSection m_ctrlCS;
 	CSingleLock m_ctrlLock;
-	CTime m_lastSignalTime;
+	HDTimer m_ctrlSignalTimer;
 	DWORD m_ownerThreadId;
 
 public:
