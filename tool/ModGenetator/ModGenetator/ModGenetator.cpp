@@ -105,7 +105,7 @@ void makeBall(int n)
 
 void makeCylinder(int n)
 {
-	char *fn = "Cylinder.obj";
+	char *fn = "cylinder.obj";
 	FILE *m_out;
 	fopen_s(&m_out, fn, "w");
 	double pie = 3.1415926535;
@@ -113,23 +113,25 @@ void makeCylinder(int n)
 	
 	fprintf(m_out, "v %lf %lf %lf\n", 0.0,0.0,1.0);
 	fprintf(m_out, "v %lf %lf %lf\n", 0.0,0.0,-1.0 );
-	for( int i = 0; i < n ; i++)
+	double a = cos(d*0.5);
+	double b = sin(d*0.5);
+	for( int i = 0; i < n * 4 ; i++)
 	{
 		double c = cos(d*i);
 		double s = sin(d*i);
 		fprintf(m_out, "v %lf %lf %lf\n", c, s, 0.0);
-		fprintf(m_out, "v %lf %lf %lf\n", s, -c, 0.0 );
+/*		fprintf(m_out, "v %lf %lf %lf\n", s, -c, 0.0 );
 		fprintf(m_out, "v %lf %lf %lf\n", -c, -s, 0.0);
 		fprintf(m_out, "v %lf %lf %lf\n", -s, c, 0.0 );
-
+*/
 		fprintf(m_out, "v %lf %lf %lf\n", c, s, 1.0);
-		fprintf(m_out, "v %lf %lf %lf\n", s, -c, 1.0 );
-		fprintf(m_out, "v %lf %lf %lf\n", -c, -s, 1.0);
-		fprintf(m_out, "v %lf %lf %lf\n", -s, c, 1.0 );
+		//fprintf(m_out, "v %lf %lf %lf\n", s, -c, 1.0 );
+		//fprintf(m_out, "v %lf %lf %lf\n", -c, -s, 1.0);
+		//fprintf(m_out, "v %lf %lf %lf\n", -s, c, 1.0 );
 		fprintf(m_out, "v %lf %lf %lf\n", c, s, -1.0);
-		fprintf(m_out, "v %lf %lf %lf\n", s, -c, -1.0 );
-		fprintf(m_out, "v %lf %lf %lf\n", -c, -s, -1.0);
-		fprintf(m_out, "v %lf %lf %lf\n", -s, c, -1.0 );
+		//fprintf(m_out, "v %lf %lf %lf\n", s, -c, -1.0 );
+		//fprintf(m_out, "v %lf %lf %lf\n", -c, -s, -1.0);
+		//fprintf(m_out, "v %lf %lf %lf\n", -s, c, -1.0 );
 
 		for( double j = 1 ; j < n ; j++ )
 		{
@@ -139,22 +141,31 @@ void makeCylinder(int n)
 				double x = r*c;
 				double y = r*s;
 				fprintf(m_out, "v %lf %lf %lf\n", x, y, 1.0);
-				fprintf(m_out, "v %lf %lf %lf\n", y, -x, 1.0 );
-				fprintf(m_out, "v %lf %lf %lf\n", -x, -y, 1.0);
-				fprintf(m_out, "v %lf %lf %lf\n", -y, x, 1.0 );
+				//fprintf(m_out, "v %lf %lf %lf\n", y, -x, 1.0 );
+				//fprintf(m_out, "v %lf %lf %lf\n", -x, -y, 1.0);
+				//fprintf(m_out, "v %lf %lf %lf\n", -y, x, 1.0 );
 				fprintf(m_out, "v %lf %lf %lf\n", x, y, -1.0);
-				fprintf(m_out, "v %lf %lf %lf\n", y, -x, -1.0 );
-				fprintf(m_out, "v %lf %lf %lf\n", -x, -y, -1.0);
-				fprintf(m_out, "v %lf %lf %lf\n", -y, x, -1.0 );
+				//fprintf(m_out, "v %lf %lf %lf\n", y, -x, -1.0 );
+				//fprintf(m_out, "v %lf %lf %lf\n", -x, -y, -1.0);
+				//fprintf(m_out, "v %lf %lf %lf\n", -y, x, -1.0 );
 				
+				if((int)(j/2) == (j-1)/2){
+					double c1 = c*a-s*b;
+					double s1 = s*a+c*b;
+					fprintf(m_out, "v %lf %lf %lf\n", c1, s1, j/n);
+					fprintf(m_out, "v %lf %lf %lf\n", c1, s1, -j/n);
+				}
+				else{
 				fprintf(m_out, "v %lf %lf %lf\n", c, s, j/n);
-				fprintf(m_out, "v %lf %lf %lf\n", s, -c,  j/n);
-				fprintf(m_out, "v %lf %lf %lf\n", -c, -s, j/n);
-				fprintf(m_out, "v %lf %lf %lf\n", -s, c, j/n );
+				//fprintf(m_out, "v %lf %lf %lf\n", s, -c,  j/n);
+				//fprintf(m_out, "v %lf %lf %lf\n", -c, -s, j/n);
+				//fprintf(m_out, "v %lf %lf %lf\n", -s, c, j/n );
 				fprintf(m_out, "v %lf %lf %lf\n", c, s, -j/n);
-				fprintf(m_out, "v %lf %lf %lf\n", s, -c, -j/n );
-				fprintf(m_out, "v %lf %lf %lf\n", -c, -s, -j/n);
-				fprintf(m_out, "v %lf %lf %lf\n", -s, c, -j/n );
+				//fprintf(m_out, "v %lf %lf %lf\n", s, -c, -j/n );
+				//fprintf(m_out, "v %lf %lf %lf\n", -c, -s, -j/n);
+				//fprintf(m_out, "v %lf %lf %lf\n", -s, c, -j/n );
+				}
+				
 			
 		}	
 	}
