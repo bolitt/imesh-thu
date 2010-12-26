@@ -13,7 +13,6 @@
 #include "Vertex.h"
 #include "Edge.h"
 
-#include "CloudLoader.h"
 
 namespace IMesh { namespace UI { namespace Models {
 
