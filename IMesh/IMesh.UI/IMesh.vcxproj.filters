@@ -44,7 +44,7 @@
     <Filter Include="external\Triangulate">
       <UniqueIdentifier>{16f0c84d-3153-44cd-b82e-7bcda5bd023f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="helpers">
+    <Filter Include="helper">
       <UniqueIdentifier>{59080d79-c217-43d7-affa-375d0d91a845}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -232,9 +232,6 @@
     <ClInclude Include="..\IMesh.Share\EventListener.h">
       <Filter>external\Share\interface</Filter>
     </ClInclude>
-    <ClInclude Include="CloudLoader.h">
-      <Filter>DS</Filter>
-    </ClInclude>
     <ClInclude Include="..\IMesh.Triangulate\EventCommon.h">
       <Filter>external\Triangulate</Filter>
     </ClInclude>
@@ -257,13 +254,13 @@
       <Filter>models</Filter>
     </ClInclude>
     <ClInclude Include="PositionHelper.h">
-      <Filter>helpers</Filter>
+      <Filter>helper</Filter>
     </ClInclude>
     <ClInclude Include="ModelViewAdjuster.h">
-      <Filter>helpers</Filter>
+      <Filter>helper</Filter>
     </ClInclude>
     <ClInclude Include="MeshHelper.h">
-      <Filter>helpers</Filter>
+      <Filter>helper</Filter>
     </ClInclude>
     <ClInclude Include="TriangulateEventListener.h">
       <Filter>DS</Filter>
@@ -351,9 +348,6 @@
     <ClCompile Include="Edge.cpp">
       <Filter>models</Filter>
     </ClCompile>
-    <ClCompile Include="CloudLoader.cpp">
-      <Filter>DS</Filter>
-    </ClCompile>
     <ClCompile Include="Structures.cpp">
       <Filter>DS</Filter>
     </ClCompile>
@@ -364,13 +358,13 @@
       <Filter>models</Filter>
     </ClCompile>
     <ClCompile Include="PositionHelper.cpp">
-      <Filter>helpers</Filter>
+      <Filter>helper</Filter>
     </ClCompile>
     <ClCompile Include="ModelViewAdjuster.cpp">
-      <Filter>helpers</Filter>
+      <Filter>helper</Filter>
     </ClCompile>
     <ClCompile Include="MeshHelper.cpp">
-      <Filter>helpers</Filter>
+      <Filter>helper</Filter>
     </ClCompile>
     <ClCompile Include="TriangulateEventListener.cpp">
       <Filter>DS</Filter>
