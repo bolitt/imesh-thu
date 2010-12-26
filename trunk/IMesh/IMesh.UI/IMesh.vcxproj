@@ -140,7 +140,6 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="ClassView.h" />
-    <ClInclude Include="CloudLoader.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="DisplayDialog.h" />
     <ClInclude Include="IAnimation.h" />
@@ -179,7 +178,6 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ChildFrm.cpp" />
     <ClCompile Include="ClassView.cpp" />
-    <ClCompile Include="CloudLoader.cpp" />
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="DisplayDialog.cpp" />
     <ClCompile Include="IAnimation.cpp" />
