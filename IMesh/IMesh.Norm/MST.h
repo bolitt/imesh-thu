@@ -4,7 +4,7 @@
 #define MST_H
 
 
-const int MAXSIZE = 30001;
+const int MAXSIZE = 300001;
 
 int Find(int x);
 
