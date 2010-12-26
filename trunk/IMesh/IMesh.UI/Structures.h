@@ -12,7 +12,6 @@
 #include "../IMesh.Triangulate/SeedSelection.h"
 
 
-
 namespace IMesh { namespace Num { namespace GL {
 	//typedef unsigned int GLenum;
 	//typedef unsigned char GLboolean;

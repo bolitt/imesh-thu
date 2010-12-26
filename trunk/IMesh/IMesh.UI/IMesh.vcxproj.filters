@@ -277,6 +277,9 @@
     <ClInclude Include="Resource.h">
       <Filter>window</Filter>
     </ClInclude>
+    <ClInclude Include="HDTimer.h">
+      <Filter>DS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ChildFrm.cpp">
@@ -377,6 +380,9 @@
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>window</Filter>
+    </ClCompile>
+    <ClCompile Include="HDTimer.cpp">
+      <Filter>DS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

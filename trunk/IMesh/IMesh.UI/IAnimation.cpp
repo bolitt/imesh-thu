@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "IAnimation.h"
+#include "HDTimer.h"
 
 namespace IMesh { namespace UI { namespace Models {
 
@@ -28,15 +29,12 @@ void Animation::OnSetup()
 	protected:
 		void Wait(DWORD millionSeconds)
 		{
-			LARGE_INTEGER prev, now, freq;
-			QueryPerformanceFrequency(&freq);
-			QueryPerformanceCounter(&prev);
-
-			double ms_per_tick = 1000.0 / freq.QuadPart;
+			HDTimer timer;
+			timer.Start();
 			while (true) 
 			{
-				QueryPerformanceCounter(&now);
-				double elapsed = (now.QuadPart - prev.QuadPart) * ms_per_tick;
+				timer.Pause();
+				double elapsed = timer.GetTotalMilliSeconds();
 				if (elapsed > millionSeconds) {
 					break;
 				}

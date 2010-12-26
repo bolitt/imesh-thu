@@ -202,7 +202,7 @@ void TriangulateEventListener::DispatchUIMessage()
 
 void TriangulateEventListener::SetSignal( TriangulateEventListener::ControlSignal signal )
 {
-	m_lastSignalTime = CTime::GetCurrentTime();
+	m_ctrlSignalTimer.Start();
 	m_ctrlLock.Lock();
 	m_ctrlSignal = signal;
 	m_ctrlLock.Unlock();
@@ -273,12 +273,12 @@ void TriangulateEventListener::OutputEdgeInfo(CString& info, TriangulateEventArg
 void TriangulateEventListener::OutputCompleteInfo(CString& info, TriangulateEventArg &eventArg )
 {
 	CString str1, str2, str3, str4;
-	CTime currentTime = CTime::GetCurrentTime();
-	CTimeSpan duration = currentTime - m_lastSignalTime;
+	m_ctrlSignalTimer.Pause();
+	double millisenconds = m_ctrlSignalTimer.GetTotalMilliSeconds();
 	str1.Format(info);
 	str2.Format(_T("  > #Points: %d"), (*eventArg.m_pAllPointList).points.size());
 	str3.Format(_T("  > #Triangule: %d"), eventArg.m_pTriangleList->size());
-	str4.Format(_T("  > Time: %d seconds"), duration.GetTotalSeconds());			
+	str4.Format(_T("  > Time: %.5lf seconds"), millisenconds / 1000.0);
 	theApp.GetMainFrame()->AddDebug(str1);
 	theApp.GetMainFrame()->AddDebug(str2);
 	theApp.GetMainFrame()->AddDebug(str3);
