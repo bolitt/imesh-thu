@@ -1,4 +1,4 @@
-#summary 项目介绍
+#summary 项目介绍（AboutUs）
 #labels Featured,Phase-QA
 
 == 介绍 ==
