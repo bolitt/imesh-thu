@@ -1,4 +1,4 @@
-#summary 问题集锦页面（FAQ）
+#summary 问题集锦（FAQ）
 #labels Phase-QA,Featured
 
 ----
