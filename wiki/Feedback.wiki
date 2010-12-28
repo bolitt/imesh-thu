@@ -1,4 +1,4 @@
-#summary 用户反馈（Feedback）页面
+#summary 用户反馈（Feedback）
 #labels Featured,Phase-QA
 
 = 用户反馈 =
